@@ -23,7 +23,7 @@
     <!-- Other libraries and styles of your own -->
     <!-------------------------------------------->
     <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-    <!-- <link rel="stylesheet" href="./styles/style.css"> -->
+    <link rel="stylesheet" href="./styles/users.css">
 
 </head>
 
@@ -46,7 +46,7 @@
     <form>
         <fieldset>
             <legend>Add a User</legend>
-            <input type="text" placeholder="user name" id="name" />
+            <input type="text" placeholder="name" id="name" />
             <input type="email" placeholder="email" id="email" />
             <input type="password" placeholder="password" id="password" />
             <input type="button" id="add" value="Add" />
@@ -70,7 +70,7 @@
                 if (this.readyState == XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         let data = JSON.parse(this.responseText);
-                        // console.log(this.responseText);
+                        console.log(this.responseText);
                         if (data.status == "success") {
                             let str = `<tr>
                                             <th class ="userid_header"><span>ID</span></th>
@@ -85,7 +85,7 @@
                                 str += ("<tr><td class = 'id'>" + row.ID
                                     + "</td><td class = 'name'><span>" + row.name
                                     + "</span></td><td class = 'email'><span>" + row.email
-                                    + "</span></td><td class = 'password><span>" + row.password
+                                    + "</span></td><td class = 'password'><span>" + row.password
                                     + "</span></td></tr>");
                             }
                             // console.log(str);
@@ -169,7 +169,7 @@
             document.getElementById("password").value = "";
 
             const xhr = new XMLHttpRequest();
-            xhr.onload = () => {
+            xhr.onload = function () {
                 if (this.readyState == XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         getUsers();

@@ -1,0 +1,15 @@
+table {
+    background-color: #c9f0e2;
+    border: solid 1px;
+  }
+
+  td {
+    border-bottom: solid 1px;
+    padding: 4px;
+    text-align: center;
+  }
+
+  form {
+    width: 80%;
+    padding-top: 2em;
+  }

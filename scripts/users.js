@@ -69,7 +69,7 @@ app.post('/add-user', (req, res) => {
 
     db.connect();
     // console.log("name: ", req.body.name, " email: ", req.body.email, " password: ", req.body.password);
-    db.query('INSERT INTO user (`name`, `email`, `password`) vlaues(?, ?, ?)',
+    db.query('INSERT INTO user (name, email, password) values(?, ?, ?)',
                 [req.body.name, req.body.email, req.body.password],
                 (error, results, fields) => {
                     if (error) console.log(error);
