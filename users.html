@@ -23,7 +23,7 @@
     <!-- Other libraries and styles of your own -->
     <!-------------------------------------------->
     <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-    <link rel="stylesheet" href="./styles/users.css">
+    <link rel="stylesheet" href="/styles/users.css">
 
 </head>
 
@@ -91,7 +91,7 @@
                             // console.log(str);
                             document.getElementById("users").innerHTML = str;
 
-                            let records = document.querySelectorAll("td[class='email'] span");
+                            let records = document.querySelectorAll("td[class='email'] span, td.name span, td.password span");
                             for (let j = 0; j < records.length; j++) {
                                 records[j].addEventListener("click", edit);
                             }
@@ -112,33 +112,61 @@
         getUsers();
 
         function edit(e) {
+            console.log("e: " + e.ID);
             let spanText = e.target.innerHTML;
+            console.log("spanText: " + spanText);
+            console.log("target id: " + e.target.class);
             let parent = e.target.parentNode;
+            console.log(parent);
+            console.log(parent.parentNode.querySelector(".password span").innerHTML);
+            let password = parent.parentNode.querySelector(".password");
+            let email = parent.parentNode.querySelector(".email");
+            let name = parent.parentNode.querySelector(".name");
             let input = document.createElement("input");
             input.value = spanText;
             input.addEventListener("keyup", function (e) {
                 let s = null;
                 let v = null;
                 if (e.which == 13) {
+                    console.log(parent);
+                    console.log(parent.parentNode.querySelector(".name"));
                     v = input.value;
                     let newSpan = document.createElement("span");
                     newSpan.addEventListener("click", edit);
-                    newSpan.innerHtML = v;
+                    newSpan.innerHTML = v;
                     parent.innerHTML = "";
                     parent.appendChild(newSpan);
-                    let dataToSend = {
-                        id: parent.parentNode.querySelector(".id").innerHTML,
-                        name: parent.parentNode.querySelector(".name").innerHTML,
-                        email: v,
-                        password: parent.parentNode.querySelector(".password").innerHTML
-                    };
-
+                    let dataToSend;
+                    if (parent == email) {
+                        dataToSend = {
+                            id: parent.parentNode.querySelector(".id").innerHTML,
+                            name: parent.parentNode.querySelector(".name span").innerHTML,
+                            email: v,
+                            password: parent.parentNode.querySelector(".password span").innerHTML
+                        };
+                    } else if (parent == name) {
+                        dataToSend = {
+                            id: parent.parentNode.querySelector(".id").innerHTML,
+                            name: v,
+                            email: parent.parentNode.querySelector(".email span").innerHTML,
+                            password: parent.parentNode.querySelector(".password span").innerHTML
+                        };
+                    } else if (parent == password) {
+                        // console.log("password");
+                        dataToSend = {
+                            id: parent.parentNode.querySelector(".id").innerHTML,
+                            name: parent.parentNode.querySelector(".name span").innerHTML,
+                            email: parent.parentNode.querySelector(".email span").innerHTML,
+                            password: v
+                        };
+                    }
+                    console.log(dataToSend.id, dataToSend.name, dataToSend.email, dataToSend.password);
                     const xhr = new XMLHttpRequest();
                     xhr.onload = function () {
                         if (this.readyState == XMLHttpRequest.DONE) {
                             if (xhr.status === 200) {
                                 document.getElementById("status").innerHTML = "Record updated.";
-                                getCustomers();
+                                getUsers();
                             } else {
                                 console.log(this.status);
                             }
@@ -149,13 +177,15 @@
                     xhr.open("POST", "/update-user");
                     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    console.log("dataToSend", "id=" + dataToSend.id + " name=" + dataToSend.name + " email=" + dataToSend.email + " password=" + dataToSend.password);
-                    xhr.send("id=" + dataToSend.id + "&email=" + dataToSend.email);
+                    console.log("dataToSend", "id=" + dataToSend.id + "&name=" + dataToSend.name + " email=" + dataToSend.email + " password=" + dataToSend.password);
+                    xhr.send("id=" + dataToSend.id + "&name=" + dataToSend.name + "&email=" + dataToSend.email + "&password=" + dataToSend.password);
                 }
             });
             parent.innerHTML = "";
             parent.appendChild(input);
         }
+
+
 
         document.getElementById("add").addEventListener("click", (e) => {
             e.preventDefault();

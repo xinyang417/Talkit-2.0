@@ -4,7 +4,8 @@ const app = express();
 const fs = require("fs");
 const mysql = require('mysql2');
 
-// app.use("/img", express.static("./images"));
+app.use("/img", express.static("./images"));
+app.use("/css", express.static("../styles"));
 
 app.get('/', function (req, res) {
 
@@ -90,14 +91,14 @@ app.post('/update-user', (req, res) => {
     });
     db.connect();
     console.log("Update values id: ", req.body.id, " user name: ", req.body.name, " email: ", req.body.name, " password: ", req.body.password)
-    db.query('UPDATE user SET email = ? WHERE ID = ?',
-                [req.body.email, req.body.id],
+    db.query('UPDATE user SET name = ?, email = ?, password = ? WHERE ID = ?',
+                [req.body.name, req.body.email, req.body.password, req.body.id],
                 (error, results) => {
                     if (error) console.log(eror);
 
                     res.send({ status: "succes", msg: "Recorded updated."});
                 });
-                connection.end();
+                db.end();
 })
 
 let port = 8000;
