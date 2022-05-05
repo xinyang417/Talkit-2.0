@@ -1,10 +1,16 @@
-
-/*-------------------------------------
- * customize material design icon sizes 
- *-------------------------------------
+/*----------------
+ * Color palette
+ *----------------
  */
+:root {
+    --primary-color: #9595c5;
+    --secondary-color: #909090;
+    --accent-color: #050708;
+    --light-font: #676767;
+}
 
-.material-icons.md-18 { font-size: 18px; }
-.material-icons.md-24 { font-size: 24px; }
-.material-icons.md-36 { font-size: 36px; }
-.material-icons.md-48 { font-size: 48px; }
+/*----------------
+ * How to use root:
+ * ex.  background-color: var(--primary-color);
+ *----------------
+ */
