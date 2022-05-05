@@ -46,7 +46,7 @@
     <form>
         <fieldset>
             <legend>Add a User</legend>
-            <input type="text" placeholder="user name" id="userName" />
+            <input type="text" placeholder="user name" id="name" />
             <input type="email" placeholder="email" id="email" />
             <input type="password" placeholder="password" id="password" />
             <input type="button" id="add" value="Add" />
@@ -88,7 +88,7 @@
                                     + "</span></td><td class = 'password><span>" + row.password
                                     + "</span></td></tr>");
                             }
-                            console.log(str);
+                            // console.log(str);
                             document.getElementById("users").innerHTML = str;
 
                             let records = document.querySelectorAll("td[class='email'] span");
@@ -160,11 +160,11 @@
         document.getElementById("add").addEventListener("click", (e) => {
             e.preventDefault();
             let formData = {
-                name: document.getElementById("userName").value,
+                name: document.getElementById("name").value,
                 email: document.getElementById("email").value,
                 password: document.getElementById("password").value
             };
-            document.getElementById("userName").value = "";
+            document.getElementById("name").value = "";
             document.getElementById("email").value = "";
             document.getElementById("password").value = "";
 
@@ -172,7 +172,7 @@
             xhr.onload = () => {
                 if (this.readyState == XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        getCustomers();
+                        getUsers();
                         document.getElementById("status").innerHTML = "DB updated.";
                     } else {
                         console.log(this.status);
@@ -184,7 +184,7 @@
             xhr.open("POST", "/add-user");
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send("userName=" + formData.name + "&email=" + formData.email + "&password=" + formData.password);
+            xhr.send("name=" + formData.name + "&email=" + formData.email + "&password=" + formData.password);
         })
     </script>
     <!-- <script src="./scripts/firebaseAPI_TEAM99.js"></script> -->
