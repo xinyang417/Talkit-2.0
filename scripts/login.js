@@ -64,8 +64,7 @@ app.post('/auth', function(request, response) {
 app.get('/home', function(request, response) {
 	// If the user is loggedin
 	if (request.session.loggedin) {
-		
-		let profile = fs.readFileSync("./profile.html", "utf8");
+		let profile = fs.readFileSync("../main.html", "utf8");
         let profileDOM = new JSDOM(profile);
 		response.send(profileDOM.serialize());
 	} else {
