@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Update Profile</title>
+    <meta name="update-profile" content="Update Profile">
+
+    <!------------------------>
+    <!-- Required meta tags -->
+    <!------------------------>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!------------------------------------------>
+    <!-- Bootstrap Library CSS JS CDN go here -->
+    <!------------------------------------------>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+
+    <!-------------------------------------------------------->
+    <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
+    <!-------------------------------------------------------->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>  -->
+    <!-- <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" /> -->
+
+    <!-------------------------------------------->
+    <!-- Other libraries and styles of your own -->
+    <!-------------------------------------------->
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <link rel="stylesheet" href="./styles/update-profile.css">
+    <link rel="stylesheet"
+        href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+</head>
+
+<body>
+    <!-- test -->
+    <!------------------------------>
+    <!-- Your HTML Layout go here -->
+    <!------------------------------>
+
+    <!-- our own navbar goes here -->
+    <!-- <nav id="navbarPlaceholder"></nav> -->
+
+    <!-- the body of your page goes here -->
+    <!-- stuff -->
+
+    <div class="profile-pic-wrapper">
+        <p class="username">Username</p>
+        <div class="pic-holder">
+            <img id="profilePic" class="pic" src="./images/logo-04.png">
+            <label for="newProfilePhoto" class="upload-file-block">
+                <i class="upload-button"><span class="material-symbols-outlined">add_a_photo</span></i>
+            </label>
+            <input class="uploadProfileInput" type="file" name="profile_pic" id="newProfilePhoto" accept="image/*">
+
+        </div>
+    </div>
+
+    <div class="profile-update">
+        <form id="profile-form">
+            <input type="text" id="displayName" placeholder="Display Name (Optional)">
+            <input type="text" id="about" placeholder="About (Optional)">
+            <input type="button" class="cancel" value="Cancel">
+            <input type="button" class="save" value="Save">
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            var readURL = function (input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.querySelector('.profilePic').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            document.querySelector(".uploadProfileInput").on('change', function () {
+                readURL(this);
+            });
+
+            document.querySelector(".upload-button").on('click', function () {
+                document.querySelector(".uploadProfileInput").click();
+            });
+        });
+    </script>
+
+    <!-- our own footer goes here-->
+    <!-- <nav id="footerPlaceholder"></nav> -->
+
+    <!---------------------------------------------->
+    <!-- Your own JavaScript functions go here    -->
+    <!---------------------------------------------->
+    <!-- <script src="./scripts/firebaseAPI_TEAM99.js"></script> -->
+    <!-- <script src="./scripts/skeleton.js"></script> -->
+    <!-- <script src="./scripts/script.js"></script> -->
+
+</body>
+
+</html>
