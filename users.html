@@ -23,7 +23,7 @@
     <!-- Other libraries and styles of your own -->
     <!-------------------------------------------->
     <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-    <link rel="stylesheet" href="/styles/users.css">
+    <link rel="stylesheet" href="/css/users.css">
 
 </head>
 
@@ -112,13 +112,13 @@
         getUsers();
 
         function edit(e) {
-            console.log("e: " + e.ID);
+            // console.log("e: " + e.ID);
             let spanText = e.target.innerHTML;
-            console.log("spanText: " + spanText);
-            console.log("target id: " + e.target.class);
+            // console.log("spanText: " + spanText);
+            // console.log("target id: " + e.target.class);
             let parent = e.target.parentNode;
-            console.log(parent);
-            console.log(parent.parentNode.querySelector(".password span").innerHTML);
+            // console.log(parent);
+            // console.log(parent.parentNode.querySelector(".password span").innerHTML);
             let password = parent.parentNode.querySelector(".password");
             let email = parent.parentNode.querySelector(".email");
             let name = parent.parentNode.querySelector(".name");
@@ -128,8 +128,8 @@
                 let s = null;
                 let v = null;
                 if (e.which == 13) {
-                    console.log(parent);
-                    console.log(parent.parentNode.querySelector(".name"));
+                    // console.log(parent);
+                    // console.log(parent.parentNode.querySelector(".name"));
                     v = input.value;
                     let newSpan = document.createElement("span");
                     newSpan.addEventListener("click", edit);
@@ -160,7 +160,7 @@
                             password: v
                         };
                     }
-                    console.log(dataToSend.id, dataToSend.name, dataToSend.email, dataToSend.password);
+                    // console.log(dataToSend.id, dataToSend.name, dataToSend.email, dataToSend.password);
                     const xhr = new XMLHttpRequest();
                     xhr.onload = function () {
                         if (this.readyState == XMLHttpRequest.DONE) {
@@ -177,7 +177,7 @@
                     xhr.open("POST", "/update-user");
                     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    console.log("dataToSend", "id=" + dataToSend.id + "&name=" + dataToSend.name + " email=" + dataToSend.email + " password=" + dataToSend.password);
+                    // console.log("dataToSend", "id=" + dataToSend.id + "&name=" + dataToSend.name + " email=" + dataToSend.email + " password=" + dataToSend.password);
                     xhr.send("id=" + dataToSend.id + "&name=" + dataToSend.name + "&email=" + dataToSend.email + "&password=" + dataToSend.password);
                 }
             });
