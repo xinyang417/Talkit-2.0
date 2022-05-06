@@ -38,6 +38,7 @@ app.get('/', function (req, res) {
         name varchar(30),
         email varchar(30),
         password varchar(20),
+        isAdmin int,
         PRIMARY KEY (ID));`;
     
     connection.connect();
@@ -53,7 +54,7 @@ app.get('/', function (req, res) {
 app.post('/auth', function(request, response) {
 
     // Connect to database
-    const connection = mysql.createConnection({
+    let connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
         password: '',
@@ -63,6 +64,8 @@ app.post('/auth', function(request, response) {
 	// Capture the input fields
 	let username = request.body.username;
 	let password = request.body.password;
+    // let isAdmin = request.body.isAdmin;
+    // console.log(isAdmin);
 	// Ensure the input fields exists and are not empty
     console.log(username, password);
 	if (username && password) {
@@ -71,7 +74,12 @@ app.post('/auth', function(request, response) {
 			// If there is an issue with the query, output the error
 			if (error) throw error;
 			// If the account exists
-			if (results.length > 0) {
+			// console.log(results.isAdmin);
+            if (results.length > 0 && results.isAdmin > 0) {
+                request.session.loggedin = true;
+				request.session.username = username;
+                response.redirect('/admin');
+            } else if (results.length > 0) {
 				// Authenticate the user
 				request.session.loggedin = true;
 				request.session.username = username;
@@ -135,6 +143,7 @@ app.post('/add-user', (req, res) => {
     console.log("Name", req.body.name);
     console.log("Email", req.body.email);
     console.log("Password", req.body.password);
+    console.log("isAdmin", req.body.isAdmin);
 
     let connection = mysql.createConnection({
         host: 'localhost',
@@ -145,8 +154,8 @@ app.post('/add-user', (req, res) => {
 
     connection.connect();
     // console.log("name: ", req.body.name, " email: ", req.body.email, " password: ", req.body.password);
-    connection.query('INSERT INTO user (name, email, password) values(?, ?, ?)',
-                [req.body.name, req.body.email, req.body.password],
+    connection.query('INSERT INTO user (name, email, password, isAdmin) values(?, ?, ?, ?)',
+                [req.body.name, req.body.email, req.body.password, req.body.isAdmin],
                 (error, results, fields) => {
                     if (error) console.log(error);
                     // console.log('Rows reutrned are: ', results);
@@ -166,8 +175,8 @@ app.post('/update-user', (req, res) => {
     });
     connection.connect();
     // console.log("Update values id: ", req.body.id, " user name: ", req.body.name, " email: ", req.body.name, " password: ", req.body.password)
-    connection.query('UPDATE user SET name = ?, email = ?, password = ? WHERE ID = ?',
-                [req.body.name, req.body.email, req.body.password, req.body.id],
+    connection.query('UPDATE user SET name = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?',
+                [req.body.name, req.body.email, req.body.password, req.body.isAdmin, req.body.id],
                 (error, results) => {
                     if (error) console.log(error);
 
@@ -215,10 +224,10 @@ app.get("/logout", function (req, res) {
 async function init() {
     const mysql = require("mysql2/promise");
     const connection = await mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "",
-      multipleStatements: true
+        host: "localhost",
+        user: "root",
+        password: "",
+        multipleStatements: true
     });
     const sql = `CREATE DATABASE IF NOT EXISTS talkit;
         use talkit;
@@ -227,6 +236,7 @@ async function init() {
         name varchar(30),
         email varchar(30),
         password varchar(20),
+        isAdmin int NOT NULL,
         PRIMARY KEY (ID));`;
     await connection.query(sql);
 
@@ -236,11 +246,11 @@ async function init() {
     // no records? Let's add a couple - for testing purposes
     if(rows.length == 0) {
         // no records, so let's add a couple
-        let userRecords = "insert into user (name, email, password) values ?";
+        let userRecords = "insert into user (name, email, password, isAdmin) values ?";
         let recordValues = [
-          ["test", "test@test.com", "test"],
-          ["joe", "joe@bcit.ca", "abc123"],
-          ["bob", "bob@bcit.ca", "xyz"]
+            ["test", "test@test.com", "test", 0],
+            ["joe", "joe@bcit.ca", "abc123", 1],
+            ["bob", "bob@bcit.ca", "xyz", 1]
         ];
         await connection.query(userRecords, [recordValues]);
     }
