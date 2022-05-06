@@ -10,13 +10,6 @@ const app = express();
 app.use("/img", express.static("../images"));
 app.use("/css", express.static("../styles"));
 
-const connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'talkit'
-});
-
 app.use(session({
 	secret: 'secret',
 	resave: true,
@@ -34,7 +27,8 @@ app.get('/', function (req, res) {
     host: 'localhost',
     user: 'root',
     password: '',
-    multipleStatements: true
+    multipleStatements: true,
+    database : 'talkit'
     });
 
     const sql = `CREATE DATABASE IF NOT EXISTS talkit;
@@ -57,6 +51,15 @@ app.get('/', function (req, res) {
 });
 
 app.post('/auth', function(request, response) {
+
+    // Connect to database
+    const connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        multipleStatements: true,
+        database : 'talkit'
+        });
 	// Capture the input fields
 	let username = request.body.username;
 	let password = request.body.password;
@@ -209,9 +212,41 @@ app.get("/logout", function (req, res) {
     }
 });
 
+async function init() {
+    const mysql = require("mysql2/promise");
+    const connection = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      multipleStatements: true
+    });
+    const sql = `CREATE DATABASE IF NOT EXISTS talkit;
+        use talkit;
+        CREATE TABLE IF NOT EXISTS user (
+        ID int NOT NULL AUTO_INCREMENT,
+        name varchar(30),
+        email varchar(30),
+        password varchar(20),
+        PRIMARY KEY (ID));`;
+    await connection.query(sql);
 
+    // await allows for us to wait for this line to execute ... synchronously
+    // also ... destructuring. There's that term again!
+    const [rows, fields] = await connection.query("SELECT * FROM user");
+    // no records? Let's add a couple - for testing purposes
+    if(rows.length == 0) {
+        // no records, so let's add a couple
+        let userRecords = "insert into user (name, email, password) values ?";
+        let recordValues = [
+          ["test", "test@test.com", "test"],
+          ["joe", "joe@bcit.ca", "abc123"],
+          ["bob", "bob@bcit.ca", "xyz"]
+        ];
+        await connection.query(userRecords, [recordValues]);
+    }
+    console.log("Listening on port " + port + "!");
+
+}
 
 let port = 8000;
-app.listen(port, function () {
-    console.log('Test app listening on port ' + port + '!');
-})
+app.listen(port, init); 
