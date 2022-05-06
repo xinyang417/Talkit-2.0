@@ -78,7 +78,7 @@ app.post('/add-user', function (req, res) {
 });
 
 // RUN SERVER
-let port = 2000;
+let port = 8000;
 app.listen(port, function () {
     console.log('Sign Up page listening on port ' + port);
 })
