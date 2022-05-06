@@ -1,0 +1,17 @@
+button {
+    background-color: #e4e4e4;
+   
+}
+
+.material-symbols-outlined {
+    font-size: 31px;
+}
+
+.bg-secondary {
+    background-color: #e4e4e4 !important;
+}
+
+button {
+    border: 0px;
+}
+
