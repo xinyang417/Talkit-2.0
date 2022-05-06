@@ -4,9 +4,10 @@ const session = require('express-session');
 const fs = require("fs");
 const {JSDOM} = require('jsdom');
 const path = require('path');
+const { response } = require('express');
 const app = express();
 
-app.use("/img", express.static("./images"));
+app.use("/img", express.static("../images"));
 app.use("/css", express.static("../styles"));
 
 const connection = mysql.createConnection({
@@ -103,6 +104,11 @@ app.get('/admin', function(request, response) {
     let doc = fs.readFileSync('../users.html', "utf-8");
     response.send(doc);
 });
+
+app.get('/signup', (req, res) => {
+    let doc = fs.readFileSync('../signup.html', "utf-8");
+    res.send(doc);
+})
 
 app.get('/get-users', (req, res) => {
     const connection = mysql.createConnection({
@@ -208,4 +214,4 @@ app.get("/logout", function (req, res) {
 let port = 8000;
 app.listen(port, function () {
     console.log('Test app listening on port ' + port + '!');
-  })
+})
