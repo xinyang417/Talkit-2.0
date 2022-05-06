@@ -23,7 +23,8 @@
     <!-- Other libraries and styles of your own -->
     <!-------------------------------------------->
     <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-    <link rel="stylesheet" href="/css/users.css">
+    <link rel="stylesheet" href="../styles/users.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
 </head>
 
@@ -38,28 +39,49 @@
 
     <!-- the body of your page goes here -->
     <!-- stuff -->
-    <div id="content">
-        <table id="users">
+    <section id="mainBody">
+        <h2>Admin</h2>
+        <p id="status"></p>
+        <form>
+            <div id="box1">
+                <fieldset>
+                    <legend>Add a User</legend>
+                    <input type="text" placeholder="name" id="name" />
+                    <input type="email" placeholder="email" id="email" />
+                    <input type="password" placeholder="password" id="password" />
+                    <input type="text" placholder="isAdmin" id="isAdmin" />
+                    <div class="buttons">
+                        <input type="button" name="clear" class="Clear" value="Clear">
+                        <input type="button" id="add" value="Add" />
+                    </div>
+                </fieldset>
+            </div>
+            <fieldset id="box2">
+                <legend>Delete a User</legend>
+                <input type="text" placeholder="id number" id="deleteID" />
+                <input type="button" id="delete" value="Delete" />
+            </fieldset>
+        </form>
+        <div id="content">
+            <table id="users">
+                <tr>
+                    <th class="userid_header"><span>ID</span></th>
+                    <th class="username_header"><span>Name</span></th>
+                    <th class="email_header"><span>Email</span></th>
+                    <th class="password_header"><span>Password</span></th>
+                    <th class="admin_header"><span>isAdmin</span></th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>john</td>
+                    <td>john@test.com</td>
+                    <td>asdf1234</td>
+                    <td>0</td>
+                </tr>
+            </table>
+        </div>
+    </section>
 
-        </table>
-    </div>
-    <form>
-        <fieldset>
-            <legend>Add a User</legend>
-            <input type="text" placeholder="name" id="name" />
-            <input type="email" placeholder="email" id="email" />
-            <input type="password" placeholder="password" id="password" />
-            <input type="text" placholder="admin?(0:no, 1:yes)" id="isAdmin">
-            <input type="button" id="add" value="Add" />
-        </fieldset>
-        <fieldset>
-            <legend>Delete a User</legend>
-            <input type="text" placeholder="id number" id="deleteID" />
-            <input type="button" id="delete" value="Delete" />
-        </fieldset>
-    </form>
-
-    <p id="status"></p>
     <!-- our own footer goes here-->
     <!-- <nav id="footerPlaceholder"></nav> -->
 
