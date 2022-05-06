@@ -195,11 +195,30 @@ app.get('/get-displayname', (req,res) => {
     connection.connect();
     connection.query(sql,(error, results) =>{
         if (error) console.log(error);
-        console.log('Name=', results);
         res.send({ status: "success", rows: results});
     });
     connection.end();
-})
+});
+
+app.get('/get-about', (req,res) => {
+    const connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'talkit'
+    });
+    
+    const sql = `SELECT about 
+                FROM profile 
+                WHERE profileID = (SELECT MAX(profileID)
+                                    FROM profile)`;
+    connection.connect();
+    connection.query(sql,(error, results) =>{
+        if (error) console.log(error);
+        res.send({ status: "success", rows: results});
+    });
+    connection.end();
+});
 
 app.post('/add-profile', function (req, res) {
     res.setHeader('Content-Type', 'application/json');

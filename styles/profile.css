@@ -87,7 +87,7 @@ body {
     padding-left: 10px;
     padding-bottom: 160px;
     width: 80%;
-    height: 200px;
+    min-height: 200px;
     margin-left: 10%;
     margin-right: 10%;
     margin-top: 5%;
