@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Sign Up</title>
+    <meta name="talkit signup" content="Sign Up Page">
+
+    <!------------------------>
+    <!-- Required meta tags -->
+    <!------------------------>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-------------------------------------------->
+    <!-- Libraries and styles of your own -->
+    <!-------------------------------------------->
+    <link href="/css/signup.css" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <!------------------------------>
+    <!-- Your HTML Layout go here -->
+    <!------------------------------>
+
+    <!-- our own navbar goes here -->
+    <!-- <nav id="navbarPlaceholder"></nav> -->
+
+    <!-- the body of your page goes here -->
+    <div class="container">
+        <div class="box1">
+            <figure class="logo">
+                <img class="img" alt="..." src="/img/logo-01.png" />
+            </figure>
+        </div>
+        <div class="box2">
+            <form id='loginForm'>
+                <input id='username' type='username' required="required" placeholder="Username" required>
+                <input id='email' type='email' required="required" placeholder="Email" required>
+                <input id='password' type='password' required="required" placeholder="Password" required>
+
+                <button id='submit' type="submit"><b></b>Continue</b></button>
+                <label>
+                    <p>Already have an account? <b><a href="login.html">Login</a></b></p>
+                </label>
+            </form>
+        </div>
+    </div>
+
+    <!-- our own footer goes here-->
+    <!-- <nav id="footerPlaceholder"></nav> -->
+
+    <!---------------------------------------------->
+    <!-- Your own JavaScript functions go here    -->
+    <!---------------------------------------------->
+    <script>
+        // Add users when continue button is clicked
+        document.getElementById("submit").addEventListener("click", function (e) {
+            e.preventDefault();
+
+            let formData = {
+                username: document.getElementById("username").value,
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value
+            };
+            document.getElementById("username").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+
+
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                if (this.readyState == XMLHttpRequest.DONE) {
+
+                    // 200 means everthing worked
+                    if (xhr.status === 200) {
+
+                        console.log("DB updated");
+
+                    } else {
+
+                        // not a 200, could be anything (404, 500, etc.)
+                        console.log(this.status);
+
+                    }
+
+                } else {
+                    console.log("ERROR", this.status);
+                }
+            }
+            xhr.open("POST", "/add-user");
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send("username=" + formData.username + "&email=" + formData.email + "&password=" + formData
+                .password);
+        })
+    </script>
+
+</body>
+
+</html>
