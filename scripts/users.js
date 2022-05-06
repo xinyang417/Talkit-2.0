@@ -90,7 +90,7 @@ app.post('/update-user', (req, res) => {
         database: 'talkit'
     });
     db.connect();
-    console.log("Update values id: ", req.body.id, " user name: ", req.body.name, " email: ", req.body.name, " password: ", req.body.password)
+    // console.log("Update values id: ", req.body.id, " user name: ", req.body.name, " email: ", req.body.name, " password: ", req.body.password)
     db.query('UPDATE user SET name = ?, email = ?, password = ? WHERE ID = ?',
                 [req.body.name, req.body.email, req.body.password, req.body.id],
                 (error, results) => {
