@@ -34,7 +34,7 @@
     <!-- Other libraries and styles of your own -->
     <!-------------------------------------------->
     <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-    <link rel="stylesheet" href="/styles/profile.css">
+    <link rel="stylesheet" href="/css/profile.css">
     <link rel="stylesheet"
         href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
@@ -55,13 +55,14 @@
     <div class="profile-pic-wrapper">
         <p class="username">Username</p>
         <div class="pic-holder">
-            <img id="profilePic" class="pic" src="/images/logo-04.png">
+            <img id="profilePic" class="pic" src="/img/logo-04.png">
         </div>
     </div>
 
     <div class="profile-update">
         <label class="display-name">Display Name</label>
-        <table type="text" id="displayName"></table>
+        <a href="/update-profile">Edit</a>
+        <table type="text" id="dName"></table>
         <label class="about-me">About</label>
         <input type="text" id="about" placeholder="About (Optional)">
 
@@ -76,8 +77,34 @@
     <!-- Your own JavaScript functions go here    -->
 
     <script>
-      
-   </script>
+        function displayName() {
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                if (this.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = JSON.parse(this.responseText);
+                        // console.log(this.responseText);
+                        if (data.status == "success") {
+                            console.log("data:", data);
+                            let row = data.rows[0];
+                            let name = "<tr><th>" + row.displayName + "</th></tr>";
+                            document.getElementById("dName").innerHTML = name;
+                        } else {
+                            console.log("Error!");
+                        }
+                    } else {
+                        console.log(this.stauts);
+                    }
+                } else {
+                    console.log("ERROR", this.status);
+                }
+            }
+            xhr.open("GET", "/get-displayname");
+            xhr.send();
+        }
+
+        displayName();
+    </script>
 
     <!---------------------------------------------->
     <!-- <script src="./scripts/firebaseAPI_TEAM99.js"></script> -->
