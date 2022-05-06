@@ -52,6 +52,8 @@
             <input type="button" id="add" value="Add" />
         </fieldset>
         <fieldset>
+            <legend>Delete a User</legend>
+            <input type="text" placeholder="id number" id="deleteID" />
             <input type="button" id="delete" value="Delete" />
         </fieldset>
     </form>
@@ -185,8 +187,6 @@
             parent.appendChild(input);
         }
 
-
-
         document.getElementById("add").addEventListener("click", (e) => {
             e.preventDefault();
             let formData = {
@@ -215,6 +215,32 @@
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.send("name=" + formData.name + "&email=" + formData.email + "&password=" + formData.password);
+        })
+
+        document.getElementById("delete").addEventListener("click", (e) => {
+            e.preventDefault();
+            let formData = {
+                id: document.getElementById("deleteID").value,
+            }
+            document.getElementById("deleteID").value = "";
+
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                if (this.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        getUsers();
+                        document.getElementById("status").innerHTML = "Record deleted.";
+                    } else {
+                        console.log(this.status);
+                    }
+                } else {
+                    console.log("ERROR", this.status);
+                }
+            }
+            xhr.open("POST", "/delete-user");
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send("id=" + formData.id);
         })
     </script>
     <!-- <script src="./scripts/firebaseAPI_TEAM99.js"></script> -->
