@@ -47,7 +47,7 @@ app.post('/auth', function(request, response) {
 				// Authenticate the user
 				request.session.loggedin = true;
 				request.session.username = username;
-				// Redirect to home page
+				// Redirect to home page ()
 				response.redirect('/home');
 				
 			} else {
@@ -62,7 +62,7 @@ app.post('/auth', function(request, response) {
 });
 
 app.get('/home', function(request, response) {
-	// If the user is loggedin
+	// If the user is logged in
 	if (request.session.loggedin) {
 		let profile = fs.readFileSync("../main.html", "utf8");
         let profileDOM = new JSDOM(profile);
@@ -74,7 +74,21 @@ app.get('/home', function(request, response) {
 	response.end();
 });
 
+app.get("/logout", function (req, res) {
+	// If the user is logged in
+    if (req.session) {
+        req.session.destroy(function (error) {
+            if (error) {
+                res.status(400).send("Unable to log out")
+            } else {
+                // session deleted, redirect to home
+                res.redirect("/");
+            }
+        });
+    }
+});
+
 let port = 8000;
 app.listen(port, function () {
-    console.log('Test app listening on port ' + port + '!');
+    console.log('Listening on port ' + port + '!');
   })
