@@ -132,6 +132,7 @@ app.get('/home', function (request, response) {
         // If the user is not logged in
         response.redirect("/");
     }
+   
     response.end();
 });
 
