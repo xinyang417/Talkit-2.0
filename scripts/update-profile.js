@@ -11,13 +11,25 @@ app.use("/css", express.static("../styles"));
 
 const storage = multer.diskStorage({
     destination: function (req, file, callback) {
-        callback(null, "./app/images/")
+        callback(null, "../images/")
     },
     filename: function (req, file, callback) {
         callback(null, "my-app-" + file.originalname.split('/').pop().trim());
     }
 });
 const upload = multer({ storage: storage });
+
+app.post('/upload-images', upload.array("files"), function (req, res) {
+
+    //console.log(req.body);
+    console.log(req.files);
+
+    for (let i = 0; i < req.files.length; i++) {
+        req.files[i].filename = req.files[i].originalname;
+    }
+
+});
+
 
 // for the favicon and any other images
 
@@ -82,16 +94,7 @@ app.get('/get-displayname', (req,res) => {
 
 // });
 
-app.post('/upload-images', upload.array("files"), function (req, res) {
 
-    //console.log(req.body);
-    console.log(req.files);
-
-    for (let i = 0; i < req.files.length; i++) {
-        req.files[i].filename = req.files[i].originalname;
-    }
-
-});
 
 
 // Update user profile information

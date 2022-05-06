@@ -34,7 +34,7 @@
     <!-- Other libraries and styles of your own -->
     <!-------------------------------------------->
     <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-    <link rel="stylesheet" href="/css/update-profile.css">
+    <link rel="stylesheet" href="/styles/update-profile.css">
     <link rel="stylesheet"
         href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
@@ -56,10 +56,9 @@
         <p class="username">Username</p>
         <form id="upload-images-form"></form>
         <div class="pic-holder">
-            <img id="profilePic" class="pic" src="/img/logo-04.png">
-            <input class="uploadProfileInput" type="file" name="profile_pic" id="newProfilePhoto" value="Upload Image"
-                accept="image/*" />
-            <label for="newProfilePhoto" class="upload-file-block">
+            <img id="profilePic" class="pic" src="/images/logo-04.png">
+            <input id="image-upload" type="file" value="Upload Image" accept="image/*" />
+            <label for="image-upload" class="upload-file-block">
                 <span class="material-symbols-outlined">add_a_photo</span>
             </label>
         </div>
@@ -72,7 +71,7 @@
             <input type="text" id="displayName" placeholder="Display Name (Optional)" />
             <input type="text" id="about" placeholder="About (Optional)" />
             <input type="button" class="cancel" value="Cancel" id="updateCancel" />
-            <input type="button" class="save" value="Save" id="updateSave" onclick="saveProfile()" />
+            <input type="button" class="save" value="Save" id="updateSave" />
         </form>
     </div>
 
@@ -85,13 +84,14 @@
     <!-- Your own JavaScript functions go here    -->
 
     <script>
+        // Upload profile image
         const upLoadForm = document.getElementById("upload-images-form");
         upLoadForm.addEventListener("submit", uploadImages);
 
         function uploadImages(e) {
             e.preventDefault();
 
-            const imageUpload = document.querySelector('#newProfilePhoto');
+            const imageUpload = document.querySelector('#image-upload');
             const formData = new FormData();
 
             for (let i = 0; i < imageUpload.files.length; i++) {
@@ -117,9 +117,7 @@
             );
         }
 
-        function saveProfile() {
-            window.location.assign("/");
-        }
+
 
         // Update profile when save button is clicked
         document.getElementById("updateSave").addEventListener("click", function (e) {
@@ -141,6 +139,7 @@
                     if (xhr.status === 200) {
 
                         console.log("DB updated");
+                        window.location.assign("/profile.html");
 
                     } else {
 
