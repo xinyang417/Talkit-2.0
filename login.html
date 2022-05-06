@@ -19,18 +19,14 @@
 		</div>
 
 		<div class="login">
-			<form action="/auth" method="post">
-				<label for="username">
-					<i class="fas fa-user"></i>
-				</label>
+			<form action="/auth" method="post" id="loginForm">
 				<input type="text" name="username" placeholder="Username" id="username" required>
-				<label for="password">
-					<i class="fas fa-lock"></i>
-				</label>
 				<input type="password" name="password" placeholder="Password" id="password" required>
+				<span class="psw"><b><a href="#">Forgot password?</a></b></span>
 				<input type="submit" value="Login">
+
 				<label>
-					<p>Do not have an account? <b><a href="/signup">Sign up!</a></b></p>
+					<p>Do not have an account? <b><a href="/signup">Sign up</a></b></p>
 				</label>
 			</form>
 		</div>
