@@ -5,10 +5,15 @@ const fs = require("fs");
 const {JSDOM} = require('jsdom');
 const path = require('path');
 const { response } = require('express');
+const multer = require("multer");
 const app = express();
+
 
 app.use("/img", express.static("../images"));
 app.use("/css", express.static("../styles"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'static')));
 
 app.use(session({
 	secret: 'secret',
@@ -16,9 +21,27 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'static')));
+const storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, "../images/")
+    },
+    filename: function (req, file, callback) {
+        callback(null, "my-app-" + file.originalname.split('/').pop().trim());
+    }
+});
+
+const upload = multer({ storage: storage });
+
+app.post('/upload-images', upload.array("files"), function (req, res) {
+
+    //console.log(req.body);
+    console.log(req.files);
+
+    for (let i = 0; i < req.files.length; i++) {
+        req.files[i].filename = req.files[i].originalname;
+    }
+
+});
 
 
 app.get('/', function (req, res) {
@@ -39,6 +62,7 @@ app.get('/', function (req, res) {
         email varchar(30),
         password varchar(20),
         isAdmin int,
+        UNIQUE (email),
         PRIMARY KEY (ID));`;
     
     connection.connect();
@@ -51,7 +75,13 @@ app.get('/', function (req, res) {
     res.send(doc);
 });
 
-app.post('/auth', function(request, response) {
+app.get('/signup', (req, res) => {
+    let doc = fs.readFileSync('../signup.html', "utf-8");
+    res.send(doc);
+})
+
+
+app.post('/auth', (req, res) => {
 
     // Connect to database
     let connection = mysql.createConnection({
@@ -62,10 +92,8 @@ app.post('/auth', function(request, response) {
         database : 'talkit'
         });
 	// Capture the input fields
-	let username = request.body.username;
-	let password = request.body.password;
-    // let isAdmin = request.body.isAdmin;
-    // console.log(isAdmin);
+	let username = req.body.username;
+	let password = req.body.password;
 	// Ensure the input fields exists and are not empty
     console.log(username, password);
 	if (username && password) {
@@ -74,26 +102,25 @@ app.post('/auth', function(request, response) {
 			// If there is an issue with the query, output the error
 			if (error) throw error;
 			// If the account exists
-			// console.log(results.isAdmin);
             if (results.length > 0 && results.isAdmin > 0) {
-                request.session.loggedin = true;
-				request.session.username = username;
-                response.redirect('/admin');
+                req.session.loggedin = true;
+				req.session.username = username;
+                res.redirect('/admin');
             } else if (results.length > 0) {
 				// Authenticate the user
-				request.session.loggedin = true;
-				request.session.username = username;
+				req.session.loggedin = true;
+				req.session.username = username;
 				// Redirect to home page
-				response.redirect('/home');
+				res.redirect('/home');
 				
 			} else {
-				response.send('Incorrect Username and/or Password!');
+				res.send('Incorrect Username and/or Password!');
 			}			
-			response.end();
+			res.end();
 		});
 	} else {
-		response.send('Please enter Username and Password!');
-		response.end();
+		res.send('Please enter Username and Password!');
+		res.end();
 	}
 });
 
@@ -116,11 +143,95 @@ app.get('/admin', function(request, response) {
     response.send(doc);
 });
 
+app.get('/profile', (req, res) => {
+    const connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        multipleStatements: true
+    });
 
-app.get('/signup', (req, res) => {
-    let doc = fs.readFileSync('../signup.html', "utf-8");
+    const sql = `CREATE DATABASE IF NOT EXISTS talkit;
+        use talkit;
+        CREATE TABLE IF NOT EXISTS profile (
+        profileID int NOT NULL AUTO_INCREMENT,
+        userID int NOT NULL,
+        displayName varchar(30),
+        about varchar(500),
+        PRIMARY KEY (profileID),
+        FOREIGN KEY (userID) REFERENCES user(ID)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE);`;
+    connection.connect();
+    connection.query(sql, function (error, results, fields) {
+        if (error) {
+            console.log(error);
+        }
+        console.log(results);
+
+    });
+    connection.end();
+
+    let doc = fs.readFileSync('../profile.html', "utf8");
+    res.send(doc);
+});
+
+app.get('/update-profile', (req, res) => {
+    let doc =fs.readFileSync('../update-profile.html', "utf-8");
     res.send(doc);
 })
+
+app.get('/get-displayname', (req,res) => {
+    const connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'talkit'
+    });
+    const sql = `SELECT displayName 
+                FROM profile 
+                WHERE profileID = (SELECT MAX(profileID)
+                                    FROM profile)`;
+    connection.connect();
+    connection.query(sql,(error, results) =>{
+        if (error) console.log(error);
+        console.log('Name=', results);
+        res.send({ status: "success", rows: results});
+    });
+    connection.end();
+})
+
+app.post('/add-profile', function (req, res) {
+    res.setHeader('Content-Type', 'application/json');
+
+    let connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'talkit'
+    });
+
+    let sql = `INSERT INTO profile (userID, displayName, about)
+                values ((SELECT id FROM user WHERE email = ?), ?, ?)`;
+    connection.connect();
+    // TO PREVENT SQL INJECTION, DO THIS:
+    // 'INSERT INTO profile (displayName, about) values (?, ?)'
+    connection.query(sql,
+        [req.body.email, req.body.displayName, req.body.about],
+        function (error, results, fields) {
+            if (error) {
+                console.log(error);
+            }
+            //console.log('Rows returned are: ', results);
+            res.send({
+                status: "success",
+                msg: "Record added."
+            });
+
+        });
+    connection.end();
+
+});
 
 app.get('/get-users', (req, res) => {
     const connection = mysql.createConnection({
