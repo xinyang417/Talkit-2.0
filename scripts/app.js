@@ -189,6 +189,20 @@ app.post('/delete-user', (req, res) => {
     connection.end();
 })
 
+app.get("/logout", function (req, res) {
+	// If the user is logged in
+    if (req.session) {
+        req.session.destroy(function (error) {
+            if (error) {
+                res.status(400).send("Unable to log out")
+            } else {
+                // session deleted, redirect to home
+                res.redirect("/");
+            }
+        });
+    }
+});
+
 
 
 let port = 8000;
