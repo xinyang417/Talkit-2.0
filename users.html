@@ -46,30 +46,31 @@
             <div id="box1">
                 <fieldset>
                     <legend>Add a User</legend>
-                    <input type="text" placeholder="name" id="name" />
-                    <input type="email" placeholder="email" id="email" />
-                    <input type="password" placeholder="password" id="password" />
+                    <input type="text" placeholder="Username" id="name" />
+                    <input type="email" placeholder="Email" id="email" />
+                    <input type="password" placeholder="Password" id="password" />
                     <input type="text" placholder="isAdmin" id="isAdmin" />
                     <div class="buttons">
-                        <input type="button" name="clear" class="Clear" value="Clear">
+                        <input type="button" id="clear" name="clear" class="Clear" value="Clear">
                         <input type="button" id="add" value="Add" />
                     </div>
                 </fieldset>
             </div>
             <fieldset id="box2">
                 <legend>Delete a User</legend>
-                <input type="text" placeholder="id number" id="deleteID" />
+                <input type="text" placeholder="User ID" id="deleteID" />
                 <input type="button" id="delete" value="Delete" />
             </fieldset>
         </form>
         <div id="content">
             <table id="users">
+                <legend>Users</legend>
                 <tr>
                     <th class="userid_header"><span>ID</span></th>
-                    <th class="username_header"><span>Name</span></th>
+                    <th class="username_header"><span>Username</span></th>
                     <th class="email_header"><span>Email</span></th>
                     <th class="password_header"><span>Password</span></th>
-                    <th class="admin_header"><span>isAdmin</span></th>
+                    <th class="admin_header"><span>Admin</span></th>
                 </tr>
                 <tr>
                     <td>1</td>

@@ -1,67 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
 body {
   font-family: 'Inter', sans-serif;
-  margin: 0;
-  align-items: center;
 }
 
 h2 {
-  margin: 10px;
-  
+  margin-left: 10vw;
+  margin-top: 20vw;
+  margin-bottom: 10vw;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
 }
 
-#mainBody {
-  align-items: center;
+legend {
+  margin-left: 10%;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 table {
-    background-color: white;
-  }
-
-  td {
-    padding: 4px;
-    text-align: center;
-  }
-
-  form {
-    width: 80%;
-    padding-top: 2em;
-  }
-
-
-
-  #box1{
-    display: gird;
-    height: 40vh;
-    
-  }
-fieldset {
-  display: grid;
-  grid-template-columns: 1fr;
+  background-color: white;
+  margin-left: 10vw;
+  width: 80vw;
 }
+
+th {
+  margin-left: 10vw;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  padding: 4px;
+  text-align: center;
+}
+
+td {
+  padding: 4px;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+}
+
 
 input[type=text],
 input[type=email],
 input[type=password] {
-    width: 80vw;
-    height: 40px;
-    margin: 5px 0 12px 0;
-    display: inline-block;
-    border: none;
-    border-radius: 10px;
-    background: #e4e4e4;
+  width: 80vw;
+  height: 40px;
+  padding-left: 10px;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+  border: none;
+  border-radius: 10px;
+  background: #e4e4e4;
 }
 
-input[type=button] {
-  background-color: #9595c5;
+#clear {
+  background-color: #909090;
   border: none;
   color: white;
-  padding: 10px 32px;
-  height: 40px;
-  width: 25%;
-  margin-top: 22px;
+  height: 30px;
+  width: 35vw;
+  margin: 10px 4.25vw 40px 10vw;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 14px;
 }
+
+#add {
+  background-color: #9595c5;
+  border: none;
+  color: white;
+  height: 30px;
+  width: 35vw;
+  margin: 10px 10vw 40px 4.25vw;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+#delete {
+  background-color: #9595c5;
+  border: none;
+  color: white;
+  height: 30px;
+  width: 80vw;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
