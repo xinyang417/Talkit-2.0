@@ -64,7 +64,8 @@
             let formData = {
                 username: document.getElementById("username").value,
                 email: document.getElementById("email").value,
-                password: document.getElementById("password").value
+                password: document.getElementById("password").value,
+                isAdmin: 0
             };
             document.getElementById("username").value = "";
             document.getElementById("email").value = "";
@@ -94,8 +95,8 @@
             xhr.open("POST", "/add-user");
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send("username=" + formData.username + "&email=" + formData.email + "&password=" + formData
-                .password);
+            xhr.send("name=" + formData.username + "&email=" + formData.email + "&password=" + formData
+                .password + "&isAdmin=" + formData.isAdmin);
         })
     </script>
 
