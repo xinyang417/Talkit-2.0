@@ -22,7 +22,7 @@ app.use("/img", express.static("./images"));
 
 
 app.get('/', function (req, res) {
-    let doc = fs.readFileSync('./app/html/upload-profile.html', "utf8");
+    let doc = fs.readFileSync('../app/html/update-profile.html', "utf8");
 
     res.set('Server', 'Wazubi Engine');
     res.set('X-Powered-By', 'Wazubi');
