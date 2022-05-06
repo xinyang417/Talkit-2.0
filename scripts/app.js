@@ -116,6 +116,7 @@ app.get('/admin', function(request, response) {
     response.send(doc);
 });
 
+
 app.get('/signup', (req, res) => {
     let doc = fs.readFileSync('../signup.html', "utf-8");
     res.send(doc);
@@ -161,7 +162,7 @@ app.post('/add-user', (req, res) => {
                     // console.log('Rows reutrned are: ', results);
                     res.send({ status: "success", msg: "Record added."});
                 });
-                connection.end();
+    connection.end();
 });
 
 app.post('/update-user', (req, res) => {
