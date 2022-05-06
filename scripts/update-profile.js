@@ -1,11 +1,13 @@
 const express = require('express');
 const app = express();
+const fs = require("fs");
+const mysql = require('mysql2');
+const multer = require("multer");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-const fs = require("fs");
-const multer = require("multer");
+app.use("/img", express.static("../images"));
+app.use("/css", express.static("../styles"));
 
 const storage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -18,17 +20,67 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // for the favicon and any other images
-app.use("/img", express.static("./images"));
-
 
 app.get('/', function (req, res) {
-    let doc = fs.readFileSync('../app/html/update-profile.html', "utf8");
+    // Build the DB 
+    const connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        multipleStatements: true
+    });
 
-    res.set('Server', 'Wazubi Engine');
-    res.set('X-Powered-By', 'Wazubi');
+    const sql = `CREATE DATABASE IF NOT EXISTS talkit;
+        use talkit;
+        CREATE TABLE IF NOT EXISTS profile (
+        ID int NOT NULL AUTO_INCREMENT,
+        displayName varchar(30),
+        about varchar(500),
+        PRIMARY KEY (ID));`;
+        // FOREIGN KEY (ID) REFERENCES user(ID)
+    connection.connect();
+    connection.query(sql, function (error, results, fields) {
+        if (error) {
+            console.log(error);
+        }
+        console.log(results);
+
+    });
+    connection.end();
+
+    let doc = fs.readFileSync('../profile.html', "utf8");
     res.send(doc);
-
 });
+
+app.get('/update-profile', (req, res) => {
+    let doc =fs.readFileSync('../update-profile.html', "utf-8");
+    res.send(doc);
+})
+
+app.get('/get-displayname', (req,res) => {
+    const connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'talkit'
+    });
+    connection.connect();
+    connection.query('SELECT displayName FROM profile WHERE ID = 1',(error, results) =>{
+        if (error) console.log(error);
+        console.log('Name=', results);
+        res.send({ status: "success", rows: results});
+    });
+    connection.end();
+})
+
+// app.get('/', function (req, res) {
+//     let doc = fs.readFileSync('../update-profile.html', "utf8");
+
+//     res.set('Server', 'Wazubi Engine');
+//     res.set('X-Powered-By', 'Wazubi');
+//     res.send(doc);
+
+// });
 
 app.post('/upload-images', upload.array("files"), function (req, res) {
 
@@ -43,43 +95,15 @@ app.post('/upload-images', upload.array("files"), function (req, res) {
 
 
 // Update user profile information
-const mysql = require('mysql2');
 
 
-app.use(express.json());
-app.use(express.urlencoded({
-    extended: true
-}));
 
-app.get('/', function (req, res) {
-    // Build the DB 
-    const connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        multipleStatements: true
-    });
+// app.use(express.json());
+// app.use(express.urlencoded({
+//     extended: true
+// }));
 
-    const createDBAndTables = `CREATE DATABASE IF NOT EXISTS talkit;
-          use talkit;
-          CREATE TABLE IF NOT EXISTS user (
-          ID int NOT NULL AUTO_INCREMENT,
-          displayName varchar(30),
-          about varchar(500);`;
 
-    connection.connect();
-    connection.query(createDBAndTables, function (error, results, fields) {
-        if (error) {
-            console.log(error);
-        }
-        console.log(results);
-
-    });
-    connection.end();
-
-    let doc = fs.readFileSync('./app/update-profile.html', "utf8");
-    res.send(doc);
-});
 
 
 // Notice that this is a 'POST'
@@ -97,7 +121,7 @@ app.post('/add-profile', function (req, res) {
     });
     connection.connect();
     // TO PREVENT SQL INJECTION, DO THIS:
-    connection.query('INSERT INTO user (displayName, about) values (?, ?, ?)',
+    connection.query('INSERT INTO profile (displayName, about) values (?, ?)',
         [req.body.displayName, req.body.about],
         function (error, results, fields) {
             if (error) {
