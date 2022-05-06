@@ -69,12 +69,20 @@
 
     <div class="profile-update">
         <form id="profile-form">
-            <input type="text" id="displayName" placeholder="Display Name (Optional)">
-            <input type="text" id="about" placeholder="About (Optional)">
-            <input type="button" class="cancel" value="Cancel">
-            <input type="button" class="save" value="Save">
+            <input type="text" id="displayName" placeholder="Display Name (Optional)" />
+            <input type="text" id="about" placeholder="About (Optional)" />
+            <input type="button" class="cancel" value="Cancel" id="cancel"/>
+            <input type="button" class="save" value="Save" id="save" onclick="saveProfile()" />
         </form>
     </div>
+
+
+
+    <!-- our own footer goes here-->
+    <!-- <nav id="footerPlaceholder"></nav> -->
+
+    <!---------------------------------------------->
+    <!-- Your own JavaScript functions go here    -->
 
     <script>
         const upLoadForm = document.getElementById("upload-images-form");
@@ -108,17 +116,56 @@
             }).catch(function (err) { ("Error:", err) }
             );
         }
+
+        function saveProfile() {
+            window.location.assign("profile.html");
+        }
+
+        // Update profile when save button is clicked
+        document.getElementById("save").addEventListener("click", function (e) {
+            e.preventDefault();
+
+            let formData = {
+                displayName: document.getElementById("displayName").value,
+                about: document.getElementById("about").value,
+            };
+            document.getElementById("displayName").value = "";
+            document.getElementById("about").value = "";
+
+
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                if (this.readyState == XMLHttpRequest.DONE) {
+
+                    // 200 means everthing worked
+                    if (xhr.status === 200) {
+
+                        console.log("DB updated");
+
+                    } else {
+
+                        // not a 200, could be anything (404, 500, etc.)
+                        console.log(this.status);
+
+                    }
+
+                } else {
+                    console.log("ERROR", this.status);
+                }
+            }
+            xhr.open("POST", "/add-profile");
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send("displayName=" + formData.displayName + "&about=" + formData.about);
+
+        })
     </script>
 
-    <!-- our own footer goes here-->
-    <!-- <nav id="footerPlaceholder"></nav> -->
-
-    <!---------------------------------------------->
-    <!-- Your own JavaScript functions go here    -->
     <!---------------------------------------------->
     <!-- <script src="./scripts/firebaseAPI_TEAM99.js"></script> -->
     <!-- <script src="./scripts/skeleton.js"></script> -->
     <!-- <script src="./scripts/script.js"></script> -->
+    
 
 </body>
 

@@ -54,62 +54,31 @@
 
     <div class="profile-pic-wrapper">
         <p class="username">Username</p>
-
         <div class="pic-holder">
             <img id="profilePic" class="pic" src="/images/logo-04.png">
         </div>
-
-
     </div>
 
     <div class="profile-update">
         <label class="display-name">Display Name</label>
-        <input type="text" id="displayName" placeholder="Display Name (Optional)">
+        <table type="text" id="displayName"></table>
         <label class="about-me">About</label>
         <input type="text" id="about" placeholder="About (Optional)">
 
 
     </div>
 
-    <script>
-        const upLoadForm = document.getElementById("upload-images-form");
-        upLoadForm.addEventListener("submit", uploadImages);
-
-        function uploadImages(e) {
-            e.preventDefault();
-
-            const imageUpload = document.querySelector('#newProfilePhoto');
-            const formData = new FormData();
-
-            for (let i = 0; i < imageUpload.files.length; i++) {
-                // put the images from the input into the form data
-                formData.append("files", imageUpload.files[i]);
-            }
-
-            const options = {
-                method: 'POST',
-                body: formData,
-                // don't put a header in, the browser will do that for us
-                //                headers: {
-                //                  "Content-Type": "multipart/form-data"
-                //                }
-            };
-            //delete options.headers['Content-Type'];
-
-            // now use fetch
-            fetch("/upload-images", options
-            ).then(function (res) {
-                console.log(res);
-            }).catch(function (err) { ("Error:", err) }
-            );
-        }
-    </script>
 
     <!-- our own footer goes here-->
     <!-- <nav id="footerPlaceholder"></nav> -->
 
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
+
+    <script>
+      
+   </script>
+
     <!---------------------------------------------->
     <!-- <script src="./scripts/firebaseAPI_TEAM99.js"></script> -->
     <!-- <script src="./scripts/skeleton.js"></script> -->
