@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,minimum-scale=1">
+	<title>Login</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+	<link href="../css/login.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<div class="container">
+
+		<div class="branding">
+			<figure class="logo">
+				<img class="img" alt="..." src="/img/logo-01.png" />
+			</figure>
+		</div>
+
+		<div class="login">
+			<form action="/auth" method="post" id="loginForm">
+				<input type="text" name="username" placeholder="Username" id="username" required>
+				<input type="password" name="password" placeholder="Password" id="password" required>
+				<span class="psw"><b><a href="#">Forgot password?</a></b></span>
+				<input type="submit" value="Login">
+
+				<label>
+					<p>Do not have an account? <b><a href="/signup">Sign up</a></b></p>
+				</label>
+			</form>
+		</div>
+	</div>
+
+
+</body>
+
+</html>

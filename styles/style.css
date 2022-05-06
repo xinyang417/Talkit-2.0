@@ -2,7 +2,7 @@
  * Color palette
  *----------------
  */
-:root {
+/*:root {
     --primary-color: #9595c5;
     --secondary-color: #909090;
     --accent-color: #050708;
@@ -14,3 +14,4 @@
  * ex.  background-color: var(--primary-color);
  *----------------
  */
+
