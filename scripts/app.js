@@ -11,6 +11,7 @@ const app = express();
 
 app.use("/img", express.static("../images"));
 app.use("/css", express.static("../styles"));
+app.use("/js", express.static('../js'));
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
@@ -56,7 +57,7 @@ app.get('/', function (req, res) {
 
     const sql = `CREATE DATABASE IF NOT EXISTS talkit;
         use talkit;
-        CREATE TABLE IF NOT EXISTS user (
+        CREATE TABLE IF NOT EXISTS BBY_01_user (
         ID int NOT NULL AUTO_INCREMENT,
         name varchar(30),
         email varchar(30),
@@ -96,7 +97,7 @@ app.post('/auth', (req, res) => {
     // Ensure the input fields exists and are not empty
     if (username && password) {
         // Execute SQL query that'll select the account from the database based on the specified username and password
-        connection.query('SELECT * FROM user WHERE name = ? AND password = ?', [username, password], function (error, results, fields) {
+        connection.query('SELECT * FROM BBY_01_user WHERE name = ? AND password = ?', [username, password], function (error, results, fields) {
             // If there is an issue with the query, output the error
             if (error) throw error;
             // If the account exists
@@ -293,7 +294,7 @@ app.get('/get-users', (req, res) => {
             database: 'talkit'
         });
         connection.connect();
-        connection.query('SELECT * FROM user', (error, results) => {
+        connection.query('SELECT * FROM BBY_01_user', (error, results) => {
             if (error) console.log(error);
             res.send({
                 status: "success",
@@ -318,7 +319,7 @@ app.post('/add-user', (req, res) => {
     });
 
     connection.connect();
-    connection.query('INSERT INTO user (name, email, password, isAdmin) values(?, ?, ?, ?)',
+    connection.query('INSERT INTO BBY_01_user (name, email, password, isAdmin) values(?, ?, ?, ?)',
         [req.body.name, req.body.email, req.body.password, req.body.isAdmin],
         (error, results, fields) => {
             if (error) console.log(error);
@@ -340,7 +341,7 @@ app.post('/update-user', (req, res) => {
         database: 'talkit'
     });
     connection.connect();
-    connection.query('UPDATE user SET name = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?',
+    connection.query('UPDATE BBY_01_user SET name = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?',
         [req.body.name, req.body.email, req.body.password, req.body.isAdmin, req.body.id],
         (error, results) => {
             if (error) console.log(error);
@@ -364,7 +365,7 @@ app.post('/delete-user', (req, res) => {
     });
     connection.connect();
     let deleteSql = `DELETE 
-                    FROM user 
+                    FROM BBY_01_user 
                     WHERE ID =?`;
     connection.query(deleteSql,
         [req.body.id],
@@ -402,7 +403,7 @@ async function init() {
     });
     const sql = `CREATE DATABASE IF NOT EXISTS talkit;
         use talkit;
-        CREATE TABLE IF NOT EXISTS user (
+        CREATE TABLE IF NOT EXISTS BBY_01_user (
         ID int NOT NULL AUTO_INCREMENT,
         name varchar(30),
         email varchar(30),
@@ -412,10 +413,10 @@ async function init() {
     await connection.query(sql);
 
 
-    const [rows, fields] = await connection.query("SELECT * FROM user");
+    const [rows, fields] = await connection.query("SELECT * FROM BBY_01_user");
     if (rows.length == 0) {
         // Dummy data
-        let userRecords = "insert into user (name, email, password, isAdmin) values ?";
+        let userRecords = "insert into BBY_01_user (name, email, password, isAdmin) values ?";
         let recordValues = [
             ["test", "test@test.com", "test", 0],
             ["joe", "joe@bcit.ca", "abc123", 1],
