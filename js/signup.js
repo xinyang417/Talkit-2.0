@@ -36,6 +36,6 @@ document.getElementById("submit").addEventListener("click", function (e) {
     xhr.open("POST", "/add-user");
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send("name=" + formData.username + "&email=" + formData.email + "&password=" + formData
+    xhr.send("username=" + formData.username + "&email=" + formData.email + "&password=" + formData
         .password + "&isAdmin=" + formData.isAdmin);
 })

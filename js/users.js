@@ -15,7 +15,7 @@ function getUsers() {
                     for (let i = 0; i < data.rows.length; i++) {
                         let row = data.rows[i];
                         str += ("<tr><td class = 'id'>" + row.ID +
-                            "</td><td class = 'name'><span>" + row.name +
+                            "</td><td class = 'username'><span>" + row.username +
                             "</span></td><td class = 'email'><span>" + row.email +
                             "</span></td><td class = 'password'><span>" + row.password +
                             "</span></td><td class = 'admin'><span>" + row.isAdmin +
@@ -49,7 +49,7 @@ function edit(e) {
     let parent = e.target.parentNode;
     let password = parent.parentNode.querySelector(".password");
     let email = parent.parentNode.querySelector(".email");
-    let name = parent.parentNode.querySelector(".name");
+    let name = parent.parentNode.querySelector(".username");
     let isAdmin = parent.parentNode.querySelector(".admin");
     let input = document.createElement("input");
     input.value = spanText;
@@ -67,7 +67,7 @@ function edit(e) {
             if (parent == email) {
                 dataToSend = {
                     id: parent.parentNode.querySelector(".id").innerHTML,
-                    name: parent.parentNode.querySelector(".name span").innerHTML,
+                    username: parent.parentNode.querySelector(".username span").innerHTML,
                     email: v,
                     password: parent.parentNode.querySelector(".password span").innerHTML,
                     isAdmin: parent.parentNode.querySelector(".admin span")
@@ -75,7 +75,7 @@ function edit(e) {
             } else if (parent == name) {
                 dataToSend = {
                     id: parent.parentNode.querySelector(".id").innerHTML,
-                    name: v,
+                    username: v,
                     email: parent.parentNode.querySelector(".email span").innerHTML,
                     password: parent.parentNode.querySelector(".password span").innerHTML,
                     isAdmin: parent.parentNode.querySelector(".admin span")
@@ -83,7 +83,7 @@ function edit(e) {
             } else if (parent == password) {
                 dataToSend = {
                     id: parent.parentNode.querySelector(".id").innerHTML,
-                    name: parent.parentNode.querySelector(".name span").innerHTML,
+                    username: parent.parentNode.querySelector(".username span").innerHTML,
                     email: parent.parentNode.querySelector(".email span").innerHTML,
                     password: v,
                     isAdmin: parent.parentNode.querySelector(".admin span")
@@ -91,7 +91,7 @@ function edit(e) {
             } else if (parent == isAdmin) {
                 dataToSend = {
                     id: parent.parentNode.querySelector(".id").innerHTML,
-                    name: parent.parentNode.querySelector(".name span").innerHTML,
+                    username: parent.parentNode.querySelector(".username span").innerHTML,
                     email: parent.parentNode.querySelector(".email span").innerHTML,
                     password: parent.parentNode.querySelector(".password span").innerHTML,
                     isAdmin: v
@@ -113,7 +113,7 @@ function edit(e) {
             xhr.open("POST", "/update-user");
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send("id=" + dataToSend.id + "&name=" + dataToSend.name + "&email=" + dataToSend.email +
+            xhr.send("id=" + dataToSend.id + "&username=" + dataToSend.username + "&email=" + dataToSend.email +
                 "&password=" + dataToSend.password + "&isAdmin=" + dataToSend.isAdmin);
         }
     });
@@ -124,12 +124,12 @@ function edit(e) {
 document.getElementById("add").addEventListener("click", (e) => {
     e.preventDefault();
     let formData = {
-        name: document.getElementById("name").value,
+        username: document.getElementById("username").value,
         email: document.getElementById("email").value,
         password: document.getElementById("password").value,
         isAdmin: document.getElementById("isAdmin").value
     };
-    document.getElementById("name").value = "";
+    document.getElementById("username").value = "";
     document.getElementById("email").value = "";
     document.getElementById("password").value = "";
     document.getElementById("isAdmin").value = "";
@@ -150,7 +150,7 @@ document.getElementById("add").addEventListener("click", (e) => {
     xhr.open("POST", "/add-user");
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send("name=" + formData.name + "&email=" + formData.email + "&password=" + formData.password +
+    xhr.send("username=" + formData.username + "&email=" + formData.email + "&password=" + formData.password +
         "&isAdmin=" + formData.isAdmin);
 })
 

@@ -59,7 +59,7 @@ app.get('/', function (req, res) {
         use talkit;
         CREATE TABLE IF NOT EXISTS BBY_01_user (
         ID int NOT NULL AUTO_INCREMENT,
-        name varchar(30),
+        username varchar(30),
         email varchar(30),
         password varchar(20),
         isAdmin int,
@@ -97,7 +97,7 @@ app.post('/auth', (req, res) => {
     // Ensure the input fields exists and are not empty
     if (username && password) {
         // Execute SQL query that'll select the account from the database based on the specified username and password
-        connection.query('SELECT * FROM BBY_01_user WHERE name = ? AND password = ?', [username, password], function (error, results, fields) {
+        connection.query('SELECT * FROM BBY_01_user WHERE username = ? AND password = ?', [username, password], function (error, results, fields) {
             // If there is an issue with the query, output the error
             if (error) throw error;
             // If the account exists
@@ -319,7 +319,7 @@ app.post('/add-user', (req, res) => {
     });
 
     connection.connect();
-    connection.query('INSERT INTO BBY_01_user (name, email, password, isAdmin) values(?, ?, ?, ?)',
+    connection.query('INSERT INTO BBY_01_user (username, email, password, isAdmin) values(?, ?, ?, ?)',
         [req.body.name, req.body.email, req.body.password, req.body.isAdmin],
         (error, results, fields) => {
             if (error) console.log(error);
@@ -341,7 +341,7 @@ app.post('/update-user', (req, res) => {
         database: 'talkit'
     });
     connection.connect();
-    connection.query('UPDATE BBY_01_user SET name = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?',
+    connection.query('UPDATE BBY_01_user SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?',
         [req.body.name, req.body.email, req.body.password, req.body.isAdmin, req.body.id],
         (error, results) => {
             if (error) console.log(error);
@@ -405,7 +405,7 @@ async function init() {
         use talkit;
         CREATE TABLE IF NOT EXISTS BBY_01_user (
         ID int NOT NULL AUTO_INCREMENT,
-        name varchar(30),
+        username varchar(30),
         email varchar(30),
         password varchar(20),
         isAdmin int NOT NULL,
@@ -416,7 +416,7 @@ async function init() {
     const [rows, fields] = await connection.query("SELECT * FROM BBY_01_user");
     if (rows.length == 0) {
         // Dummy data
-        let userRecords = "insert into BBY_01_user (name, email, password, isAdmin) values ?";
+        let userRecords = "insert into BBY_01_user (username, email, password, isAdmin) values ?";
         let recordValues = [
             ["test", "test@test.com", "test", 0],
             ["joe", "joe@bcit.ca", "abc123", 1],
