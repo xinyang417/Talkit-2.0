@@ -67,7 +67,6 @@ input[type=submit]:hover {
     ::placeholder {
         color: #909090;
         font-size: 14px;
-        padding: 13px;
         font-family: 'Inter', sans-serif !important;
     }
 
@@ -88,7 +87,7 @@ input[type=submit]:hover {
         font-weight: bold;
     }
 
-    label p {
+    p {
         text-align: center;
         margin-top: 55px;
         font-size: 14px;
@@ -162,7 +161,6 @@ input[type=submit]:hover {
     ::placeholder {
         color: #909090;
         font-size: 14px;
-        padding: 13px;
         font-family: 'Inter', sans-serif !important;
     }
 
@@ -183,7 +181,7 @@ input[type=submit]:hover {
         font-weight: bold;
     }
 
-    label p {
+    p {
         text-align: center;
         margin-top: 55px;
         font-size: 12px;
