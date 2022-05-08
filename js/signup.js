@@ -18,10 +18,7 @@ document.getElementById("submit").addEventListener("click", function (e) {
 
             // 200 means everthing worked
             if (xhr.status === 200) {
-
-                console.log("DB updated");
                 window.location.assign("/profile");
-
             } else {
 
                 // not a 200, could be anything (404, 500, etc.)

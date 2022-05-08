@@ -320,7 +320,7 @@ app.post('/add-user', (req, res) => {
 
     connection.connect();
     connection.query('INSERT INTO BBY_01_user (username, email, password, isAdmin) values(?, ?, ?, ?)',
-        [req.body.name, req.body.email, req.body.password, req.body.isAdmin],
+        [req.body.username, req.body.email, req.body.password, req.body.isAdmin],
         (error, results, fields) => {
             if (error) console.log(error);
             res.send({
