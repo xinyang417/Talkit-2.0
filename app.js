@@ -7,6 +7,8 @@ const { JSDOM } = require('jsdom');
 const path = require('path');
 const { res } = require('express');
 const multer = require("multer");
+const { connect } = require('http2');
+const ConnectionConfig = require('mysql/lib/ConnectionConfig');
 const app = express();
 
 
@@ -27,7 +29,7 @@ app.use(session({
 
 const storage = multer.diskStorage({
     destination: function (req, file, callback) {
-        callback(null, "../images/")
+        callback(null, "./images/")
     },
     filename: function (req, file, callback) {
         callback(null, "my-app-" + file.originalname.split('/').pop().trim());
@@ -38,12 +40,7 @@ const upload = multer({
     storage: storage
 });
 
-app.post('/upload-images', upload.array("files"), (req, res) => {
 
-    for (let i = 0; i < req.files.length; i++) {
-        req.files[i].filename = req.files[i].originalname;
-    }
-});
 
 
 app.get('/', (req, res) => {
@@ -174,12 +171,20 @@ app.get('/profile', (req, res) => {
         userID int NOT NULL,
         displayName varchar(30),
         about varchar(500),
+        profilePic varchar(500),
         PRIMARY KEY (profileID),
         FOREIGN KEY (userID) REFERENCES bby_01_user(ID)
         ON DELETE CASCADE
-        ON UPDATE CASCADE);`;
+        ON UPDATE CASCADE);
+        INSERT INTO profile(userID, displayName, about, profilePic)
+        SELECT * FROM (SELECT ? AS userID, '' AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
+        WHERE NOT EXISTS (SELECT userID
+                            FROM profile
+                            WHERE userID = ?) LIMIT 1;`;
+        
+        
         connection.connect();
-        connection.query(sql, (error, results, fields) => {
+        connection.query(sql, [req.session.userid, req.session.userid], (error, results, fields) => {
             if (error) {
                 console.log(error);
             }
@@ -205,6 +210,32 @@ app.get('/update-profile', (req, res) => {
     }
 })
 
+app.post('/upload-images', upload.array("files"), (req, res) => {
+    // for (let i = 0; i < req.files.length; i++) {
+    //     req.files[i].filename = req.files[i].originalname;
+    // }
+    
+    console.log(req.files[0].filename);
+    const connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        multipleStatements: true,
+        database: 'COMP2800'
+    })
+    const sql = `UPDATE profile
+                SET profilePic = ?
+                WHERE userID = ?`;
+    connection.connect();
+    connection.query(sql, [req.files[0].filename, req.session.userid], (error, results) =>{
+        if(error) console.log(error);
+        res.send({
+            status: "success",
+            rows: results
+        });
+    });
+});
+
 app.get('/get-displayname', (req, res) => {
     // If the user is loggedin
     if (req.session.loggedin) {
@@ -216,9 +247,7 @@ app.get('/get-displayname', (req, res) => {
         });
         const sql = `SELECT displayName 
                 FROM profile 
-                WHERE profileID = (SELECT MAX(profileID)
-                                    FROM profile
-                                    WHERE userID = ?)`;
+                WHERE userID = ?`;
         connection.connect();
         connection.query(sql, [req.session.userid], (error, results) => {
             if (error) console.log(error);
@@ -246,9 +275,7 @@ app.get('/get-about', (req, res) => {
 
         const sql = `SELECT about 
                 FROM profile 
-                WHERE profileID = (SELECT MAX(profileID)
-                                    FROM profile
-                                    WHERE userID = ?)`;
+                WHERE userID = ?`;
         connection.connect();
         connection.query(sql, [req.session.userid], (error, results) => {
             if (error) console.log(error);
@@ -264,6 +291,32 @@ app.get('/get-about', (req, res) => {
     }
 });
 
+app.get('/get-profilePic', (req, res) => {
+    if (req.session.loggedin) {
+        const connection = mysql.createConnection({
+            host: 'localhost',
+            user: 'root',
+            password: '',
+            database: 'COMP2800'
+        });
+
+        const sql = `SELECT profilePic
+                    FROM profile
+                    WHERE userID = ?`;
+        connection.connect();
+        connection.query(sql, [req.session.userid], (error, results) => {
+            if(error) console.log(error);
+            res.send ({
+                status: "success",
+                rows: results
+            });
+        });
+        connection.end();
+    } else {
+        res.redirect("/");
+    }
+});
+
 app.post('/update-profile', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
 
@@ -274,11 +327,13 @@ app.post('/update-profile', (req, res) => {
         database: 'COMP2800'
     });
 
-    let sql = `INSERT INTO profile (userID, displayName, about)
-                values (?, ?, ?)`;
+    let sql = `UPDATE profile 
+                SET displayName = ?,
+                    about =?
+                WHERE userID = ?;`;
     connection.connect();
     connection.query(sql,
-        [req.session.userid, req.body.displayName, req.body.about],
+        [req.body.displayName, req.body.about, req.session.userid],
         (error, results, fields) => {
             if (error) {
                 console.log(error);
