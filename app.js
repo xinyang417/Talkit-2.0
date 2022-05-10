@@ -245,7 +245,7 @@ app.get('/get-displayname', (req, res) => {
             password: '',
             database: 'COMP2800'
         });
-        const sql = `SELECT displayName 
+        const sql = `SELECT * 
                 FROM profile 
                 WHERE userID = ?`;
         connection.connect();
@@ -273,7 +273,7 @@ app.get('/get-about', (req, res) => {
             database: 'COMP2800'
         });
 
-        const sql = `SELECT about 
+        const sql = `SELECT * 
                 FROM profile 
                 WHERE userID = ?`;
         connection.connect();
@@ -300,7 +300,7 @@ app.get('/get-profilePic', (req, res) => {
             database: 'COMP2800'
         });
 
-        const sql = `SELECT profilePic
+        const sql = `SELECT *
                     FROM profile
                     WHERE userID = ?`;
         connection.connect();
@@ -327,23 +327,55 @@ app.post('/update-profile', (req, res) => {
         database: 'COMP2800'
     });
 
-    let sql = `UPDATE profile 
-                SET displayName = ?,
-                    about =?
-                WHERE userID = ?;`;
+    let newName = req.body.displayName;
+    let newAbout = req.body.about;
+    let sql = `SELECT * FROM profile WHERE userID = ?`;
     connection.connect();
-    connection.query(sql,
-        [req.body.displayName, req.body.about, req.session.userid],
-        (error, results, fields) => {
-            if (error) {
-                console.log(error);
-            }
-            res.send({
-                status: "success",
-                msg: "Record added."
+    if(newName == '' && newAbout != '') {
+        sql = `UPDATE profile
+                SET about = ?
+                WHERE userID =?`;
+        connection.query(sql, [newAbout, req.session.userid],
+            (error, results, fields) => {
+                if (error) console.log(error);
+                res.send({
+                    status: "succes",
+                    msg: "About updated."
+                });
             });
-
+    } else if (newAbout == '' && newName != '') {
+        sql = `UPDATE profile
+                SET displayName = ?
+                WHERE userID =?`;
+        connection.query(sql, [newName, req.session.userid],
+            (error, results, fields) => {
+                if (error) console.log(error);
+                res.send({
+                    status: "succes",
+                    msg: "Display name updated."
+                });
+            });
+    }
+    connection.query(sql, [req.session.userid], (error, results, fields) => {
+        if(error) console.log(error);
+        res.send({
+            status: "success",
+            msg: "Record updated."
         });
+    });
+    
+    // connection.query(sql,
+    //     [req.body.displayName, req.body.about, req.session.userid],
+    //     (error, results, fields) => {
+    //         if (error) {
+    //             console.log(error);
+    //         }
+    //         res.send({
+    //             status: "success",
+    //             msg: "Record updated."
+    //         });
+
+    //     });
     connection.end();
 
 });
