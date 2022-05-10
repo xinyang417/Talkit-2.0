@@ -10,9 +10,9 @@ const multer = require("multer");
 const app = express();
 
 
-app.use("/img", express.static("../images"));
-app.use("/css", express.static("../styles"));
-app.use("/js", express.static('../js'));
+app.use("/img", express.static("./images"));
+app.use("/css", express.static("./styles"));
+app.use("/js", express.static("./js"));
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
@@ -53,11 +53,11 @@ app.get('/', (req, res) => {
         user: 'root',
         password: '',
         multipleStatements: true,
-        database: 'talkit'
+        database: 'COMP2800'
     });
 
-    const sql = `CREATE DATABASE IF NOT EXISTS talkit;
-        use talkit;
+    const sql = `CREATE DATABASE IF NOT EXISTS COMP2800;
+        use COMP2800;
         CREATE TABLE IF NOT EXISTS BBY_01_user (
         ID int NOT NULL AUTO_INCREMENT,
         username varchar(30),
@@ -72,7 +72,7 @@ app.get('/', (req, res) => {
         if (error) console.log(error);
     });
     connection.end();
-    let doc = fs.readFileSync('../login.html', "utf-8");
+    let doc = fs.readFileSync('./login.html', "utf-8");
     res.send(doc);
 } else {
     res.redirect('/home');
@@ -80,7 +80,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/signup', (req, res) => {
-    let doc = fs.readFileSync('../signup.html', "utf-8");
+    let doc = fs.readFileSync('./signup.html', "utf-8");
     res.send(doc);
 })
 
@@ -93,7 +93,7 @@ app.post('/auth', (req, res) => {
         user: 'root',
         password: '',
         multipleStatements: true,
-        database: 'talkit'
+        database: 'COMP2800'
     });
     // Capture the input fields
     let username = req.body.username;
@@ -132,7 +132,7 @@ app.get('/home', (req, res) => {
 
     // If the user is logged in
     if (req.session.loggedin) {
-        let profile = fs.readFileSync("../main.html", "utf8");
+        let profile = fs.readFileSync("./main.html", "utf8");
         let profileDOM = new JSDOM(profile);
         res.send(profileDOM.serialize());
     } else {
@@ -144,14 +144,11 @@ app.get('/home', (req, res) => {
 });
 
 app.get('/admin', (req, res) => {
-    console.log(req.session.isAdmin);
     // If the user is logged in
     if (req.session.loggedin && req.session.isAdmin > 0) {
         // Render login template
-        let doc = fs.readFileSync('../users.html', "utf-8");
+        let doc = fs.readFileSync('./users.html', "utf-8");
         res.send(doc);
-
-        console.log(req.session.isAdmin);
     } else {
         // If the user is not logged in
         res.redirect("/home");
@@ -170,8 +167,8 @@ app.get('/profile', (req, res) => {
             multipleStatements: true
         });
 
-        const sql = `CREATE DATABASE IF NOT EXISTS talkit;
-        use talkit;
+        const sql = `CREATE DATABASE IF NOT EXISTS COMP2800;
+        use COMP2800;
         CREATE TABLE IF NOT EXISTS profile (
         profileID int NOT NULL AUTO_INCREMENT,
         userID int NOT NULL,
@@ -189,7 +186,7 @@ app.get('/profile', (req, res) => {
         });
         connection.end();
 
-        let doc = fs.readFileSync('../profile.html', "utf8");
+        let doc = fs.readFileSync('./profile.html', "utf8");
         res.send(doc);
     } else {
         // If the user is not logged in
@@ -200,7 +197,7 @@ app.get('/profile', (req, res) => {
 app.get('/update-profile', (req, res) => {
     // If the user is loggedin
     if (req.session.loggedin) {
-        let doc = fs.readFileSync('../update-profile.html', "utf-8");
+        let doc = fs.readFileSync('./update-profile.html', "utf-8");
         res.send(doc);
     } else {
         // If the user is not logged in
@@ -215,7 +212,7 @@ app.get('/get-displayname', (req, res) => {
             host: 'localhost',
             user: 'root',
             password: '',
-            database: 'talkit'
+            database: 'COMP2800'
         });
         const sql = `SELECT displayName 
                 FROM profile 
@@ -244,7 +241,7 @@ app.get('/get-about', (req, res) => {
             host: 'localhost',
             user: 'root',
             password: '',
-            database: 'talkit'
+            database: 'COMP2800'
         });
 
         const sql = `SELECT about 
@@ -274,7 +271,7 @@ app.post('/update-profile', (req, res) => {
         host: 'localhost',
         user: 'root',
         password: '',
-        database: 'talkit'
+        database: 'COMP2800'
     });
 
     let sql = `INSERT INTO profile (userID, displayName, about)
@@ -303,7 +300,7 @@ app.get('/get-users', (req, res) => {
             host: 'localhost',
             user: 'root',
             password: '',
-            database: 'talkit'
+            database: 'COMP2800'
         });
         connection.connect();
         connection.query('SELECT * FROM BBY_01_user', (error, results) => {
@@ -327,7 +324,7 @@ app.post('/add-user', (req, res) => {
         host: 'localhost',
         user: 'root',
         password: '',
-        database: 'talkit'
+        database: 'COMP2800'
     });
 
     connection.connect();
@@ -350,7 +347,7 @@ app.post('/update-user', (req, res) => {
         host: 'localhost',
         user: 'root',
         password: '',
-        database: 'talkit'
+        database: 'COMP2800'
     });
     connection.connect();
     connection.query('UPDATE BBY_01_user SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?',
@@ -373,7 +370,7 @@ app.post('/delete-user', (req, res) => {
         host: 'localhost',
         user: 'root',
         password: '',
-        database: 'talkit'
+        database: 'COMP2800'
     });
     connection.connect();
     let deleteSql = `DELETE 
@@ -413,8 +410,8 @@ async function init() {
         password: "",
         multipleStatements: true
     });
-    const sql = `CREATE DATABASE IF NOT EXISTS talkit;
-        use talkit;
+    const sql = `CREATE DATABASE IF NOT EXISTS COMP2800;
+        use COMP2800;
         CREATE TABLE IF NOT EXISTS BBY_01_user (
         ID int NOT NULL AUTO_INCREMENT,
         username varchar(30),
