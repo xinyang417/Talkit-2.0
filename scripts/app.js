@@ -101,7 +101,8 @@ app.post('/auth', (req, res) => {
     // Ensure the input fields exists and are not empty
     if (username && password) {
         // Execute SQL query that'll select the account from the database based on the specified username and password
-        connection.query('SELECT * FROM BBY_01_user WHERE username = ? AND password = ?', [username, password], function (error, results, fields) {
+        connection.query('SELECT * FROM BBY_01_user WHERE username = ? AND password = ?',
+                        [username, password], function (error, results, fields) {
             
             // If there is an issue with the query, output the error
             if (error) throw error;
@@ -111,6 +112,8 @@ app.post('/auth', (req, res) => {
                 req.session.loggedin = true;
                 req.session.username = username;
                 req.session.isAdmin = results[0].isAdmin;
+                req.session.userid = results[0].ID;
+                
                 // Redirect to home page
                 res.redirect('/home');
 
@@ -179,6 +182,7 @@ app.get('/profile', (req, res) => {
         ON DELETE CASCADE
         ON UPDATE CASCADE);`;
         connection.connect();
+        // console.log(req.session.userid);
         connection.query(sql, (error, results, fields) => {
             if (error) {
                 console.log(error);
@@ -217,9 +221,10 @@ app.get('/get-displayname', (req, res) => {
         const sql = `SELECT displayName 
                 FROM profile 
                 WHERE profileID = (SELECT MAX(profileID)
-                                    FROM profile)`;
+                                    FROM profile
+                                    WHERE userID = ?)`;
         connection.connect();
-        connection.query(sql, (error, results) => {
+        connection.query(sql, [req.session.userid], (error, results) => {
             if (error) console.log(error);
             res.send({
                 status: "success",
@@ -246,9 +251,10 @@ app.get('/get-about', (req, res) => {
         const sql = `SELECT about 
                 FROM profile 
                 WHERE profileID = (SELECT MAX(profileID)
-                                    FROM profile)`;
+                                    FROM profile
+                                    WHERE userID = ?)`;
         connection.connect();
-        connection.query(sql, (error, results) => {
+        connection.query(sql, [req.session.userid], (error, results) => {
             if (error) console.log(error);
             res.send({
                 status: "success",
@@ -262,7 +268,7 @@ app.get('/get-about', (req, res) => {
     }
 });
 
-app.post('/add-profile', (req, res) => {
+app.post('/update-profile', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
 
     let connection = mysql.createConnection({
@@ -273,10 +279,10 @@ app.post('/add-profile', (req, res) => {
     });
 
     let sql = `INSERT INTO profile (userID, displayName, about)
-                values ((SELECT id FROM user WHERE email = ?), ?, ?)`;
+                values (?, ?, ?)`;
     connection.connect();
     connection.query(sql,
-        [req.body.email, req.body.displayName, req.body.about],
+        [req.session.userid, req.body.displayName, req.body.about],
         (error, results, fields) => {
             if (error) {
                 console.log(error);
@@ -357,7 +363,7 @@ app.post('/update-user', (req, res) => {
                 status: "success",
                 msg: "Recorded updated."
             });
-        });
+        }); 
     connection.end();
 })
 
