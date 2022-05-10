@@ -29,13 +29,11 @@ document.getElementById("updateSave").addEventListener("click", function (e) {
     e.preventDefault();
 
     let formData = {
-        // email: document.getElementById("email").value,
         displayName: document.getElementById("displayName").value,
         about: document.getElementById("about").value,
     };
     document.getElementById("displayName").value = "";
     document.getElementById("about").value = "";
-    // document.getElementById("email").value = "";
 
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
