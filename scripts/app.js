@@ -5,7 +5,7 @@ const session = require('express-session');
 const fs = require("fs");
 const { JSDOM } = require('jsdom');
 const path = require('path');
-const { response } = require('express');
+const { res } = require('express');
 const multer = require("multer");
 const app = express();
 
@@ -38,7 +38,7 @@ const upload = multer({
     storage: storage
 });
 
-app.post('/upload-images', upload.array("files"), function (req, res) {
+app.post('/upload-images', upload.array("files"), (req, res) => {
 
     for (let i = 0; i < req.files.length; i++) {
         req.files[i].filename = req.files[i].originalname;
@@ -46,7 +46,7 @@ app.post('/upload-images', upload.array("files"), function (req, res) {
 });
 
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
 
     const connection = mysql.createConnection({
         host: 'localhost',
@@ -99,17 +99,15 @@ app.post('/auth', (req, res) => {
     if (username && password) {
         // Execute SQL query that'll select the account from the database based on the specified username and password
         connection.query('SELECT * FROM BBY_01_user WHERE username = ? AND password = ?', [username, password], function (error, results, fields) {
+            
             // If there is an issue with the query, output the error
             if (error) throw error;
             // If the account exists
-            if (results.length > 0 && results.isAdmin > 0) {
-                req.session.loggedin = true;
-                req.session.username = username;
-                res.redirect('/admin');
-            } else if (results.length > 0) {
+            if (results.length > 0) {
                 // Authenticate the user
                 req.session.loggedin = true;
                 req.session.username = username;
+                req.session.isAdmin = results[0].isAdmin;
                 // Redirect to home page
                 res.redirect('/home');
 
@@ -124,31 +122,36 @@ app.post('/auth', (req, res) => {
     }
 });
 
-app.get('/home', function (request, response) {
+app.get('/home', (req, res) => {
+
     // If the user is logged in
-    if (request.session.loggedin) {
+    if (req.session.loggedin) {
         let profile = fs.readFileSync("../main.html", "utf8");
         let profileDOM = new JSDOM(profile);
-        response.send(profileDOM.serialize());
+        res.send(profileDOM.serialize());
     } else {
         // If the user is not logged in
-        response.redirect("/");
+        res.redirect("/");
     }
-   
-    response.end();
+    
+    res.end();
 });
 
-app.get('/admin', function (request, response) {
+app.get('/admin', (req, res) => {
+    console.log(req.session.isAdmin);
     // If the user is logged in
-    if (request.session.loggedin) {
+    if (req.session.loggedin && req.session.isAdmin > 0) {
         // Render login template
         let doc = fs.readFileSync('../users.html', "utf-8");
-        response.send(doc);
+        res.send(doc);
+
+        console.log(req.session.isAdmin);
     } else {
         // If the user is not logged in
-        response.redirect("/");
+        res.redirect("/home");
+        
     }
-    response.end();
+    res.end();
 });
 
 app.get('/profile', (req, res) => {
@@ -173,7 +176,7 @@ app.get('/profile', (req, res) => {
         ON DELETE CASCADE
         ON UPDATE CASCADE);`;
         connection.connect();
-        connection.query(sql, function (error, results, fields) {
+        connection.query(sql, (error, results, fields) => {
             if (error) {
                 console.log(error);
             }
@@ -256,7 +259,7 @@ app.get('/get-about', (req, res) => {
     }
 });
 
-app.post('/add-profile', function (req, res) {
+app.post('/add-profile', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
 
     let connection = mysql.createConnection({
@@ -271,7 +274,7 @@ app.post('/add-profile', function (req, res) {
     connection.connect();
     connection.query(sql,
         [req.body.email, req.body.displayName, req.body.about],
-        function (error, results, fields) {
+        (error, results, fields) => {
             if (error) {
                 console.log(error);
             }
@@ -380,7 +383,7 @@ app.post('/delete-user', (req, res) => {
     connection.end();
 })
 
-app.get("/logout", function (req, res) {
+app.get("/logout", (req, res) => {
     // If the user is logged in
     if (req.session) {
         req.session.destroy(function (error) {
