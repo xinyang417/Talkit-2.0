@@ -178,11 +178,10 @@ app.get('/profile', (req, res) => {
         displayName varchar(30),
         about varchar(500),
         PRIMARY KEY (profileID),
-        FOREIGN KEY (userID) REFERENCES user(ID)
+        FOREIGN KEY (userID) REFERENCES bby_01_user(ID)
         ON DELETE CASCADE
         ON UPDATE CASCADE);`;
         connection.connect();
-        // console.log(req.session.userid);
         connection.query(sql, (error, results, fields) => {
             if (error) {
                 console.log(error);
@@ -416,7 +415,6 @@ async function init() {
     });
     const sql = `CREATE DATABASE IF NOT EXISTS talkit;
         use talkit;
-        Drop table bby_01_user;
         CREATE TABLE IF NOT EXISTS BBY_01_user (
         ID int NOT NULL AUTO_INCREMENT,
         username varchar(30),
