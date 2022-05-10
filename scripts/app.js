@@ -47,7 +47,7 @@ app.post('/upload-images', upload.array("files"), (req, res) => {
 
 
 app.get('/', (req, res) => {
-
+    if (!req.session.loggedin) {
     const connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
@@ -74,6 +74,9 @@ app.get('/', (req, res) => {
     connection.end();
     let doc = fs.readFileSync('../login.html', "utf-8");
     res.send(doc);
+} else {
+    res.redirect('/home');
+}
 });
 
 app.get('/signup', (req, res) => {
