@@ -27,7 +27,6 @@ function uploadImages(e) {
 // Update profile when save button is clicked
 document.getElementById("updateSave").addEventListener("click", function (e) {
     e.preventDefault();
-
     let formData = {
         displayName: document.getElementById("displayName").value,
         about: document.getElementById("about").value,
