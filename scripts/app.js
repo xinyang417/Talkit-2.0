@@ -407,6 +407,7 @@ async function init() {
     });
     const sql = `CREATE DATABASE IF NOT EXISTS talkit;
         use talkit;
+        Drop table bby_01_user;
         CREATE TABLE IF NOT EXISTS BBY_01_user (
         ID int NOT NULL AUTO_INCREMENT,
         username varchar(30),
