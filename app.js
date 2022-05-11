@@ -527,3 +527,6 @@ async function init() {
 // RUN SERVER
 let port = 8000;
 app.listen(port, init);
+
+// CLEARDB_DATABASE_URL: mysql://b459ce75b586dd:7790c83a@us-cdbr-east-05.cleardb.net/heroku_7ab302bab529edd?reconnect=true
+
