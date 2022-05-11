@@ -207,7 +207,7 @@ app.get('/profile', (req, res) => {
     }
 });
 
-app.get('/update-profile', (req, res) => {
+app.get('/update-profiles', (req, res) => {
     // If the user is loggedin
     if (req.session.loggedin) {
         let doc = fs.readFileSync('./update-profile.html', "utf-8");
@@ -329,12 +329,24 @@ app.post('/update-profile', (req, res) => {
     }
     let newName = req.body.displayName;
     let newAbout = req.body.about;
-    let sql = `SELECT * FROM profile WHERE userID = ?`;
+    let sql;
     database.connect();
-    if(newName == '' && newAbout != '') {
+    if (newAbout != '' && newName != '') {
+        sql = `UPDATE profile
+                SET about = ?, displayName = ?
+                WHERE userID = ?`;
+        database.query(sql, [newAbout, newName, req.session.userid],
+            (error, results, fields) => {
+                if (error) console.log(error);
+                res.send({
+                    status: "succes",
+                    msg: "About updated."
+                });
+            });
+    } else if(newAbout != '') {
         sql = `UPDATE profile
                 SET about = ?
-                WHERE userID =?`;
+                WHERE userID = ?`;
         database.query(sql, [newAbout, req.session.userid],
             (error, results, fields) => {
                 if (error) console.log(error);
@@ -343,10 +355,10 @@ app.post('/update-profile', (req, res) => {
                     msg: "About updated."
                 });
             });
-    } else if (newAbout == '' && newName != '') {
+    } else if (newName != '') {
         sql = `UPDATE profile
                 SET displayName = ?
-                WHERE userID =?`;
+                WHERE userID = ?`;
         database.query(sql, [newName, req.session.userid],
             (error, results, fields) => {
                 if (error) console.log(error);
@@ -356,13 +368,6 @@ app.post('/update-profile', (req, res) => {
                 });
             });
     }
-    database.query(sql, [req.session.userid], (error, results, fields) => {
-        if(error) console.log(error);
-        res.send({
-            status: "success",
-            msg: "Record updated."
-        });
-    });
     
     database.end();
 

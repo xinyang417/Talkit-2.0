@@ -64,7 +64,6 @@ function edit(e) {
             parent.innerHTML = "";
             parent.appendChild(newSpan);
             let dataToSend;
-            console.log(name);
             if (parent == email) {
                 dataToSend = {
                     id: parent.parentNode.querySelector(".id").innerHTML,
@@ -74,7 +73,6 @@ function edit(e) {
                     isAdmin: parent.parentNode.querySelector(".admin span")
                 };
             } else if (parent == name) {
-                console.log(v);
                 dataToSend = {
                     id: parent.parentNode.querySelector(".id").innerHTML,
                     username: v,
@@ -82,7 +80,6 @@ function edit(e) {
                     password: parent.parentNode.querySelector(".password span").innerHTML,
                     isAdmin: parent.parentNode.querySelector(".admin span")
                 };
-                console.log(dataToSend.username);
             } else if (parent == password) {
                 dataToSend = {
                     id: parent.parentNode.querySelector(".id").innerHTML,
@@ -100,7 +97,6 @@ function edit(e) {
                     isAdmin: v
                 };
             }
-            console.log(dataToSend.username);
             const xhr = new XMLHttpRequest();
             xhr.onload = function () {
                 if (this.readyState == XMLHttpRequest.DONE) {

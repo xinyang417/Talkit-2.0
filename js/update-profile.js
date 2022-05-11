@@ -33,7 +33,8 @@ document.getElementById("updateSave").addEventListener("click", function (e) {
     };
     document.getElementById("displayName").value = "";
     document.getElementById("about").value = "";
-
+    console.log(formData.displayName);
+    console.log(formData.about);
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE) {
