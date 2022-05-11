@@ -228,10 +228,6 @@ app.get('/update-profiles', (req, res) => {
 })
 
 app.post('/upload-images', upload.array("files"), (req, res) => {
-    // for (let i = 0; i < req.files.length; i++) {
-    //     req.files[i].filename = req.files[i].originalname;
-    // }
-    
     console.log(req.files[0].filename);
     if (is_heroku) {
         var database = mysql.createConnection(dbConfigHeroku);
