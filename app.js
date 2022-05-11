@@ -114,7 +114,17 @@ app.post('/auth', (req, res) => {
             // If there is an issue with the query, output the error
             if (error) throw error;
             // If the account exists
-            if (results.length > 0) {
+            if (results.length > 0 && results[0].isAdmin == 1) {
+                // Authenticate the user
+                req.session.loggedin = true;
+                req.session.username = username;
+                req.session.isAdmin = results[0].isAdmin;
+                req.session.userid = results[0].ID;
+                
+                // Redirect to home page
+                res.redirect('/admin');
+
+            } else if (results.length > 0) {
                 // Authenticate the user
                 req.session.loggedin = true;
                 req.session.username = username;
@@ -123,7 +133,6 @@ app.post('/auth', (req, res) => {
                 
                 // Redirect to home page
                 res.redirect('/home');
-
             } else {
                 res.send('Incorrect Username and/or Password!');
             }
