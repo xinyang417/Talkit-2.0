@@ -41,7 +41,7 @@ const upload = multer({
 });
 
 // Variable to determine if db connection is remote or local
-const is_heroku = process.env.is_heroku || false;
+const is_heroku = process.env.IS_HEROKU || false;
 
 // Local Database
 const dbConfigLocal = {
