@@ -519,7 +519,6 @@ async function init() {
 }
 }
 
-console.log(is_heroku);
 // RUN SERVER
 let port = 8000;
 if (is_heroku) {
