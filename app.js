@@ -519,18 +519,19 @@ async function init() {
 }
 }
 
-
+console.log(is_heroku);
 // RUN SERVER
-let port = 8000;
+// let port = 8000;
 if (is_heroku) {
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
         console.log('Server is running on port ' + PORT + ' .');
     });
-} else {
-    app.listen(port, init);
+} 
+// else {
+//     app.listen(port, init);
 
-}
+// }
 
 
 
