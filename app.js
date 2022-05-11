@@ -520,13 +520,18 @@ async function init() {
         ];
         await connection.query(userRecords, [recordValues]);
     }
-    console.log("Listening on port " + port + "!");
+    // console.log("Listening on port " + port + "!");
 
 }
 
 // RUN SERVER
-let port = 8000;
-app.listen(port, init);
+// let port = 8000;
+// app.listen(port, init);
+
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+    console.log('Server is running on port ${PORT}.');
+});
 
 
 
