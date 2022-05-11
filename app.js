@@ -364,18 +364,6 @@ app.post('/update-profile', (req, res) => {
         });
     });
     
-    // connection.query(sql,
-    //     [req.body.displayName, req.body.about, req.session.userid],
-    //     (error, results, fields) => {
-    //         if (error) {
-    //             console.log(error);
-    //         }
-    //         res.send({
-    //             status: "success",
-    //             msg: "Record updated."
-    //         });
-
-    //     });
     connection.end();
 
 });
@@ -387,6 +375,7 @@ app.get('/get-users', (req, res) => {
             host: 'localhost',
             user: 'root',
             password: '',
+            multipleStatements: true,
             database: 'COMP2800'
         });
         connection.connect();
@@ -411,6 +400,7 @@ app.post('/add-user', (req, res) => {
         host: 'localhost',
         user: 'root',
         password: '',
+        multipleStatements: true,
         database: 'COMP2800'
     });
 
@@ -448,7 +438,7 @@ app.post('/update-user', (req, res) => {
             });
         }); 
     connection.end();
-})
+});
 
 app.post('/delete-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
@@ -457,23 +447,66 @@ app.post('/delete-user', (req, res) => {
         host: 'localhost',
         user: 'root',
         password: '',
+        multipleStatements: true,
         database: 'COMP2800'
     });
     connection.connect();
     let deleteSql = `DELETE 
                     FROM BBY_01_user 
-                    WHERE ID =?`;
+                    WHERE ID = ?`;
+    let adminLeft = `SELECT *
+                    FROM BBY_01_user
+                    WHERE isAdmin = 1`;
+    let checkAdmin = `SELECT isAdmin
+                    FROM bby_01_user
+                    WHERE ID = ?`;
+    var numberOfAdmin;
+    var accountType;
+    connection.query(checkAdmin, [req.body.id], (error, results) => {
+        if (error) console.log(error);
+        accountType = results[0].isAdmin;
+        // console.log(accountType);
+    });
+    connection.query(adminLeft, (error, results) => {
+        if (error) console.log(error);
+        numberOfAdmin = results.length;
+        console.log(numberOfAdmin, accountType);
+        if (numberOfAdmin == 1 && accountType == 1) {
+            console.log("equals two");
+            res.send({
+                status: "fail",
+                msg:"The account is the last admin account."
+            });
+        } else {
+            deleteSQL(req, res);
+        }
+    });
+    connection.end();
+});
+
+function deleteSQL(req, res) {
+    let connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        multipleStatements: true,
+        database: 'COMP2800'
+    });
+    connection.connect();
+    let deleteSql = `DELETE 
+                    FROM BBY_01_user 
+                    WHERE ID = ?`;
     connection.query(deleteSql,
         [req.body.id],
         (error, results) => {
             if (error) console.log(error);
+            
             res.send({
                 status: "success",
                 msg: "Record deleted"
-            })
-        })
-    connection.end();
-})
+            });
+        });
+}
 
 app.get("/logout", (req, res) => {
     // If the user is logged in

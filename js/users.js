@@ -101,7 +101,9 @@ function edit(e) {
             xhr.onload = function () {
                 if (this.readyState == XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        document.getElementById("status").innerHTML = "Record updated.";
+                        let data = xhr.responseText;
+                        let jsonResponse = JSON.parse(data);
+                        document.getElementById("status").innerHTML = jsonResponse["msg"];
                         getUsers();
                     } else {
                         console.log(this.status);
@@ -139,7 +141,9 @@ document.getElementById("add").addEventListener("click", (e) => {
         if (this.readyState == XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 getUsers();
-                document.getElementById("status").innerHTML = "DB updated.";
+                let data = xhr.responseText;
+                let jsonResponse = JSON.parse(data);
+                document.getElementById("status").innerHTML = jsonResponse["msg"];
             } else {
                 console.log(this.status);
             }
@@ -166,7 +170,9 @@ document.getElementById("delete").addEventListener("click", (e) => {
         if (this.readyState == XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 getUsers();
-                document.getElementById("status").innerHTML = "Record deleted.";
+                let data = xhr.responseText;
+                let jsonResponse = JSON.parse(data);
+                document.getElementById("status").innerHTML = jsonResponse["msg"];
             } else {
                 console.log(this.status);
             }
