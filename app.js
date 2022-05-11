@@ -46,15 +46,15 @@ const upload = multer({
 app.get('/', (req, res) => {
     if (!req.session.loggedin) {
     const connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
+        host: 'us-cdbr-east-05.cleardb.net',
+        user: 'b459ce75b586dd',
+        password: '7790c83a',
         multipleStatements: true,
-        database: 'COMP2800'
+        database: 'heroku_7ab302bab529edd'
     });
 
-    const sql = `CREATE DATABASE IF NOT EXISTS COMP2800;
-        use COMP2800;
+    const sql = `CREATE DATABASE IF NOT EXISTS heroku_7ab302bab529edd;
+        use heroku_7ab302bab529edd;
         CREATE TABLE IF NOT EXISTS BBY_01_user (
         ID int NOT NULL AUTO_INCREMENT,
         username varchar(30),
@@ -86,11 +86,11 @@ app.post('/auth', (req, res) => {
 
     // Connect to database
     let connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
+        host: 'us-cdbr-east-05.cleardb.net',
+        user: 'b459ce75b586dd',
+        password: '7790c83a',
         multipleStatements: true,
-        database: 'COMP2800'
+        database: 'heroku_7ab302bab529edd'
     });
     // Capture the input fields
     let username = req.body.username;
@@ -158,14 +158,14 @@ app.get('/profile', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
         const connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '',
+            host: 'us-cdbr-east-05.cleardb.net',
+            user: 'b459ce75b586dd',
+            password: '7790c83a',
             multipleStatements: true
         });
 
-        const sql = `CREATE DATABASE IF NOT EXISTS COMP2800;
-        use COMP2800;
+        const sql = `CREATE DATABASE IF NOT EXISTS heroku_7ab302bab529edd;
+        use heroku_7ab302bab529edd;
         CREATE TABLE IF NOT EXISTS profile (
         profileID int NOT NULL AUTO_INCREMENT,
         userID int NOT NULL,
@@ -217,11 +217,11 @@ app.post('/upload-images', upload.array("files"), (req, res) => {
     
     console.log(req.files[0].filename);
     const connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
+        host: 'us-cdbr-east-05.cleardb.net',
+        user: 'b459ce75b586dd',
+        password: '7790c83a',
         multipleStatements: true,
-        database: 'COMP2800'
+        database: 'heroku_7ab302bab529edd'
     })
     const sql = `UPDATE profile
                 SET profilePic = ?
@@ -240,10 +240,10 @@ app.get('/get-displayname', (req, res) => {
     // If the user is loggedin
     if (req.session.loggedin) {
         const connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '',
-            database: 'COMP2800'
+            host: 'us-cdbr-east-05.cleardb.net',
+            user: 'b459ce75b586dd',
+            password: '7790c83a',
+            database: 'heroku_7ab302bab529edd'
         });
         const sql = `SELECT * 
                 FROM profile 
@@ -267,10 +267,10 @@ app.get('/get-about', (req, res) => {
     // If the user is loggedin
     if (req.session.loggedin) {
         const connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '',
-            database: 'COMP2800'
+            host: 'us-cdbr-east-05.cleardb.net',
+            user: 'b459ce75b586dd',
+            password: '7790c83a',
+            database: 'heroku_7ab302bab529edd'
         });
 
         const sql = `SELECT * 
@@ -294,10 +294,10 @@ app.get('/get-about', (req, res) => {
 app.get('/get-profilePic', (req, res) => {
     if (req.session.loggedin) {
         const connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '',
-            database: 'COMP2800'
+            host: 'us-cdbr-east-05.cleardb.net',
+            user: 'b459ce75b586dd',
+            password: '7790c83a',
+            database: 'heroku_7ab302bab529edd'
         });
 
         const sql = `SELECT *
@@ -321,10 +321,10 @@ app.post('/update-profile', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
 
     let connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'COMP2800'
+        host: 'us-cdbr-east-05.cleardb.net',
+        user: 'b459ce75b586dd',
+        password: '7790c83a',
+        database: 'heroku_7ab302bab529edd'
     });
 
     let newName = req.body.displayName;
@@ -364,18 +364,18 @@ app.post('/update-profile', (req, res) => {
         });
     });
     
-    // connection.query(sql,
-    //     [req.body.displayName, req.body.about, req.session.userid],
-    //     (error, results, fields) => {
-    //         if (error) {
-    //             console.log(error);
-    //         }
-    //         res.send({
-    //             status: "success",
-    //             msg: "Record updated."
-    //         });
+    connection.query(sql,
+        [req.body.displayName, req.body.about, req.session.userid],
+        (error, results, fields) => {
+            if (error) {
+                console.log(error);
+            }
+            res.send({
+                status: "success",
+                msg: "Record updated."
+            });
 
-    //     });
+        });
     connection.end();
 
 });
@@ -384,10 +384,10 @@ app.get('/get-users', (req, res) => {
     // If the user is loggedin
     if (req.session.loggedin) {
         const connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '',
-            database: 'COMP2800'
+            host: 'us-cdbr-east-05.cleardb.net',
+            user: 'b459ce75b586dd',
+            password: '7790c83a',
+            database: 'heroku_7ab302bab529edd'
         });
         connection.connect();
         connection.query('SELECT * FROM BBY_01_user', (error, results) => {
@@ -408,10 +408,10 @@ app.post('/add-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
 
     let connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'COMP2800'
+        host: 'us-cdbr-east-05.cleardb.net',
+        user: 'b459ce75b586dd',
+        password: '7790c83a',
+        database: 'heroku_7ab302bab529edd'
     });
 
     connection.connect();
@@ -431,10 +431,10 @@ app.post('/update-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
 
     let connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'COMP2800'
+        host: 'us-cdbr-east-05.cleardb.net',
+        user: 'b459ce75b586dd',
+        password: '7790c83a',
+        database: 'heroku_7ab302bab529edd'
     });
     connection.connect();
     connection.query('UPDATE BBY_01_user SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?',
@@ -454,10 +454,10 @@ app.post('/delete-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
 
     let connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'COMP2800'
+        host: 'us-cdbr-east-05.cleardb.net',
+        user: 'b459ce75b586dd',
+        password: '7790c83a',
+        database: 'heroku_7ab302bab529edd'
     });
     connection.connect();
     let deleteSql = `DELETE 
@@ -492,13 +492,13 @@ app.get("/logout", (req, res) => {
 async function init() {
     const mysql = require("mysql2/promise");
     const connection = await mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "",
+        host: "us-cdbr-east-05.cleardb.net",
+        user: "b459ce75b586dd",
+        password: "7790c83a",
         multipleStatements: true
     });
-    const sql = `CREATE DATABASE IF NOT EXISTS COMP2800;
-        use COMP2800;
+    const sql = `CREATE DATABASE IF NOT EXISTS heroku_7ab302bab529edd;
+        use heroku_7ab302bab529edd;
         CREATE TABLE IF NOT EXISTS BBY_01_user (
         ID int NOT NULL AUTO_INCREMENT,
         username varchar(30),
@@ -528,5 +528,5 @@ async function init() {
 let port = 8000;
 app.listen(port, init);
 
-// CLEARDB_DATABASE_URL: mysql://b459ce75b586dd:7790c83a@us-cdbr-east-05.cleardb.net/heroku_7ab302bab529edd?reconnect=true
+
 
