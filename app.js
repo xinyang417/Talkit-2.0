@@ -40,19 +40,33 @@ const upload = multer({
     storage: storage
 });
 
+// Variable to determine if db connection is remote or local
+const is_heroku = process.env.is_heroku || false;
 
+// Local Database
+const dbConfigLocal = {
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    multipleStatements: true,
+    database: 'COMP2800'
+};
 
+// Remote Database
+const dbConfigHeroku = {
+    host:"us-cdbr-east-05.cleardb.net",
+    user: "b459ce75b586dd",
+    password: "7790c83a",
+    database: "heroku_7ab302bab529edd"
+}
 
 app.get('/', (req, res) => {
     if (!req.session.loggedin) {
-    const connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        multipleStatements: true,
-        database: 'COMP2800'
-    });
-
+        if(is_heroku) {
+            var database = mysql.createConnection(dbConfigHeroku);
+        } else {
+            var database = mysql.createConnection(dbConfigLocal);
+        }
     const sql = `CREATE DATABASE IF NOT EXISTS COMP2800;
         use COMP2800;
         CREATE TABLE IF NOT EXISTS BBY_01_user (
@@ -64,11 +78,11 @@ app.get('/', (req, res) => {
         UNIQUE (email),
         PRIMARY KEY (ID));`;
 
-    connection.connect();
-    connection.query(sql, (error, results) => {
+    database.connect();
+    database.query(sql, (error, results) => {
         if (error) console.log(error);
     });
-    connection.end();
+    database.end();
     let doc = fs.readFileSync('./login.html', "utf-8");
     res.send(doc);
 } else {
@@ -83,22 +97,18 @@ app.get('/signup', (req, res) => {
 
 
 app.post('/auth', (req, res) => {
-
-    // Connect to database
-    let connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        multipleStatements: true,
-        database: 'COMP2800'
-    });
+    if (is_heroku) {
+        var database = mysql.createConnection(dbConfigHeroku);
+    } else {
+        var database = mysql.createConnection(dbConfigLocal);
+    }
     // Capture the input fields
     let username = req.body.username;
     let password = req.body.password;
     // Ensure the input fields exists and are not empty
     if (username && password) {
         // Execute SQL query that'll select the account from the database based on the specified username and password
-        connection.query('SELECT * FROM BBY_01_user WHERE username = ? AND password = ?',
+        database.query('SELECT * FROM BBY_01_user WHERE username = ? AND password = ?',
                         [username, password], function (error, results, fields) {
             
             // If there is an issue with the query, output the error
@@ -157,13 +167,11 @@ app.get('/admin', (req, res) => {
 app.get('/profile', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
-        const connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '',
-            multipleStatements: true
-        });
-
+        if (is_heroku) {
+            var database = mysql.createConnection(dbConfigHeroku);
+        } else {
+            var database = mysql.createConnection(dbConfigLocal);
+        }
         const sql = `CREATE DATABASE IF NOT EXISTS COMP2800;
         use COMP2800;
         CREATE TABLE IF NOT EXISTS profile (
@@ -183,13 +191,13 @@ app.get('/profile', (req, res) => {
                             WHERE userID = ?) LIMIT 1;`;
         
         
-        connection.connect();
-        connection.query(sql, [req.session.userid, req.session.userid], (error, results, fields) => {
+        database.connect();
+        database.query(sql, [req.session.userid, req.session.userid], (error, results, fields) => {
             if (error) {
                 console.log(error);
             }
         });
-        connection.end();
+        database.end();
 
         let doc = fs.readFileSync('./profile.html', "utf8");
         res.send(doc);
@@ -216,18 +224,16 @@ app.post('/upload-images', upload.array("files"), (req, res) => {
     // }
     
     console.log(req.files[0].filename);
-    const connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        multipleStatements: true,
-        database: 'COMP2800'
-    })
+    if (is_heroku) {
+        var database = mysql.createConnection(dbConfigHeroku);
+    } else {
+        var database = mysql.createConnection(dbConfigLocal);
+    }
     const sql = `UPDATE profile
                 SET profilePic = ?
                 WHERE userID = ?`;
-    connection.connect();
-    connection.query(sql, [req.files[0].filename, req.session.userid], (error, results) =>{
+    database.connect();
+    database.query(sql, [req.files[0].filename, req.session.userid], (error, results) =>{
         if(error) console.log(error);
         res.send({
             status: "success",
@@ -239,24 +245,23 @@ app.post('/upload-images', upload.array("files"), (req, res) => {
 app.get('/get-displayname', (req, res) => {
     // If the user is loggedin
     if (req.session.loggedin) {
-        const connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '',
-            database: 'COMP2800'
-        });
+        if (is_heroku) {
+            var database = mysql.createConnection(dbConfigHeroku);
+        } else {
+            var database = mysql.createConnection(dbConfigLocal);
+        }
         const sql = `SELECT * 
                 FROM profile 
                 WHERE userID = ?`;
-        connection.connect();
-        connection.query(sql, [req.session.userid], (error, results) => {
+        database.connect();
+        database.query(sql, [req.session.userid], (error, results) => {
             if (error) console.log(error);
             res.send({
                 status: "success",
                 rows: results
             });
         });
-        connection.end();
+        database.end();
     } else {
         // If the user is not logged in
         res.redirect("/");
@@ -266,25 +271,24 @@ app.get('/get-displayname', (req, res) => {
 app.get('/get-about', (req, res) => {
     // If the user is loggedin
     if (req.session.loggedin) {
-        const connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '',
-            database: 'COMP2800'
-        });
+        if (is_heroku) {
+            var database = mysql.createConnection(dbConfigHeroku);
+        } else {
+            var database = mysql.createConnection(dbConfigLocal);
+        }
 
         const sql = `SELECT * 
                 FROM profile 
                 WHERE userID = ?`;
-        connection.connect();
-        connection.query(sql, [req.session.userid], (error, results) => {
+        database.connect();
+        database.query(sql, [req.session.userid], (error, results) => {
             if (error) console.log(error);
             res.send({
                 status: "success",
                 rows: results
             });
         });
-        connection.end();
+        database.end();
     } else {
         // If the user is not logged in
         res.redirect("/");
@@ -293,25 +297,24 @@ app.get('/get-about', (req, res) => {
 
 app.get('/get-profilePic', (req, res) => {
     if (req.session.loggedin) {
-        const connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '',
-            database: 'COMP2800'
-        });
+        if (is_heroku) {
+            var database = mysql.createConnection(dbConfigHeroku);
+        } else {
+            var database = mysql.createConnection(dbConfigLocal);
+        }
 
         const sql = `SELECT *
                     FROM profile
                     WHERE userID = ?`;
-        connection.connect();
-        connection.query(sql, [req.session.userid], (error, results) => {
+        database.connect();
+        database.query(sql, [req.session.userid], (error, results) => {
             if(error) console.log(error);
             res.send ({
                 status: "success",
                 rows: results
             });
         });
-        connection.end();
+        database.end();
     } else {
         res.redirect("/");
     }
@@ -319,23 +322,20 @@ app.get('/get-profilePic', (req, res) => {
 
 app.post('/update-profile', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-
-    let connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'COMP2800'
-    });
-
+    if (is_heroku) {
+        var database = mysql.createConnection(dbConfigHeroku);
+    } else {
+        var database = mysql.createConnection(dbConfigLocal);
+    }
     let newName = req.body.displayName;
     let newAbout = req.body.about;
     let sql = `SELECT * FROM profile WHERE userID = ?`;
-    connection.connect();
+    database.connect();
     if(newName == '' && newAbout != '') {
         sql = `UPDATE profile
                 SET about = ?
                 WHERE userID =?`;
-        connection.query(sql, [newAbout, req.session.userid],
+        database.query(sql, [newAbout, req.session.userid],
             (error, results, fields) => {
                 if (error) console.log(error);
                 res.send({
@@ -347,7 +347,7 @@ app.post('/update-profile', (req, res) => {
         sql = `UPDATE profile
                 SET displayName = ?
                 WHERE userID =?`;
-        connection.query(sql, [newName, req.session.userid],
+        database.query(sql, [newName, req.session.userid],
             (error, results, fields) => {
                 if (error) console.log(error);
                 res.send({
@@ -356,7 +356,7 @@ app.post('/update-profile', (req, res) => {
                 });
             });
     }
-    connection.query(sql, [req.session.userid], (error, results, fields) => {
+    database.query(sql, [req.session.userid], (error, results, fields) => {
         if(error) console.log(error);
         res.send({
             status: "success",
@@ -364,7 +364,7 @@ app.post('/update-profile', (req, res) => {
         });
     });
     
-    connection.query(sql,
+    database.query(sql,
         [req.body.displayName, req.body.about, req.session.userid],
         (error, results, fields) => {
             if (error) {
@@ -376,28 +376,27 @@ app.post('/update-profile', (req, res) => {
             });
 
         });
-    connection.end();
+    database.end();
 
 });
 
 app.get('/get-users', (req, res) => {
     // If the user is loggedin
     if (req.session.loggedin) {
-        const connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '',
-            database: 'COMP2800'
-        });
-        connection.connect();
-        connection.query('SELECT * FROM BBY_01_user', (error, results) => {
+        if (is_heroku) {
+            var database = mysql.createConnection(dbConfigHeroku);
+        } else {
+            var database = mysql.createConnection(dbConfigLocal);
+        }
+        database.connect();
+        database.query('SELECT * FROM BBY_01_user', (error, results) => {
             if (error) console.log(error);
             res.send({
                 status: "success",
                 rows: results
             });
         });
-        connection.end();
+        database.end();
     } else {
         // If the user is not logged in
         res.redirect("/");
@@ -406,16 +405,13 @@ app.get('/get-users', (req, res) => {
 
 app.post('/add-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-
-    let connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'COMP2800'
-    });
-
-    connection.connect();
-    connection.query('INSERT INTO BBY_01_user (username, email, password, isAdmin) values(?, ?, ?, ?)',
+    if (is_heroku) {
+        var database = mysql.createConnection(dbConfigHeroku);
+    } else {
+        var database = mysql.createConnection(dbConfigLocal);
+    }
+    database.connect();
+    database.query('INSERT INTO BBY_01_user (username, email, password, isAdmin) values(?, ?, ?, ?)',
         [req.body.username, req.body.email, req.body.password, req.body.isAdmin],
         (error, results, fields) => {
             if (error) console.log(error);
@@ -424,20 +420,18 @@ app.post('/add-user', (req, res) => {
                 msg: "Record added."
             });
         });
-    connection.end();
+    database.end();
 });
 
 app.post('/update-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-
-    let connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'COMP2800'
-    });
-    connection.connect();
-    connection.query('UPDATE BBY_01_user SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?',
+    if (is_heroku) {
+        var database = mysql.createConnection(dbConfigHeroku);
+    } else {
+        var database = mysql.createConnection(dbConfigLocal);
+    }
+    database.connect();
+    database.query('UPDATE BBY_01_user SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?',
         [req.body.name, req.body.email, req.body.password, req.body.isAdmin, req.body.id],
         (error, results) => {
             if (error) console.log(error);
@@ -447,23 +441,22 @@ app.post('/update-user', (req, res) => {
                 msg: "Recorded updated."
             });
         }); 
-    connection.end();
+    database.end();
 })
 
 app.post('/delete-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
  
-    let connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'COMP2800'
-    });
-    connection.connect();
+    if (is_heroku) {
+        var database = mysql.createConnection(dbConfigHeroku);
+    } else {
+        var database = mysql.createConnection(dbConfigLocal);
+    }
+    database.connect();
     let deleteSql = `DELETE 
                     FROM BBY_01_user 
                     WHERE ID =?`;
-    connection.query(deleteSql,
+    database.query(deleteSql,
         [req.body.id],
         (error, results) => {
             if (error) console.log(error);
@@ -472,7 +465,7 @@ app.post('/delete-user', (req, res) => {
                 msg: "Record deleted"
             })
         })
-    connection.end();
+    database.end();
 })
 
 app.get("/logout", (req, res) => {
@@ -490,8 +483,10 @@ app.get("/logout", (req, res) => {
 });
 
 async function init() {
+    if (!is_heroku) {
     const mysql = require("mysql2/promise");
-    const connection = await mysql.createConnection({
+
+    const localConnection = await mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -506,10 +501,10 @@ async function init() {
     password varchar(20),
     isAdmin int NOT NULL,
     PRIMARY KEY (ID));`;
-    await connection.query(sql);
+    await localConnection.query(sql);
 
 
-    const [rows, fields] = await connection.query("SELECT * FROM BBY_01_user");
+    const [rows, fields] = await localConnection.query("SELECT * FROM BBY_01_user");
     if (rows.length == 0) {
         // Dummy data
         let userRecords = "insert into BBY_01_user (username, email, password, isAdmin) values ?";
@@ -518,18 +513,25 @@ async function init() {
             ["joe", "joe@bcit.ca", "abc123", 1],
             ["bob", "bob@bcit.ca", "xyz", 1]
         ];
-        await connection.query(userRecords, [recordValues]);
+        await localConnection.query(userRecords, [recordValues]);
     }
     console.log("Listening on port " + port + "!");
 }
+}
+
 
 // RUN SERVER
 let port = 8000;
-app.listen(port, init);
+if (is_heroku) {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log('Server is running on port ' + PORT + ' .');
+    });
+} else {
+    app.listen(port, init);
+
+}
 
 
-// const PORT = process.env.PORT || 3000;
-// app.listen(PORT, () => {
-//     console.log('Server is running on port ' + PORT + ' .');
-// });
+
 
