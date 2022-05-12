@@ -17,7 +17,7 @@ function uploadImages(e) {
     };
     fetch("/upload-images", options
     ).then(function (res) {
-        console.log(res);
+        console.log("File name: ",res);
     }).catch(function (err) { ("Error:", err) }
     );
 }
@@ -28,11 +28,15 @@ function uploadImages(e) {
 document.getElementById("updateSave").addEventListener("click", function (e) {
     e.preventDefault();
     let formData = {
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value,
         displayName: document.getElementById("displayName").value,
-        about: document.getElementById("about").value,
+        about: document.getElementById("about").value
     };
     document.getElementById("displayName").value = "";
     document.getElementById("about").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
     console.log(formData.displayName);
     console.log(formData.about);
     const xhr = new XMLHttpRequest();
@@ -59,7 +63,8 @@ document.getElementById("updateSave").addEventListener("click", function (e) {
     xhr.open("POST", "/update-profile");
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send("displayName=" + formData.displayName + "&about=" + formData.about);
+    xhr.send("displayName=" + formData.displayName + "&about=" + formData.about 
+            + "&email=" + formData.email + "&password=" + formData.password);
 
 })
 

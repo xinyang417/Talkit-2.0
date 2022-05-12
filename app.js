@@ -374,47 +374,55 @@ app.post('/update-profile', (req, res) => {
     }
     let newName = req.body.displayName;
     let newAbout = req.body.about;
+    let newEmail = req.body.email;
+    let newPassword = req.body.password;
     let sql;
+    let message = "Profile updated.";
     database.connect();
-    if (newAbout != '' && newName != '') {
-        sql = `UPDATE profile
-                SET about = ?, displayName = ?
-                WHERE userID = ?`;
-        database.query(sql, [newAbout, newName, req.session.userid],
-            (error, results, fields) => {
-                if (error) console.log(error);
-                res.send({
-                    status: "succes",
-                    msg: "About updated."
-                });
-            });
-    } else if(newAbout != '') {
+    
+    if(newAbout != '') {
         sql = `UPDATE profile
                 SET about = ?
                 WHERE userID = ?`;
         database.query(sql, [newAbout, req.session.userid],
             (error, results, fields) => {
                 if (error) console.log(error);
-                res.send({
-                    status: "success",
-                    msg: "About updated."
-                });
+                message = "About updated."
             });
-    } else if (newName != '') {
+    }
+    if (newName != '') {
         sql = `UPDATE profile
                 SET displayName = ?
                 WHERE userID = ?`;
         database.query(sql, [newName, req.session.userid],
             (error, results, fields) => {
                 if (error) console.log(error);
-                res.send({
-                    status: "success",
-                    msg: "Display name updated."
-                });
+                message = "Display name updated."
             });
-    } else {
-        res.send();
     }
+    if (newEmail != '') {
+        sql = `UPDATE bby_01_user
+                SET email = ?
+                WHERE ID = ?`;
+        database.query(sql, [newEmail, req.session.userid], (error, results, fields) => {
+            if(error) console.log(error);
+            message = "Email updated."
+        });
+    }
+    if (newPassword != '') {
+        sql = `UPDATE bby_01_user
+                SET password = ?
+                WHERE ID = ?`;
+        database.query(sql, [newPassword, req.session.userid], (error, results, fields) => {
+            if (error) console.log(error);
+            message = "Password updated."
+        })
+    }
+        res.send({
+            status: "success",
+            msg: message
+        });
+    
     
     database.end();
 
