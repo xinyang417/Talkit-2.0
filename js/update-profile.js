@@ -27,12 +27,15 @@ function uploadImages(e) {
 // Update profile when save button is clicked
 document.getElementById("updateSave").addEventListener("click", function (e) {
     e.preventDefault();
+
     let formData = {
+        email: document.getElementById("email").value,
         displayName: document.getElementById("displayName").value,
         about: document.getElementById("about").value,
     };
     document.getElementById("displayName").value = "";
     document.getElementById("about").value = "";
+    document.getElementById("email").value = "";
 
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -55,9 +58,9 @@ document.getElementById("updateSave").addEventListener("click", function (e) {
             console.log("ERROR", this.status);
         }
     }
-    xhr.open("POST", "/update-profile");
+    xhr.open("POST", "/add-profile");
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send("displayName=" + formData.displayName + "&about=" + formData.about);
+    xhr.send("email=" + formData.email + "&displayName=" + formData.displayName + "&about=" + formData.about);
 
 })
