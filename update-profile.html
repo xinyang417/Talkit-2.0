@@ -21,6 +21,7 @@
 <body>
     <div class="profile-pic-wrapper">
         <p class="username">Username</p>
+
         <form id="upload-images-form">
             <div class="pic-holder">
                 <img id="profilePic" class="pic" alt="profile" src="/img/logo-04.png">
@@ -35,13 +36,23 @@
 
     <div class="profile-update">
         <form id="profile-form">
-            <input type="text" id="email" placeholder="Your email" />
             <input type="text" id="displayName" placeholder="Display Name (Optional)" />
             <input type="text" id="about" placeholder="About (Optional)" />
             <input type="button" class="cancel" value="Cancel" id="updateCancel" />
             <input type="button" class="save" value="Save" id="updateSave" />
         </form>
     </div>
+
+    <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
+        <div class="container py-3">
+            <button><span class="material-symbols-outlined">home</span></button>
+            <button><span class="material-symbols-outlined">bookmark</span></button>
+            <button><span class="material-symbols-outlined">add</span></button>
+            <button><span class="material-symbols-outlined">forum</span></button>
+            <button><span class="material-symbols-outlined">notifications</span></button>
+
+        </div>
+    </footer>
 
     <script src="./js/update-profile.js"></script>
 </body>
