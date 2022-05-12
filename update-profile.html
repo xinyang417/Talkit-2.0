@@ -19,40 +19,78 @@
 </head>
 
 <body>
-    <div class="profile-pic-wrapper">
-        <p class="username">Username</p>
+    <div class="container">
 
-        <form id="upload-images-form">
-            <div class="pic-holder">
-                <img id="profilePic" class="pic" alt="profile" src="/img/logo-04.png">
-                <input id="image-upload" type="file" accept="image/*" />
-                <label for="image-upload" class="upload-file-block">
-                    <span class="material-symbols-outlined">add_a_photo</span>
-                </label>
-            </div>
-            <input id="submit" type="submit" value="Submit" />
-        </form>
-    </div>
-
-    <div class="profile-update">
-        <form id="profile-form">
-            <input type="text" id="displayName" placeholder="Display Name (Optional)" />
-            <input type="text" id="about" placeholder="About (Optional)" />
-            <input type="button" class="cancel" value="Cancel" id="updateCancel" />
-            <input type="button" class="save" value="Save" id="updateSave" />
-        </form>
-    </div>
-
-    <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
-        <div class="container py-3">
-            <button><span class="material-symbols-outlined">home</span></button>
-            <button><span class="material-symbols-outlined">bookmark</span></button>
-            <button><span class="material-symbols-outlined">add</span></button>
-            <button><span class="material-symbols-outlined">forum</span></button>
-            <button><span class="material-symbols-outlined">notifications</span></button>
-
+        <div class="nav">
+            <!--Back Button-->
+            <button onclick="history.back()" id="back"><span class="material-symbols-outlined">
+                    arrow_back
+                </span></button>
         </div>
-    </footer>
+
+        <!--TalkIt Logo (Web Version Only)-->
+        <div class="logo">
+            <figure class="logo">
+                <img class="img" id="logo" alt="..." src="/img/logo-01.png">
+            </figure>
+        </div>
+
+
+        <div id="pageName">
+            <h2><b> Edit Profile</b></h2>
+        </div>
+
+        <!--Upload Picture-->
+        <div class="profile-pic-wrapper">
+            <form id="upload-images-form">
+                <div class="pic-holder">
+                    <img id="profilePic" class="pic" alt="profile" src="/img/logo-04.png">
+                    <input id="image-upload" type="file" accept="image/*" />
+                    <label for="image-upload" class="upload-file-block">
+                        <span class="material-symbols-outlined">add_a_photo</span>
+                    </label>
+                </div>
+                <input id="submit" type="submit" value="Submit Photo" />
+                <p class="username">Username</p>
+            </form>
+        </div>
+
+        <!--Update Profile-->
+        <div class="profile-update">
+            <form id="profile-form">
+                <input type="text" id="email" placeholder="Email" />
+                <input type="text" id="displayName" placeholder="Display Name (Optional)" />
+                <textarea id="about" rows="4" cols="50" placeholder="About (Optional)"></textarea>
+                <div class="buttons">
+                    <input type="button" class="cancel" value="Cancel" id="updateCancel" />
+                    <input type="button" class="save" value="Save" id="updateSave" />
+                </div>
+            </form>
+        </div>
+
+        <!--Footer-->
+        <div id="footer">
+            <ul>
+                <li><a href="#"><span class="material-symbols-outlined" id="home">home</span></a><b>Home</b> </li>
+                <li><a href="#"><span class="material-symbols-outlined" id="bookmark">bookmark</span></a><b>Bookmark</b>
+                </li>
+                <li><a href="#"><span class="material-symbols-outlined" id="add">add_box</span></a><b>Share
+                        Story</b></li>
+                <li><a href="#"><span class="material-symbols-outlined" id="inbox">mail</span></a><b>Messages</b> </li>
+                <li><a href="#"><span class="material-symbols-outlined"
+                            id="notifications">notifications</span></a><b>Notifications</b>
+                </li>
+            </ul>
+        </div>
+
+        <!--Bottom Menu-->
+        <div id="bottomMenu">
+            <ul>
+                <li><a href="#"></a><b>Profile</b> </li>
+                <li><a href="#"></a><b>Log Out</b> </li>
+            </ul>
+        </div>
+    </div>
 
     <script src="./js/update-profile.js"></script>
 </body>
