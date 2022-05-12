@@ -230,7 +230,7 @@ app.get('/profile', (req, res) => {
     }
 });
 
-app.get('/update-profiles', (req, res) => {
+app.get('/update-profile', (req, res) => {
     // If the user is loggedin
     if (req.session.loggedin) {
         let doc = fs.readFileSync('./update-profile.html', "utf-8");
@@ -396,7 +396,7 @@ app.post('/update-profile', (req, res) => {
             (error, results, fields) => {
                 if (error) console.log(error);
                 res.send({
-                    status: "succes",
+                    status: "success",
                     msg: "About updated."
                 });
             });
@@ -408,10 +408,12 @@ app.post('/update-profile', (req, res) => {
             (error, results, fields) => {
                 if (error) console.log(error);
                 res.send({
-                    status: "succes",
+                    status: "success",
                     msg: "Display name updated."
                 });
             });
+    } else {
+        res.send();
     }
     
     database.end();

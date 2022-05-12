@@ -85,6 +85,7 @@ function displayUsername() {
                 let data = JSON.parse(this.responseText);
                 if (data.status == "success") {
                     let row = data.rows[0];
+                    console.log(row.username);
                     document.getElementById("uName").innerHTML = row.username;
                 } else {
                     console.log("Error!");
