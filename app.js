@@ -164,6 +164,7 @@ app.get('/home', (req, res) => {
     if (req.session.loggedin) {
         let profile = fs.readFileSync("./main.html", "utf8");
         let profileDOM = new JSDOM(profile);
+        profileDOM.window.document.getElementById("greetUser").innerHTML = "Hello, " + req.session.username;
         res.send(profileDOM.serialize());
     } else {
         // If the user is not logged in
@@ -494,15 +495,13 @@ app.post('/update-user', (req, res) => {
 
 app.post('/delete-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-
-    let connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        multipleStatements: true,
-        database: 'COMP2800'
-    });
-    connection.connect();
+    if (is_heroku) {
+        var database = mysql.createConnection(dbConfigHeroku);
+    } else {
+        var database = mysql.createConnection(dbConfigLocal);
+    }
+   
+    database.connect();
     let adminLeft = `SELECT *
                     FROM BBY_01_user
                     WHERE isAdmin = 1`;
@@ -511,11 +510,11 @@ app.post('/delete-user', (req, res) => {
                     WHERE ID = ?`;
     var numberOfAdmin;
     var accountType;
-    connection.query(checkAdmin, [req.body.id], (error, results) => {
+    database.query(checkAdmin, [req.body.id], (error, results) => {
         if (error) console.log(error);
         accountType = results[0].isAdmin;
     });
-    connection.query(adminLeft, (error, results) => {
+    database.query(adminLeft, (error, results) => {
         if (error) console.log(error);
         numberOfAdmin = results.length;
         if (numberOfAdmin == 1 && accountType == 1) {
@@ -527,22 +526,20 @@ app.post('/delete-user', (req, res) => {
             deleteSQL(req, res);
         }
     });
-    connection.end();
+    database.end();
 });
 
 function deleteSQL(req, res) {
-    let connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        multipleStatements: true,
-        database: 'COMP2800'
-    });
-    connection.connect();
+    if (is_heroku) {
+        var database = mysql.createConnection(dbConfigHeroku);
+    } else {
+        var database = mysql.createConnection(dbConfigLocal);
+    }
+    database.connect();
     let deleteSql = `DELETE 
                     FROM BBY_01_user 
                     WHERE ID = ?`;
-    connection.query(deleteSql,
+    database.query(deleteSql,
         [req.body.id],
         (error, results) => {
             if (error) console.log(error);

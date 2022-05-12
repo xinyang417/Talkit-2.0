@@ -6,6 +6,10 @@ body {
     overflow-x: hidden;
 }
 
+#greetUser {
+    font-weight: bold;
+}
+
 @media screen and (min-width: 701px) {
     .container {
         display: grid;
