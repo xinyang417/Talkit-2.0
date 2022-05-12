@@ -3,11 +3,17 @@ const express = require('express');
 const mysql = require('mysql2');
 const session = require('express-session');
 const fs = require("fs");
-const { JSDOM } = require('jsdom');
+const {
+    JSDOM
+} = require('jsdom');
 const path = require('path');
-const { res } = require('express');
+const {
+    res
+} = require('express');
 const multer = require("multer");
-const { connect } = require('http2');
+const {
+    connect
+} = require('http2');
 const ConnectionConfig = require('mysql/lib/ConnectionConfig');
 const app = express();
 
@@ -54,7 +60,7 @@ const dbConfigLocal = {
 
 // Remote Database
 const dbConfigHeroku = {
-    host:"us-cdbr-east-05.cleardb.net",
+    host: "us-cdbr-east-05.cleardb.net",
     user: "b459ce75b586dd",
     password: "7790c83a",
     database: "heroku_7ab302bab529edd"
@@ -62,12 +68,12 @@ const dbConfigHeroku = {
 
 app.get('/', (req, res) => {
     if (!req.session.loggedin) {
-        if(is_heroku) {
+        if (is_heroku) {
             var database = mysql.createConnection(dbConfigHeroku);
         } else {
             var database = mysql.createConnection(dbConfigLocal);
         }
-    const sql = `CREATE DATABASE IF NOT EXISTS COMP2800;
+        const sql = `CREATE DATABASE IF NOT EXISTS COMP2800;
         use COMP2800;
         CREATE TABLE IF NOT EXISTS BBY_01_user (
         ID int NOT NULL AUTO_INCREMENT,
@@ -78,16 +84,16 @@ app.get('/', (req, res) => {
         UNIQUE (email),
         PRIMARY KEY (ID));`;
 
-    database.connect();
-    database.query(sql, (error, results) => {
-        if (error) console.log(error);
-    });
-    database.end();
-    let doc = fs.readFileSync('./login.html', "utf-8");
-    res.send(doc);
-} else {
-    res.redirect('/home');
-}
+        database.connect();
+        database.query(sql, (error, results) => {
+            if (error) console.log(error);
+        });
+        database.end();
+        let doc = fs.readFileSync('./login.html', "utf-8");
+        res.send(doc);
+    } else {
+        res.redirect('/home');
+    }
 });
 
 app.get('/signup', (req, res) => {
@@ -109,50 +115,51 @@ app.post('/auth', (req, res) => {
     if (username && password) {
         // Execute SQL query that'll select the account from the database based on the specified username and password
         database.query('SELECT * FROM BBY_01_user WHERE username = ? AND password = ?',
-                        [username, password], function (error, results, fields) {
-            
-            // If there is an issue with the query, output the error
-            if (error) throw error;
-            // If the account exists
-            if (results.length > 0 && results[0].isAdmin == 1) {
-                // Authenticate the user
-                req.session.loggedin = true;
-                req.session.username = username;
-                req.session.isAdmin = results[0].isAdmin;
-                req.session.userid = results[0].ID;
-                
-                // Redirect to admin page
-                res.send({
-                    status: "success",
-                    msg: "Logged in."
-                });
+            [username, password],
+            function (error, results, fields) {
 
-            } else if (results.length > 0) {
-                // Authenticate the user
-                req.session.loggedin = true;
-                req.session.username = username;
-                req.session.isAdmin = results[0].isAdmin;
-                req.session.userid = results[0].ID;
-            
-                // Redirect to home page
-                res.send({
-                    status: "success",
-                    msg: "Logged in."
-                });
-            } else {
-                // Print Error Message
-                res.send({
-                    status: "fail",
-                    msg: "User account not found."
-                });
-            }
-            res.end();
-        });
+                // If there is an issue with the query, output the error
+                if (error) throw error;
+                // If the account exists
+                if (results.length > 0 && results[0].isAdmin == 1) {
+                    // Authenticate the user
+                    req.session.loggedin = true;
+                    req.session.username = username;
+                    req.session.isAdmin = results[0].isAdmin;
+                    req.session.userid = results[0].ID;
+
+                    // Redirect to admin page
+                    res.send({
+                        status: "success",
+                        msg: "Logged in."
+                    });
+
+                } else if (results.length > 0) {
+                    // Authenticate the user
+                    req.session.loggedin = true;
+                    req.session.username = username;
+                    req.session.isAdmin = results[0].isAdmin;
+                    req.session.userid = results[0].ID;
+
+                    // Redirect to home page
+                    res.send({
+                        status: "success",
+                        msg: "Logged in."
+                    });
+                } else {
+                    // Print Error Message
+                    res.send({
+                        status: "fail",
+                        msg: "User account not found."
+                    });
+                }
+                res.end();
+            });
     } else {
         // Print Error Message
         res.send({
             status: "empty",
-            msg: "Please enter username or password"
+            msg: "Username and Password cannot be empty."
         });
         res.end();
     }
@@ -169,7 +176,7 @@ app.get('/home', (req, res) => {
         // If the user is not logged in
         res.redirect("/");
     }
-    
+
     res.end();
 });
 
@@ -182,7 +189,7 @@ app.get('/admin', (req, res) => {
     } else {
         // If the user is not logged in
         res.redirect("/home");
-        
+
     }
     res.end();
 });
@@ -212,8 +219,8 @@ app.get('/profile', (req, res) => {
         WHERE NOT EXISTS (SELECT userID
                             FROM profile
                             WHERE userID = ?) LIMIT 1;`;
-        
-        
+
+
         database.connect();
         database.query(sql, [req.session.userid, req.session.userid], (error, results, fields) => {
             if (error) {
@@ -252,8 +259,8 @@ app.post('/upload-images', upload.array("files"), (req, res) => {
                 SET profilePic = ?
                 WHERE userID = ?`;
     database.connect();
-    database.query(sql, [req.files[0].filename, req.session.userid], (error, results) =>{
-        if(error) console.log(error);
+    database.query(sql, [req.files[0].filename, req.session.userid], (error, results) => {
+        if (error) console.log(error);
         res.send({
             status: "success",
             rows: results
@@ -327,8 +334,8 @@ app.get('/get-profilePic', (req, res) => {
                     WHERE userID = ?`;
         database.connect();
         database.query(sql, [req.session.userid], (error, results) => {
-            if(error) console.log(error);
-            res.send ({
+            if (error) console.log(error);
+            res.send({
                 status: "success",
                 rows: results
             });
@@ -379,8 +386,8 @@ app.post('/update-profile', (req, res) => {
     let sql;
     let message = "Profile updated.";
     database.connect();
-    
-    if(newAbout != '') {
+
+    if (newAbout != '') {
         sql = `UPDATE profile
                 SET about = ?
                 WHERE userID = ?`;
@@ -405,7 +412,7 @@ app.post('/update-profile', (req, res) => {
                 SET email = ?
                 WHERE ID = ?`;
         database.query(sql, [newEmail, req.session.userid], (error, results, fields) => {
-            if(error) console.log(error);
+            if (error) console.log(error);
             message = "Email updated."
         });
     }
@@ -418,12 +425,12 @@ app.post('/update-profile', (req, res) => {
             message = "Password updated."
         })
     }
-        res.send({
-            status: "success",
-            msg: message
-        });
-    
-    
+    res.send({
+        status: "success",
+        msg: message
+    });
+
+
     database.end();
 
 });
@@ -488,7 +495,7 @@ app.post('/update-user', (req, res) => {
                 status: "success",
                 msg: "Recorded updated."
             });
-        }); 
+        });
     database.end();
 })
 
@@ -521,7 +528,7 @@ app.post('/delete-user', (req, res) => {
         if (numberOfAdmin == 1 && accountType == 1) {
             res.send({
                 status: "fail",
-                msg:"The account is the last admin account."
+                msg: "The account is the last admin account."
             });
         } else {
             deleteSQL(req, res);
@@ -546,7 +553,7 @@ function deleteSQL(req, res) {
         [req.body.id],
         (error, results) => {
             if (error) console.log(error);
-            
+
             res.send({
                 status: "success",
                 msg: "Record deleted"
@@ -570,15 +577,15 @@ app.get("/logout", (req, res) => {
 
 async function init() {
     if (!is_heroku) {
-    const mysql = require("mysql2/promise");
+        const mysql = require("mysql2/promise");
 
-    const localConnection = await mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "",
-        multipleStatements: true
-    });
-    const sql = `CREATE DATABASE IF NOT EXISTS COMP2800;
+        const localConnection = await mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            multipleStatements: true
+        });
+        const sql = `CREATE DATABASE IF NOT EXISTS COMP2800;
     use COMP2800;
     CREATE TABLE IF NOT EXISTS BBY_01_user (
     ID int NOT NULL AUTO_INCREMENT,
@@ -587,22 +594,22 @@ async function init() {
     password varchar(20),
     isAdmin int NOT NULL,
     PRIMARY KEY (ID));`;
-    await localConnection.query(sql);
+        await localConnection.query(sql);
 
 
-    const [rows, fields] = await localConnection.query("SELECT * FROM BBY_01_user");
-    if (rows.length == 0) {
-        // Dummy data
-        let userRecords = "insert into BBY_01_user (username, email, password, isAdmin) values ?";
-        let recordValues = [
-            ["test", "test@test.com", "test", 0],
-            ["joe", "joe@bcit.ca", "abc123", 1],
-            ["bob", "bob@bcit.ca", "xyz", 1]
-        ];
-        await localConnection.query(userRecords, [recordValues]);
+        const [rows, fields] = await localConnection.query("SELECT * FROM BBY_01_user");
+        if (rows.length == 0) {
+            // Dummy data
+            let userRecords = "insert into BBY_01_user (username, email, password, isAdmin) values ?";
+            let recordValues = [
+                ["test", "test@test.com", "test", 0],
+                ["joe", "joe@bcit.ca", "abc123", 1],
+                ["bob", "bob@bcit.ca", "xyz", 1]
+            ];
+            await localConnection.query(userRecords, [recordValues]);
+        }
+        console.log("Listening on port " + port + "!");
     }
-    console.log("Listening on port " + port + "!");
-}
 }
 
 // RUN SERVER
@@ -612,12 +619,7 @@ if (is_heroku) {
     app.listen(PORT, () => {
         console.log('Server is running on port ' + PORT + ' .');
     });
-} 
-else {
+} else {
     app.listen(port, init);
 
 }
-
-
-
-

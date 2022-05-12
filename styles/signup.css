@@ -118,6 +118,10 @@ button:hover {
         text-decoration: none;
         font-family: 'Inter', sans-serif;
     }
+
+    p b {
+        color: #9595c5;
+    }
 }
 
 @media screen and (max-width: 700px) {
@@ -142,7 +146,6 @@ button:hover {
         margin-left: auto;
         margin-right: auto;
         width: 90%;
-
     }
 
     .logo {
@@ -154,6 +157,11 @@ button:hover {
     .box2 {
         grid-row: 2 / span 1;
         padding: 3em 3em 3em 3em;
+    }
+
+    .box2 h3 {
+        font-size: 20px;
+        text-align: center;
     }
 
     #loginForm {
@@ -207,6 +215,10 @@ button:hover {
         font-size: 14px;
         color: black;
         font-family: 'Inter', sans-serif;
+    }
+
+    p b {
+        color: #9595c5;
     }
 
     p a {
