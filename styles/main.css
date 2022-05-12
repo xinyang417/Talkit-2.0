@@ -25,14 +25,13 @@ body {
         grid-column: 1 / span 1;
         border-top: 0.5px solid #e4e4e4;
         margin-left: 2em;
-        margin-top: 2em;
     }
 
 
     #footer ul {
         margin-bottom: 1.5em;
         padding: 0;
-        bottom: 0;
+        bottom: 2em;
         margin: 0em 1em 0em 1em;
         max-width: 100%;
         position: sticky;
@@ -135,12 +134,12 @@ body {
     }
 
     .searchBar {
-        margin: 0em 4em 0 4em;
         width: 100%;
     }
 
     #search-bar {
         margin: 0em 4em 0 4em;
+        max-width: 100% !important;
         background-color: #e4e4e4;
         color: #909090;
         font-family: 'Inter', sans-serif;
@@ -155,11 +154,10 @@ body {
     #bottomMenu {
         grid-row: 3 / span 1;
         grid-column: 1 / span 1;
-        margin: 6em 2em 0em 2em;
+        margin: 2em 2em 0 2em;
     }
 
     #bottomMenu ul {
-        margin-bottom: 1.5em;
         padding: 0;
         margin: 0em 1em 0em 1em;
         max-width: 100%;
@@ -245,6 +243,11 @@ body {
 
     #nav ul li {
         display: inline;
+        padding: 0;
+    }
+
+    #nav ul button {
+        padding: 0;
     }
 
     #pageName {
@@ -280,6 +283,7 @@ body {
     #logo {
         max-width: 0;
         max-height: 0;
+        display: none;
     }
 
     img {
