@@ -66,6 +66,11 @@ document.getElementById("updateSave").addEventListener("click", function (e) {
     xhr.send("displayName=" + formData.displayName + "&about=" + formData.about 
             + "&email=" + formData.email + "&password=" + formData.password);
 
+});
+
+document.getElementById("updateCancel").addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.assign("/profile");
 })
 
 function displayUsername() {
