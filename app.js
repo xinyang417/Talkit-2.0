@@ -121,8 +121,11 @@ app.post('/auth', (req, res) => {
                 req.session.isAdmin = results[0].isAdmin;
                 req.session.userid = results[0].ID;
                 
-                // Redirect to home page
-                res.redirect('/admin');
+                // Redirect to admin page
+                res.send({
+                    status: "success",
+                    msg: "Logged in."
+                });
 
             } else if (results.length > 0) {
                 // Authenticate the user
@@ -130,16 +133,27 @@ app.post('/auth', (req, res) => {
                 req.session.username = username;
                 req.session.isAdmin = results[0].isAdmin;
                 req.session.userid = results[0].ID;
-                
+            
                 // Redirect to home page
-                res.redirect('/home');
+                res.send({
+                    status: "success",
+                    msg: "Logged in."
+                });
             } else {
-                res.send('Incorrect Username and/or Password!');
+                // Print Error Message
+                res.send({
+                    status: "fail",
+                    msg: "User account not found."
+                });
             }
             res.end();
         });
     } else {
-        res.send('Please enter Username and Password!');
+        // Print Error Message
+        res.send({
+            status: "empty",
+            msg: "Please enter username or password"
+        });
         res.end();
     }
 });
