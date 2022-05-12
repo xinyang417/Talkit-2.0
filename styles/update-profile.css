@@ -351,6 +351,7 @@ body {
         border: none;
         margin-left: 1em;
         color: #909090;
+        padding: 0;
     }
 
     .material-symbols-outlined {
@@ -446,10 +447,10 @@ body {
 
     .username {
         float: right;
-        text-align: right;
+        /* text-align: right; */
         font-family: 'Inter', sans-serif;
         font-weight: bold;
-        font-size: 18px;
+        font-size: 14px;
     }
 
     input[type=text] {
