@@ -64,6 +64,7 @@ function edit(e) {
             parent.innerHTML = "";
             parent.appendChild(newSpan);
             let dataToSend;
+
             if (parent == email) {
                 dataToSend = {
                     id: parent.parentNode.querySelector(".id").innerHTML,

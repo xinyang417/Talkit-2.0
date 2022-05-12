@@ -121,6 +121,7 @@ app.post('/auth', (req, res) => {
                 req.session.isAdmin = results[0].isAdmin;
                 req.session.userid = results[0].ID;
                 
+                
                 // Redirect to home page
                 res.redirect('/admin');
 
@@ -134,7 +135,11 @@ app.post('/auth', (req, res) => {
                 // Redirect to home page
                 res.redirect('/home');
             } else {
-                res.send('Incorrect Username and/or Password!');
+                // res.send('Incorrect Username and/or Password!');
+                res.send({
+                    status: "fail",
+                    msg: "User account not found."
+                });
             }
             res.end();
         });
