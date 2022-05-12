@@ -19,13 +19,15 @@ button:hover {
         display: grid;
         height: 100vh;
         width: 100vw;
-        grid-template-rows: 3fr 5fr;
-        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-rows: 30% 40% 30%;
+        grid-template-columns: 50% 50%;
     }
 
     .box1 {
-        grid-row: 1 / span 1;
-        grid-column: 2 / span 1;
+        grid-row: 2 / span 1;
+        grid-column: 1 / span 1;
+        display: flex;
+        place-items: center;
     }
 
     img {
@@ -39,8 +41,6 @@ button:hover {
 
     .logo {
         position: sticky;
-        top: 13em;
-
     }
 
     .box2 {
@@ -84,7 +84,7 @@ button:hover {
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        border-radius: 10px;
+        border-radius: 20px;
         font-size: 18px;
     }
 
@@ -170,7 +170,7 @@ button:hover {
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        border-radius: 10px;
+        border-radius: 20px;
         font-size: 18px;
     }
 
