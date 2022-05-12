@@ -83,13 +83,14 @@ body {
         display: none;
     }
 
-    .logo {
+    #logo {
         grid-row: 1 / span 1;
         grid-column: 1 / span 1;
         margin: 4em 0 0 2em;
+        position: relative;
     }
 
-    #logo {
+    #logo img {
         width: 100%;
     }
 
@@ -102,7 +103,7 @@ body {
     }
 
     #pageName h2 {
-        margin: 2em;
+        margin: 2em 0 1em 2em;
         font-size: 35px;
     }
 
@@ -195,28 +196,40 @@ body {
         padding-top: 0;
         text-align: left;
         max-width: 100%;
-        margin: 0 2em 0 2em;
-        padding-right: 4em;
+        margin: 0 4em 0 4em;
+    }
+
+    #email,
+    #password {
+        width: 47%;
+    }
+
+    #displayName {
+        width: 100%;
+        margin-top: 1em;
     }
 
     input[type=text] {
-        width: 100%;
         height: 40px;
-        margin: 0 2em 0 2em;
         padding-left: 10px;
-        display: inline-block;
         border: none;
         border-radius: 10px;
         color: black;
         background: #e4e4e4;
         font-family: 'Inter', sans-serif;
         font-size: 18px;
+    }
+
+    #textInput {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
     }
 
     textarea {
         width: 100%;
-        margin: 0 2em 0 2em;
-        padding-left: 10px;
+        margin-top: 1em;
+        padding: 10px;
         display: inline-block;
         border: none;
         border-radius: 10px;
@@ -224,37 +237,16 @@ body {
         background: #e4e4e4;
         font-family: 'Inter', sans-serif;
         font-size: 18px;
-
-    }
-
-    #email {
-        padding-top: 0;
         text-align: left;
-        max-width: 100%;
-        margin: 1em 2em 1em 2em;
-        padding-right: 4em;
-    }
-
-    #displayName {
-        padding-top: 0;
-        text-align: left;
-        max-width: 100%;
-        margin: 1em 2em 1em 2em;
-        padding-right: 4em;
-    }
-
-    #about {
-        padding-top: 0;
-        text-align: left;
-        max-width: 100%;
-        margin: 1em 2em 1em 2em;
-        padding-right: 4em;
     }
 
     .buttons {
-        margin-top: 1em;
+        margin-top: 4em;
         display: flex;
         justify-content: space-between;
+        float: right;
+        width: 50%;
+        align-items: right;
     }
 
     .cancel {
@@ -262,12 +254,11 @@ body {
         border: none;
         color: white;
         height: 50px;
-        width: 30%;
+        width: 45%;
         text-align: center;
         border-radius: 10px;
         font-size: 20px;
         font-family: 'Inter', sans-serif;
-        margin-left: 18em;
     }
 
     .save {
@@ -275,13 +266,11 @@ body {
         border: none;
         color: white;
         height: 50px;
-        width: 30%;
+        width: 45%;
         text-align: center;
         border-radius: 10px;
         font-size: 20px;
         font-family: 'Inter', sans-serif;
-        float: right;
-        margin-right: -2em;
         font-weight: bold;
     }
 
@@ -409,6 +398,7 @@ body {
         background-color: white;
         color: #9595c5;
         font-size: 14px;
+        padding: 0;
     }
 
 
@@ -477,9 +467,8 @@ body {
     }
 
     #about {
-        height: 15em !important;
         width: 100%;
-        height: 60px;
+        height: 110px !important;
         margin: 5px 0 12px 0;
         padding-left: 10px;
         padding-top: 10px;
@@ -495,6 +484,7 @@ body {
     .buttons {
         display: flex;
         justify-content: space-between;
+        margin-top: 45px;
     }
 
     .cancel {
