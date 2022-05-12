@@ -62,3 +62,27 @@ document.getElementById("updateSave").addEventListener("click", function (e) {
     xhr.send("displayName=" + formData.displayName + "&about=" + formData.about);
 
 })
+
+function displayUsername() {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function (){
+        if (this.readyState == XMLHttpRequest.DONE){
+            if (xhr.status === 200) {
+                let data = JSON.parse(this.responseText);
+                if (data.status == "success") {
+                    let row = data.rows[0];
+                    document.getElementById("uName").innerHTML = row.username;
+                } else {
+                    console.log("Error!");
+                }
+            } else {
+                console.log(this.status);
+            }
+        } else {
+            console.log("ERROR", this.status);
+        }
+    }
+    xhr.open("GET", "/get-username");
+    xhr.send();
+}
+displayUsername();

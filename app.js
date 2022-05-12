@@ -325,6 +325,32 @@ app.get('/get-profilePic', (req, res) => {
     }
 });
 
+app.get('/get-username', (req, res) => {
+    if (req.session.loggedin) {
+        if (is_heroku) {
+            var database = mysql.createConnection(dbConfigHeroku);
+        } else {
+            var database = mysql.createConnection(dbConfigLocal);
+        }
+
+        const sql = `SELECT * 
+                FROM bby_01_user 
+                WHERE ID = ?`;
+        database.connect();
+        database.query(sql, [req.session.userid], (error, results) => {
+            if (error) console.log(error);
+            res.send({
+                status: "success",
+                rows: results
+            });
+        });
+        database.end();
+    } else {
+        // If the user is not logged in
+        res.redirect("/");
+    }
+});
+
 app.post('/update-profile', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     if (is_heroku) {
