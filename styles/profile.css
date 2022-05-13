@@ -169,7 +169,7 @@ body {
         font-size: 18px;
         color: #9595c5;
         margin-top: 2.5em;
-        margin-right: -5em;
+        margin-right: 4em;
     }
 
     .username {
@@ -215,12 +215,28 @@ body {
         font-size: 18px;
     }
 
+    #dName {
+        padding-top: 0;
+        text-align: left;
+        max-width: 100%;
+        margin: 0em 4em 0em 4em;
+        font-size: 18px;
+    }
+
     .about-me {
         padding-top: 0;
         text-align: left;
         max-width: 100%;
         margin: 1em 4em 1em 4em;
         font-weight: bold;
+        font-size: 18px;
+    }
+
+    #about {
+        padding-top: 0;
+        text-align: left;
+        max-width: 100%;
+        margin: 0em 4em 0em 4em;
         font-size: 18px;
     }
 
@@ -285,6 +301,7 @@ body {
 
     #back {
         margin-top: 30px;
+        margin-left: 1em;
         background-color: transparent;
         border: none;
         padding-left: 0;
@@ -405,6 +422,13 @@ body {
         font-weight: bold;
         margin: 2em 0em 2em 0em;
     }
+    
+    #dName {
+        padding-top: 0;
+        text-align: left;
+        max-width: 100%;
+        margin: 1em 0em 1em 0em;
+    }
 
     .about-me {
         padding-top: 0;
@@ -412,6 +436,13 @@ body {
         max-width: 100%;
         font-weight: bold;
         margin: 2em 0em 2em 0em;
+    }
+
+    #about {
+        padding-top: 0;
+        text-align: left;
+        max-width: 100%;
+        margin: 1em 0em 1em 0em;
     }
 
     .username {
