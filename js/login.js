@@ -1,13 +1,11 @@
 ready(function () {
 
     function ajaxPOST(url, callback, data) {
-
         let params = typeof data == 'string' ? data : Object.keys(data).map(
             function (k) {
                 return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
             }
         ).join('&');
-
         const xhr = new XMLHttpRequest();
         xhr.onload = function () {
             if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
@@ -31,6 +29,7 @@ ready(function () {
         let queryString = "username=" + username.value + "&password=" + password.value;
 
         ajaxPOST("/auth", function (data) {
+            console.log(data);
             if (data) {
                 let dataParsed = JSON.parse(data);
                 if (dataParsed.status == "fail") {

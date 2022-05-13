@@ -165,6 +165,62 @@ app.post('/auth', (req, res) => {
     }
 });
 
+app.post('/check-account', (req, res) => {
+    if (is_heroku) {
+        var database = mysql.createConnection(dbConfigHeroku);
+    } else {
+        var database = mysql.createConnection(dbConfigLocal);
+    }
+    let username = req.body.username;
+    let email = req.body.email;
+    let password = req.body.password;
+    let checkUsername = false;
+    let checkEmail = false;
+    
+    if (username && password && email) {
+        database.query('SELECT * from bby_01_user', (error, results) => {
+            if (error) throw error
+            for (let i = 0; i < results.length; i++) {
+                if (results[i].username == username) {
+                    checkUsername = true;
+                    break;
+                }
+            }
+            for (let i = 0; i < results.length; i++) {
+                if (results[i].email == email) {
+                    checkEmail = true;
+                    break;
+                }
+            }
+            if (checkEmail) {
+                res.send({
+                    status: "email existed",
+                    msg: "You already signed up with the email."
+                });
+            } else if (checkUsername) {
+                res.send({
+                    status: "invalid username",
+                    msg: "Someone already use the username."
+                });
+            } else {
+                res.send({
+                    status: "success",
+                    msg: "Signed up"
+                });
+            }
+            res.end();
+        });
+    } else {
+        res.send({
+            status: "empty",
+            msg: "Username Password and email cannot be empty"
+        });
+        res.end();
+    }
+    
+    
+})
+
 app.get('/home', (req, res) => {
 
     // If the user is logged in
