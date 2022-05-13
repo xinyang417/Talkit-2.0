@@ -37,8 +37,6 @@ document.getElementById("updateSave").addEventListener("click", function (e) {
     document.getElementById("about").value = "";
     document.getElementById("email").value = "";
     document.getElementById("password").value = "";
-    console.log(formData.displayName);
-    console.log(formData.about);
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE) {
@@ -60,11 +58,11 @@ document.getElementById("updateSave").addEventListener("click", function (e) {
             console.log("ERROR", this.status);
         }
     }
+    let queryString = "displayName=" + formData.displayName + "&about=" + formData.about + "&email=" + formData.email + "&password=" + formData.password;
     xhr.open("POST", "/update-profile");
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send("displayName=" + formData.displayName + "&about=" + formData.about 
-            + "&email=" + formData.email + "&password=" + formData.password);
+    xhr.send(queryString);
 
 });
 

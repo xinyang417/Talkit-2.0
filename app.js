@@ -208,6 +208,11 @@ app.get('/home', (req, res) => {
         let profile = fs.readFileSync("./main.html", "utf8");
         let profileDOM = new JSDOM(profile);
         profileDOM.window.document.getElementById("greetUser").innerHTML = "Hello, " + req.session.username;
+        if (req.session.isAdmin == 0) {
+            profileDOM.window.document.getElementById("dBoard").remove();
+            profileDOM.window.document.getElementById("dashboard-icon").remove();
+            
+        }
         res.send(profileDOM.serialize());
     } else {
         // If the user is not logged in
@@ -253,6 +258,9 @@ app.get('/profile', (req, res) => {
         database.end();
         let doc = fs.readFileSync('./profile.html', "utf8");
         let profileDOM = new JSDOM(doc);
+        if (req.session.isAdmin == 0) {
+            profileDOM.window.document.querySelector("#dashboard").remove();
+        }
         profileDOM.window.document.getElementById("uName").innerHTML = req.session.username + "'s Profile";
         res.send(profileDOM.serialize());
     } else {
@@ -266,6 +274,9 @@ app.get('/update-profile', (req, res) => {
     if (req.session.loggedin) {
         let doc = fs.readFileSync('./update-profile.html', "utf-8");
         let profileDOM = new JSDOM(doc);
+        if (req.session.isAdmin == 0) {
+            profileDOM.window.document.querySelector("#dashboard").remove();
+        }
         profileDOM.window.document.getElementById("uName").innerHTML = req.session.username;
         res.send(profileDOM.serialize());
     } else {
@@ -596,9 +607,44 @@ app.get("/logout", (req, res) => {
     }
 });
 
+
+/**
+ * Code for Connection Error handling while hosting.
+ * I found this code on stackoverflow.com.
+ * 
+ * @author https://stackoverflow.com/users/395659/cloudymarble
+ * @see https://stackoverflow.com/questions/20210522/nodejs-mysql-error-connection-lost-the-server-closed-the-connection
+ */
+var connection;
+
+function handleDisconnect() {
+    if (is_heroku){
+  connection = mysql.createConnection(dbConfigHeroku); // Recreate the connection, since
+                                                  // the old one cannot be reused.
+
+  connection.connect(function(err) {              // The server is either down
+    if(err) {                                     // or restarting (takes a while sometimes).
+      console.log('error when connecting to db:', err);
+      setTimeout(handleDisconnect, 2000); 
+    }                                     
+  });                                     
+                                          
+  connection.on('error', function(err) {
+    console.log('db error', err);
+    if(err.code === 'PROTOCOL_CONNECTION_LOST') { 
+      handleDisconnect();                        
+    } else {                                      
+      throw err;                                  
+    }
+  });
+}
+}
+
+handleDisconnect();
+
 // RUN SERVER REMOTELY
 if (is_heroku) {
-    const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 8080;
     app.listen(PORT, () => {
         console.log('Server is running on port ' + PORT + ' .');
     });
