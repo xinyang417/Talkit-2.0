@@ -156,7 +156,7 @@ app.post('/check-account', (req, res) => {
     let password = req.body.password;
     let checkUsername = false;
     let checkEmail = false;
-    
+
     if (username && password && email) {
         database.query('SELECT * from bby_01_user', (error, results) => {
             if (error) throw error
@@ -197,8 +197,8 @@ app.post('/check-account', (req, res) => {
         });
         res.end();
     }
-    
-    
+
+
 })
 
 app.get('/home', (req, res) => {
@@ -253,7 +253,7 @@ app.get('/profile', (req, res) => {
         database.end();
         let doc = fs.readFileSync('./profile.html', "utf8");
         let profileDOM = new JSDOM(doc);
-        profileDOM.window.document.getElementById("uName").innerHTML = req.session.username;
+        profileDOM.window.document.getElementById("uName").innerHTML = req.session.username + "'s Profile";
         res.send(profileDOM.serialize());
     } else {
         // If the user is not logged in
@@ -531,7 +531,7 @@ app.post('/delete-user', (req, res) => {
     } else {
         var database = mysql.createConnection(dbConfigLocal);
     }
-   
+
     database.connect();
     let adminLeft = `SELECT *
                     FROM BBY_01_user
