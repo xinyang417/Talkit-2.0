@@ -2,11 +2,17 @@
 <html lang="en">
 
 <head>
+	<title>Login</title>
+
+	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,minimum-scale=1">
-	<title>Login</title>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+
+	<!-- Required Link Tags -->
 	<link href="/css/login.css" rel="stylesheet" type="text/css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -16,23 +22,26 @@
 			<figure class="logo">
 				<img class="img" alt="..." src="/img/logo-01.png" />
 			</figure>
+			<p>An Online Community for Peer Support</p>
+			<p>Talkit, we get it.</p>
 		</div>
 
 		<div class="login">
 			<form action="/auth" method="post" id="loginForm">
+				<h3>Welcome back!</h3>
 				<input type="text" name="username" placeholder="Username" id="username" required>
 				<input type="password" name="password" placeholder="Password" id="password" required>
-				<span class="psw"><b><a href="#">Forgot password?</a></b></span>
-				<input type="submit" value="Login">
-
+				<span class="psw"><a href="#"><b>Forgot password?</b></a></span>
+				<input type="submit" value="Login" id="loginbutton">
+				<p id="errorMsg"></p>
 				<p>
-					Do not have an account? <b><a href="/signup">Sign up</a></b>
+					Do not have an account? <a href="/signup"><b>Sign Up</b></a>
 				</p>
 			</form>
 		</div>
 	</div>
 
-
+	<script src="./js/login.js"></script>
 </body>
 
 </html>

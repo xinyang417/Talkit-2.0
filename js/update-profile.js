@@ -16,9 +16,7 @@ function uploadImages(e) {
         body: formData,
     };
     fetch("/upload-images", options
-    ).then(function (res) {
-        console.log(res);
-    }).catch(function (err) { ("Error:", err) }
+    ).catch(function (err) { ("Error:", err) }
     );
 }
 
@@ -28,22 +26,22 @@ function uploadImages(e) {
 document.getElementById("updateSave").addEventListener("click", function (e) {
     e.preventDefault();
     let formData = {
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value,
         displayName: document.getElementById("displayName").value,
-        about: document.getElementById("about").value,
+        about: document.getElementById("about").value
     };
     document.getElementById("displayName").value = "";
     document.getElementById("about").value = "";
-
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE) {
 
             // 200 means everthing worked
             if (xhr.status === 200) {
-
-                console.log("DB updated");
                 window.location.assign("/profile");
-
             } else {
 
                 // not a 200, could be anything (404, 500, etc.)
@@ -55,9 +53,64 @@ document.getElementById("updateSave").addEventListener("click", function (e) {
             console.log("ERROR", this.status);
         }
     }
+    let queryString = "displayName=" + formData.displayName + "&about=" + formData.about + "&email=" + formData.email + "&password=" + formData.password;
     xhr.open("POST", "/update-profile");
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send("displayName=" + formData.displayName + "&about=" + formData.about);
+    xhr.send(queryString);
 
+});
+
+document.getElementById("updateCancel").addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.assign("/profile");
 })
+
+function displayUsername() {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function (){
+        if (this.readyState == XMLHttpRequest.DONE){
+            if (xhr.status === 200) {
+                let data = JSON.parse(this.responseText);
+                if (data.status != "success") {
+                    console.log("Error!");
+                }
+            } else {
+                console.log(this.status);
+            }
+        } else {
+            console.log("ERROR", this.status);
+        }
+    }
+    xhr.open("GET", "/get-username");
+    xhr.send();
+}
+displayUsername();
+
+function displayName() {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let data = JSON.parse(this.responseText);
+                if (data.status == "success" && data.rows.length > 0) {
+                    let row = data.rows[0];
+                    let name = row.displayName;
+                    let about = row.about;
+                    document.getElementById("displayName").setAttribute("value", name);
+                    document.getElementById("about").innerHTML = about;
+                } else {
+                    console.log("Error!");
+                }
+            } else {
+                console.log(this.stauts);
+            }
+        } else {
+            console.log("ERROR", this.status);
+        }
+    }
+    xhr.open("GET", "/get-displayname");
+    xhr.send();
+}
+
+displayName();

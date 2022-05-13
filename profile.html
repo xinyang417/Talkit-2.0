@@ -19,23 +19,69 @@
 </head>
 
 <body>
+    <div class="container">
+        <div class="nav">
+            <!--Back Button-->
+            <button onclick="history.back()" id="back"><span class="material-symbols-outlined">
+                    arrow_back
+                </span></button>
+        </div>
 
-    <div class="profile-pic-wrapper">
-        <p class="username">Username</p>
-        <div class="pic-holder">
-            <img id="profilePic" class="pic" alt="profilePic" src="/img/logo-04.png">
+        <!--TalkIt Logo (Web Version Only)-->
+        <div id="logo">
+            <figure class="logo">
+                <img class="img" alt="..." src="/img/logo-01.png">
+            </figure>
+        </div>
+
+        <div id="pageName">
+            <h2 class="username" id="uName">username's Profile</h2>
+        </div>
+
+
+        <!--Upload Picture-->
+        <div class="profile-pic-wrapper">
+            <div class="pic-holder">
+                <img id="profilePic" class="pic" alt="profilePic" src="/img/logo-04.png">
+            </div>
+        </div>
+
+        <!--Update Profile-->
+        <div class="profile-update">
+            <label class="display-name">Display Name</label>
+            <div id="dName">
+            </div>
+            <label class="about-me">About</label>
+            <div id="about">
+            </div>
+            <p class="edit"><a href="/update-profile">Edit Profile</a></p>
+        </div>
+
+        <!--Footer-->
+        <div id="footer">
+            <ul>
+                <li><a href="/home" id="home"><span class="material-symbols-outlined">home</span><b>Home</b></a> </li>
+                <li><a href="#" id="bookmark"><span class="material-symbols-outlined">bookmark</span><b>Bookmark</b></a>
+                </li>
+                <li><a href="#" id="add"><span class="material-symbols-outlined">add_box</span><b>Share
+                            Story</b></a></li>
+                <li><a href="#" id="inbox"><span class="material-symbols-outlined">mail</span><b>Messages</b></a></li>
+                <li><a href="#" id="notifications"><span
+                            class="material-symbols-outlined">notifications</span><b>Notifications</b></a>
+                </li>
+            </ul>
+        </div>
+
+        <!--Bottom Menu-->
+        <div id="bottomMenu">
+            <ul>
+                <li id="dashboard"><a href="/admin"><b>Dashboard</b></a></li>
+                <li><a href="/profile"><b>Profile</b></a></li>
+                <li><a href="/logout"><b>Log Out</b></a> </li>
+            </ul>
         </div>
     </div>
 
-    <div class="profile-update">
-        <label class="display-name">Display Name</label>
-        <a href="/update-profile">Edit</a>
-        <div id="dName"></div>
-        <label class="about-me">About</label>
-        <div id="about">
-
-        </div>
-    </div>
     <script src="./js/profile.js"></script>
 </body>
 

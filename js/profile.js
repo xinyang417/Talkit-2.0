@@ -8,9 +8,6 @@ function displayName() {
                     let row = data.rows[0];
                     let name = "<p>" + row.displayName + "</p>";
                     document.getElementById("dName").innerHTML = name;
-                // } else if (data.status == "success" && data.rows.length == 0) {
-                //     let name = "<p></p>"
-                //     document.getElementById("dName").innerHTML = name;
                 } else {
                     console.log("Error!");
                 }
@@ -33,14 +30,10 @@ function displayAbout() {
         if (this.readyState == XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
-                console.log(data);
                 if (data.status == "success" && data.rows.length > 0) {
                     let row = data.rows[0];
                     let about = "<p>" + row.about + "</p>";
                     document.getElementById("about").innerHTML = about;
-                // } else if (data.status == "success" && data.rows.length == 0) {
-                //     let about = "<p></p>"
-                //     document.getElementById("about").innerHTML = about;
                 } else {
                     console.log("Error!");
                 }
@@ -59,8 +52,8 @@ displayAbout();
 
 function displayPicture() {
     const xhr = new XMLHttpRequest();
-    xhr.onload = function (){
-        if (this.readyState == XMLHttpRequest.DONE){
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
                 if (data.status == "success" && data.rows.length > 0) {
@@ -83,3 +76,22 @@ function displayPicture() {
 }
 
 displayPicture();
+
+function displayUsername() {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let data = JSON.parse(this.responseText);
+                if (data.status != "success") console.log("Error!");
+            } else {
+                console.log(this.status);
+            }
+        } else {
+            console.log("ERROR", this.status);
+        }
+    }
+    xhr.open("GET", "/get-username");
+    xhr.send();
+}
+displayUsername();

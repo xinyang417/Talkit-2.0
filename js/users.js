@@ -15,7 +15,7 @@ function getUsers() {
                     for (let i = 0; i < data.rows.length; i++) {
                         let row = data.rows[i];
                         str += ("<tr><td class = 'id'>" + row.ID +
-                            "</td><td class = 'username'><span>" + row.username +
+                            "</td><td class = 'usernames'><span>" + row.username +
                             "</span></td><td class = 'email'><span>" + row.email +
                             "</span></td><td class = 'password'><span>" + row.password +
                             "</span></td><td class = 'admin'><span>" + row.isAdmin +
@@ -24,7 +24,7 @@ function getUsers() {
                     document.getElementById("users").innerHTML = str;
 
                     let records = document.querySelectorAll(
-                        "td.email span, td.name span, td.password span, td.admin span");
+                        "td.email span, td.usernames span, td.password span, td.admin span");
                     for (let j = 0; j < records.length; j++) {
                         records[j].addEventListener("click", edit);
                     }
@@ -49,12 +49,11 @@ function edit(e) {
     let parent = e.target.parentNode;
     let password = parent.parentNode.querySelector(".password");
     let email = parent.parentNode.querySelector(".email");
-    let name = parent.parentNode.querySelector(".username");
+    let name = parent.parentNode.querySelector(".usernames");
     let isAdmin = parent.parentNode.querySelector(".admin");
     let input = document.createElement("input");
     input.value = spanText;
     input.addEventListener("keyup", function (e) {
-        let s = null;
         let v = null;
         if (e.which == 13) {
             v = input.value;
@@ -64,13 +63,14 @@ function edit(e) {
             parent.innerHTML = "";
             parent.appendChild(newSpan);
             let dataToSend;
+
             if (parent == email) {
                 dataToSend = {
                     id: parent.parentNode.querySelector(".id").innerHTML,
-                    username: parent.parentNode.querySelector(".username span").innerHTML,
+                    username: parent.parentNode.querySelector(".usernames span").innerHTML,
                     email: v,
                     password: parent.parentNode.querySelector(".password span").innerHTML,
-                    isAdmin: parent.parentNode.querySelector(".admin span")
+                    isAdmin: parent.parentNode.querySelector(".admin span").innerHTML
                 };
             } else if (parent == name) {
                 dataToSend = {
@@ -78,20 +78,20 @@ function edit(e) {
                     username: v,
                     email: parent.parentNode.querySelector(".email span").innerHTML,
                     password: parent.parentNode.querySelector(".password span").innerHTML,
-                    isAdmin: parent.parentNode.querySelector(".admin span")
+                    isAdmin: parent.parentNode.querySelector(".admin span").innerHTML
                 };
             } else if (parent == password) {
                 dataToSend = {
                     id: parent.parentNode.querySelector(".id").innerHTML,
-                    username: parent.parentNode.querySelector(".username span").innerHTML,
+                    username: parent.parentNode.querySelector(".usernames span").innerHTML,
                     email: parent.parentNode.querySelector(".email span").innerHTML,
                     password: v,
-                    isAdmin: parent.parentNode.querySelector(".admin span")
+                    isAdmin: parent.parentNode.querySelector(".admin span").innerHTML
                 };
             } else if (parent == isAdmin) {
                 dataToSend = {
                     id: parent.parentNode.querySelector(".id").innerHTML,
-                    username: parent.parentNode.querySelector(".username span").innerHTML,
+                    username: parent.parentNode.querySelector(".usernames span").innerHTML,
                     email: parent.parentNode.querySelector(".email span").innerHTML,
                     password: parent.parentNode.querySelector(".password span").innerHTML,
                     isAdmin: v
@@ -101,7 +101,9 @@ function edit(e) {
             xhr.onload = function () {
                 if (this.readyState == XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        document.getElementById("status").innerHTML = "Record updated.";
+                        let data = xhr.responseText;
+                        let jsonResponse = JSON.parse(data);
+                        document.getElementById("status").innerHTML = jsonResponse["msg"];
                         getUsers();
                     } else {
                         console.log(this.status);
@@ -139,7 +141,9 @@ document.getElementById("add").addEventListener("click", (e) => {
         if (this.readyState == XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 getUsers();
-                document.getElementById("status").innerHTML = "DB updated.";
+                let data = xhr.responseText;
+                let jsonResponse = JSON.parse(data);
+                document.getElementById("status").innerHTML = jsonResponse["msg"];
             } else {
                 console.log(this.status);
             }
@@ -166,7 +170,9 @@ document.getElementById("delete").addEventListener("click", (e) => {
         if (this.readyState == XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 getUsers();
-                document.getElementById("status").innerHTML = "Record deleted.";
+                let data = xhr.responseText;
+                let jsonResponse = JSON.parse(data);
+                document.getElementById("status").innerHTML = jsonResponse["msg"];
             } else {
                 console.log(this.status);
             }
