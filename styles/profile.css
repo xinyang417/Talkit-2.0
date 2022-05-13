@@ -302,6 +302,9 @@ body {
     #pageName h2 {
         margin-top: 30px;
         font-size: 25px;
+        position: absolute;
+        left: 1em;
+        text-align: left;
     }
 
     .profile-pic-wrapper {
@@ -336,13 +339,19 @@ body {
         justify-content: center;
     }
 
-    #edit {
+    .edit {
         float: right;
         text-align: right;
         font-family: 'Inter', sans-serif;
         font-weight: bold;
-        font-size: 18px;
-        color: #9595c5;
+        font-size: 14px;
+        position: absolute;
+        right: 2em;
+        top: 2.5em;
+    }
+
+    .edit a {
+        color: #9595c5 !important;
     }
 
 
@@ -400,7 +409,7 @@ body {
         text-align: left;
         max-width: 100%;
         font-weight: bold;
-        margin: 2em 0em 2em 0em;
+        margin: 2em 0 0 0;
     }
 
     #dName {
@@ -415,7 +424,7 @@ body {
         text-align: left;
         max-width: 100%;
         font-weight: bold;
-        margin: 2em 0em 2em 0em;
+        margin: 2em 0 0 0;
     }
 
     #about {
