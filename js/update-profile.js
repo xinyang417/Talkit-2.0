@@ -91,3 +91,31 @@ function displayUsername() {
     xhr.send();
 }
 displayUsername();
+
+function displayName() {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let data = JSON.parse(this.responseText);
+                if (data.status == "success" && data.rows.length > 0) {
+                    let row = data.rows[0];
+                    let name = row.displayName;
+                    let about = row.about;
+                    document.getElementById("displayName").setAttribute("value", name);
+                    document.getElementById("about").innerHTML = about;
+                } else {
+                    console.log("Error!");
+                }
+            } else {
+                console.log(this.stauts);
+            }
+        } else {
+            console.log("ERROR", this.status);
+        }
+    }
+    xhr.open("GET", "/get-displayname");
+    xhr.send();
+}
+
+displayName();
