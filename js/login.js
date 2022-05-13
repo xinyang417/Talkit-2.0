@@ -10,7 +10,6 @@ ready(function () {
         xhr.onload = function () {
             if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
                 callback(this.responseText);
-
             } else {
                 console.log(this.status);
             }
@@ -29,7 +28,6 @@ ready(function () {
         let queryString = "username=" + username.value + "&password=" + password.value;
 
         ajaxPOST("/auth", function (data) {
-            console.log(data);
             if (data) {
                 let dataParsed = JSON.parse(data);
                 if (dataParsed.status == "fail") {
