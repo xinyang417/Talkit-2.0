@@ -288,7 +288,7 @@ body {
 
   #box2 {
     grid-row: 4 / span 1;
-    margin: 0em 1em 0em 1em;
+    margin: 1em 1em 0em 1em;
     margin-bottom: 0;
   }
 
@@ -323,7 +323,7 @@ body {
   input[type=text],
   input[type=email],
   input[type=password] {
-    margin: 1em 0em 1em 0em;
+    margin: 0.5em 0em 0.5em 0em;
     height: 40px;
     padding-left: 10px;
     border: none;
@@ -348,6 +348,7 @@ body {
   }
 
   .buttons {
+    margin-top: 0.5em;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -409,7 +410,7 @@ body {
     display: inline-block;
     font-size: 18px;
     font-weight: bold;
-    margin: 1em 0em 1em 0em;
+    margin: 0.5em 0em 0.5em 0em;
   }
 
   .material-symbols-outlined {
