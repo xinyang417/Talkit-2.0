@@ -16,7 +16,7 @@ body {
         height: 100vh;
         max-width: 100vw;
         overflow-y: scroll;
-        grid-template-rows: 1fr 4fr 3fr 1fr;
+        grid-template-rows: 1fr 3fr 3fr;
         grid-template-columns: 1fr 3fr;
         padding: 0;
         margin: 0;
@@ -38,25 +38,25 @@ body {
         bottom: 2em;
         margin: 0em 1em 0em 1em;
         max-width: 100%;
-        position: sticky;
+        position: absolute;
         list-style-type: none;
+        top: 15em;
     }
 
     ul li {
-        padding: 0.8em 3em 0.8em 3em;
+        padding: 0.5em 3em 0.5em 3em;
         font-size: 18px;
-        border-radius: 10px;
     }
 
-    ul li:hover {
-        background-color: #9595c5;
-        color: white;
-        cursor: pointer;
-        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.108), 0 5px 10px 0 rgba(0, 0, 0, 0.076);
+    ul li a {
+        color: black;
+        text-decoration: none;
+        margin: 0;
     }
 
-    .material-symbols-outlined {
-        display: none;
+    ul li a:hover {
+        color: #9595c5;
+        text-decoration: none;
     }
 
     #logo {
@@ -80,24 +80,11 @@ body {
 
 
     /* not shown in web version */
-
     #back {
         display: none;
     }
 
-    #search {
-        display: none;
-    }
-
-    #dashboard {
-        display: none;
-    }
-
-    #profile {
-        display: none;
-    }
-
-    #logout {
+    .material-symbols-outlined {
         display: none;
     }
 
@@ -109,50 +96,71 @@ body {
         margin: 2em 2em 0 2em;
         background-color: white;
         border-radius: 25px 25px 0 0;
+        padding: 4em 4em 0 4em;
     }
 
     #pageName h2 {
-        margin: 2em;
+        margin: 0 0 1.5em 0;
         font-size: 35px;
     }
 
     .story-list {
         grid-row: 2 / 5;
-        margin: 0em 2em 2em 2em;
+        margin: 0em 32px 2em 32px;
         background-color: white;
         border-radius: 0 0 25px 25px;
+        padding: 2em 4em 2em 4em;
+        overflow-y: scroll;
+        font-size: 18px;
     }
 
-    .story-title {
-        font-family: 'Inter', sans-serif;
-        font-size: 18px;
+    .post {
+        display: flex;
+        place-items: center;
+    }
+
+    .post p,
+    a {
+        margin: 0 0 1em 0.5em;
+    }
+
+    .post a {
+        color: black;
+        text-decoration: none;
+    }
+
+    .post a:hover {
+        color: black;
+        text-decoration: underline;
+    }
+
+    .post .break1,
+    .break2 {
+        color: #9595c5;
         font-weight: bold;
-        margin-top: 2.75em;
-        margin-left: 4em;
     }
 
-    .story-text {
-        font-family: 'Inter', sans-serif;
-        font-size: 18px;
-        margin-left: 4em;
+    .profilePic {
+        max-width: 55px;
+        float: left;
+        margin: 0 0 1em 0;
     }
 
-    .searchBar {
-        width: 100%;
+    .post .bookmark {
+        text-decoration: none;
     }
 
     #search-bar {
-        margin: 0em 4em 0 4em;
-        max-width: 100% !important;
+        width: 100%;
         background-color: #e4e4e4;
         color: #909090;
         font-family: 'Inter', sans-serif;
         font-size: 18px;
-        text-align: left;
-        padding-left: 20px;
         height: 40px;
         border-radius: 20px;
         border: none;
+        padding-left: 20px;
+        margin-bottom: 1em;
     }
 
     #bottomMenu {
@@ -165,8 +173,10 @@ body {
         padding: 0;
         margin: 0em 1em 0em 1em;
         max-width: 100%;
-        position: sticky;
+        position: absolute;
         list-style-type: none;
+        bottom: 4em;
+        z-index: 9999999;
     }
 
 }
@@ -262,6 +272,7 @@ body {
 
     #pageName h2 {
         margin-top: 30px;
+        margin-bottom: 30px;
         font-size: 25px;
         font-family: 'Inter', sans-serif;
     }
@@ -270,32 +281,74 @@ body {
         grid-row: 3 / span 3;
         border: none;
         margin: 0em 1em 0em 1em;
+        overflow-y: scroll;
+        font-size: 14px;
     }
 
-    .story-title {
-        font-family: 'Inter', sans-serif;
-        font-size: 14px;
+    .post {
+        margin-bottom: 1em;
+    }
+
+    .post .author,
+    .post .break1,
+    .post .postTime {
+        display: inline-flex;
+        place-items: center;
+        margin-left: 0;
+        margin-bottom: 0;
+    }
+
+    .post .postTitle {
+        display: flex;
+        margin-bottom: 0;
+        flex: 50%;
+    }
+
+    .post p,
+    a {
+        margin: 0 0 1em 0.5em;
+    }
+
+    .post a {
+        color: black;
+        text-decoration: none;
+    }
+
+    .post a:hover {
+        color: black;
+        text-decoration: underline;
+    }
+
+    .post .break1 {
+        color: #9595c5;
         font-weight: bold;
     }
 
-    .story-text {
-        font-family: 'Inter', sans-serif;
-        font-size: 14px;
+    .break2 {
+        display: none;
+    }
 
+    .profilePic {
+        max-width: 45px;
+        float: left;
+        margin: 0 1em 1em 0;
+    }
+
+    .post .material-symbols-outlined {
+        color: #9595c5;
+        float: right;
+        font-weight: bold;
+        font-size: 25px;
+        right: 1em;
+    }
+
+    .post .bookmark {
+        text-decoration: none;
     }
 
     #logo {
         max-width: 0;
         max-height: 0;
-        display: none;
-    }
-
-    img {
-        max-width: 0;
-        max-height: 0;
-    }
-
-    .searchBar {
         display: none;
     }
 
@@ -314,7 +367,7 @@ body {
     }
 
     #footer ul {
-        padding: 0;
+        padding: 0 0 1.5em 0;
         bottom: 0;
         margin: 0em 1em 0em 1em;
         max-width: 100%;
@@ -322,11 +375,10 @@ body {
         display: flex;
         justify-content: space-between;
         list-style-type: none;
-
     }
 
     ul li {
-        display: inline;
+        display: inline-block;
         padding-top: 5px;
     }
 
@@ -334,6 +386,7 @@ body {
         transition: all 0.3s ease;
         color: #909090;
         font-size: 25px;
+        margin: 0;
     }
 
     ul b {
@@ -348,6 +401,10 @@ body {
     #footer li .active {
         transition: all 0.3s ease;
         color: black !important;
+    }
+
+    #bottomMenu {
+        display: none;
     }
 
 }

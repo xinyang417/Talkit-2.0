@@ -122,6 +122,12 @@ button:hover {
     p b {
         color: #9595c5;
     }
+
+    #errorMsg {
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+        color: red;
+    }
 }
 
 @media screen and (max-width: 700px) {
@@ -225,5 +231,11 @@ button:hover {
         color: black;
         text-decoration: none;
         font-family: 'Inter', sans-serif;
+    }
+
+    #errorMsg {
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+        color: red;
     }
 }

@@ -193,7 +193,7 @@ app.post('/check-account', (req, res) => {
     } else {
         res.send({
             status: "empty",
-            msg: "Username Password and email cannot be empty"
+            msg: "Please fill in all the fields."
         });
         res.end();
     }
