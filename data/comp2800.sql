@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS BBY_01_user (
         UNIQUE (email),
         PRIMARY KEY (ID));
 
+-- Dummy user credentials data
 INSERT INTO BBY_01_user (username, email, password, isAdmin) VALUES 
 ('Jason', 'jason@gmail.com', 'jason123', 1),
 ('Richard', 'richard@gmail.com', 'richard', 0),
@@ -29,7 +30,7 @@ CREATE TABLE IF NOT EXISTS profile (
         ON UPDATE CASCADE);
 
 -- Unused table for now
-CREATE TABLE IF NOT EXISTS timeline (
+CREATE TABLE IF NOT EXISTS BBY_01_timeline (
         postID int NOT NULL AUTO_INCREMENT,
         userID int NOT NULL,
         displayName varchar(30),
@@ -37,7 +38,7 @@ CREATE TABLE IF NOT EXISTS timeline (
         date datetime,
         PRIMARY KEY (postID),
         FOREIGN KEY (userID) REFERENCES bby_01_user(ID));
-        -- FOREIGN KEY (displayName) REFERENCES profile(displayName));
+       
 
 
 
