@@ -63,32 +63,12 @@ const dbConfigHeroku = {
     host: "us-cdbr-east-05.cleardb.net",
     user: "b459ce75b586dd",
     password: "7790c83a",
+    multipleStatements: true,
     database: "heroku_7ab302bab529edd"
-}
+};
 
 app.get('/', (req, res) => {
     if (!req.session.loggedin) {
-        if (is_heroku) {
-            var database = mysql.createConnection(dbConfigHeroku);
-        } else {
-            var database = mysql.createConnection(dbConfigLocal);
-        }
-        const sql = `CREATE DATABASE IF NOT EXISTS COMP2800;
-        use COMP2800;
-        CREATE TABLE IF NOT EXISTS BBY_01_user (
-        ID int NOT NULL AUTO_INCREMENT,
-        username varchar(30),
-        email varchar(30),
-        password varchar(20),
-        isAdmin int,
-        UNIQUE (email),
-        PRIMARY KEY (ID));`;
-
-        database.connect();
-        database.query(sql, (error, results) => {
-            if (error) console.log(error);
-        });
-        database.end();
         let doc = fs.readFileSync('./login.html', "utf-8");
         res.send(doc);
     } else {
@@ -259,25 +239,11 @@ app.get('/profile', (req, res) => {
         } else {
             var database = mysql.createConnection(dbConfigLocal);
         }
-        const sql = `CREATE DATABASE IF NOT EXISTS COMP2800;
-        use COMP2800;
-        CREATE TABLE IF NOT EXISTS profile (
-        profileID int NOT NULL AUTO_INCREMENT,
-        userID int NOT NULL,
-        displayName varchar(30),
-        about varchar(500),
-        profilePic varchar(500),
-        PRIMARY KEY (profileID),
-        FOREIGN KEY (userID) REFERENCES bby_01_user(ID)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE);
-        INSERT INTO profile(userID, displayName, about, profilePic)
+        const sql = ` INSERT INTO profile(userID, displayName, about, profilePic)
         SELECT * FROM (SELECT ? AS userID, '' AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
         WHERE NOT EXISTS (SELECT userID
                             FROM profile
                             WHERE userID = ?) LIMIT 1;`;
-
-
         database.connect();
         database.query(sql, [req.session.userid, req.session.userid], (error, results, fields) => {
             if (error) {
@@ -306,7 +272,6 @@ app.get('/update-profile', (req, res) => {
 })
 
 app.post('/upload-images', upload.array("files"), (req, res) => {
-    console.log(req.files[0].filename);
     if (is_heroku) {
         var database = mysql.createConnection(dbConfigHeroku);
     } else {
@@ -493,7 +458,7 @@ app.post('/update-profile', (req, res) => {
 });
 
 app.get('/get-users', (req, res) => {
-    // If the user is loggedin
+    // If the user is logged in
     if (req.session.loggedin) {
         if (is_heroku) {
             var database = mysql.createConnection(dbConfigHeroku);
@@ -628,51 +593,17 @@ app.get("/logout", (req, res) => {
     }
 });
 
-async function init() {
-    if (!is_heroku) {
-        const mysql = require("mysql2/promise");
-
-        const localConnection = await mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            multipleStatements: true
-        });
-        const sql = `CREATE DATABASE IF NOT EXISTS COMP2800;
-    use COMP2800;
-    CREATE TABLE IF NOT EXISTS BBY_01_user (
-    ID int NOT NULL AUTO_INCREMENT,
-    username varchar(30),
-    email varchar(30),
-    password varchar(20),
-    isAdmin int NOT NULL,
-    PRIMARY KEY (ID));`;
-        await localConnection.query(sql);
-
-
-        const [rows, fields] = await localConnection.query("SELECT * FROM BBY_01_user");
-        if (rows.length == 0) {
-            // Dummy data
-            let userRecords = "insert into BBY_01_user (username, email, password, isAdmin) values ?";
-            let recordValues = [
-                ["test", "test@test.com", "test", 0],
-                ["joe", "joe@bcit.ca", "abc123", 1],
-                ["bob", "bob@bcit.ca", "xyz", 1]
-            ];
-            await localConnection.query(userRecords, [recordValues]);
-        }
-        console.log("Listening on port " + port + "!");
-    }
-}
-
-// RUN SERVER
-let port = 8000;
+// RUN SERVER REMOTELY
 if (is_heroku) {
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
         console.log('Server is running on port ' + PORT + ' .');
     });
 } else {
-    app.listen(port, init);
+    // RUN SERVER LOCALLY
+    let port = 8000;
+    app.listen(port, () => {
+        console.log("Listening on port " + port + "!");
+    })
 
 }
