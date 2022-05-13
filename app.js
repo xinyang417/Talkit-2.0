@@ -67,6 +67,7 @@ const dbConfigHeroku = {
     database: "heroku_7ab302bab529edd"
 };
 
+// Creates Connection to Database
 if (is_heroku) {
     var database = mysql.createPool(dbConfigHeroku);
 } else {
@@ -89,11 +90,6 @@ app.get('/signup', (req, res) => {
 
 
 app.post('/auth', (req, res) => {
-    // if (is_heroku) {
-    //     var database = mysql.createConnection(dbConfigHeroku);
-    // } else {
-    //     var database = mysql.createConnection(dbConfigLocal);
-    // }
     // Capture the input fields
     let username = req.body.username;
     let password = req.body.password;
@@ -152,11 +148,6 @@ app.post('/auth', (req, res) => {
 });
 
 app.post('/check-account', (req, res) => {
-    // if (is_heroku) {
-    //     var database = mysql.createConnection(dbConfigHeroku);
-    // } else {
-    //     var database = mysql.createConnection(dbConfigLocal);
-    // }
     let username = req.body.username;
     let email = req.body.email;
     let password = req.body.password;
@@ -245,23 +236,17 @@ app.get('/admin', (req, res) => {
 app.get('/profile', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
-        // if (is_heroku) {
-        //     var database = mysql.createConnection(dbConfigHeroku);
-        // } else {
-        //     var database = mysql.createConnection(dbConfigLocal);
-        // }
+
         const sql = ` INSERT INTO profile(userID, displayName, about, profilePic)
         SELECT * FROM (SELECT ? AS userID, '' AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
         WHERE NOT EXISTS (SELECT userID
                             FROM profile
                             WHERE userID = ?) LIMIT 1;`;
-        // database.connect();
         database.query(sql, [req.session.userid, req.session.userid], (error, results, fields) => {
             if (error) {
                 console.log(error);
             }
         });
-        // database.end();
         let doc = fs.readFileSync('./profile.html', "utf8");
         let profileDOM = new JSDOM(doc);
         if (req.session.isAdmin == 0) {
@@ -292,15 +277,10 @@ app.get('/update-profile', (req, res) => {
 })
 
 app.post('/upload-images', upload.array("files"), (req, res) => {
-    // if (is_heroku) {
-    //     var database = mysql.createConnection(dbConfigHeroku);
-    // } else {
-    //     var database = mysql.createConnection(dbConfigLocal);
-    // }
+
     const sql = `UPDATE profile
                 SET profilePic = ?
                 WHERE userID = ?`;
-    // database.connect();
     database.query(sql, [req.files[0].filename, req.session.userid], (error, results) => {
         if (error) console.log(error);
         res.send({
@@ -313,15 +293,11 @@ app.post('/upload-images', upload.array("files"), (req, res) => {
 app.get('/get-displayname', (req, res) => {
     // If the user is loggedin
     if (req.session.loggedin) {
-        // if (is_heroku) {
-        //     var database = mysql.createConnection(dbConfigHeroku);
-        // } else {
-        //     var database = mysql.createConnection(dbConfigLocal);
-        // }
+
         const sql = `SELECT * 
                 FROM profile 
                 WHERE userID = ?`;
-        // database.connect();
+
         database.query(sql, [req.session.userid], (error, results) => {
             if (error) console.log(error);
             res.send({
@@ -329,7 +305,6 @@ app.get('/get-displayname', (req, res) => {
                 rows: results
             });
         });
-        // database.end();
     } else {
         // If the user is not logged in
         res.redirect("/");
@@ -339,16 +314,11 @@ app.get('/get-displayname', (req, res) => {
 app.get('/get-about', (req, res) => {
     // If the user is loggedin
     if (req.session.loggedin) {
-        // if (is_heroku) {
-        //     var database = mysql.createConnection(dbConfigHeroku);
-        // } else {
-        //     var database = mysql.createConnection(dbConfigLocal);
-        // }
-
+    
         const sql = `SELECT * 
                 FROM profile 
                 WHERE userID = ?`;
-        // database.connect();
+    
         database.query(sql, [req.session.userid], (error, results) => {
             if (error) console.log(error);
             res.send({
@@ -356,7 +326,7 @@ app.get('/get-about', (req, res) => {
                 rows: results
             });
         });
-        // database.end();
+     
     } else {
         // If the user is not logged in
         res.redirect("/");
@@ -365,16 +335,11 @@ app.get('/get-about', (req, res) => {
 
 app.get('/get-profilePic', (req, res) => {
     if (req.session.loggedin) {
-        // if (is_heroku) {
-        //     var database = mysql.createConnection(dbConfigHeroku);
-        // } else {
-        //     var database = mysql.createConnection(dbConfigLocal);
-        // }
 
         const sql = `SELECT *
                     FROM profile
                     WHERE userID = ?`;
-        // database.connect();
+  
         database.query(sql, [req.session.userid], (error, results) => {
             if (error) console.log(error);
             res.send({
@@ -382,7 +347,7 @@ app.get('/get-profilePic', (req, res) => {
                 rows: results
             });
         });
-        // database.end();
+     
     } else {
         res.redirect("/");
     }
@@ -390,16 +355,11 @@ app.get('/get-profilePic', (req, res) => {
 
 app.get('/get-username', (req, res) => {
     if (req.session.loggedin) {
-        // if (is_heroku) {
-        //     var database = mysql.createConnection(dbConfigHeroku);
-        // } else {
-        //     var database = mysql.createConnection(dbConfigLocal);
-        // }
 
         const sql = `SELECT * 
                 FROM bby_01_user 
                 WHERE ID = ?`;
-        // database.connect();
+
         database.query(sql, [req.session.userid], (error, results) => {
             if (error) console.log(error);
             res.send({
@@ -407,7 +367,7 @@ app.get('/get-username', (req, res) => {
                 rows: results
             });
         });
-        // database.end();
+    
     } else {
         // If the user is not logged in
         res.redirect("/");
@@ -416,18 +376,12 @@ app.get('/get-username', (req, res) => {
 
 app.post('/update-profile', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    // if (is_heroku) {
-    //     var database = mysql.createConnection(dbConfigHeroku);
-    // } else {
-    //     var database = mysql.createConnection(dbConfigLocal);
-    // }
     let newName = req.body.displayName;
     let newAbout = req.body.about;
     let newEmail = req.body.email;
     let newPassword = req.body.password;
     let sql;
     let message = "Profile updated.";
-    // database.connect();
 
     if (newAbout != '') {
         sql = `UPDATE profile
@@ -471,21 +425,12 @@ app.post('/update-profile', (req, res) => {
         status: "success",
         msg: message
     });
-
-
-    // database.end();
-
 });
 
 app.get('/get-users', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
-        // if (is_heroku) {
-        //     var database = mysql.createConnection(dbConfigHeroku);
-        // } else {
-        //     var database = mysql.createConnection(dbConfigLocal);
-        // }
-        // database.connect();
+       
         database.query('SELECT * FROM BBY_01_user', (error, results) => {
             if (error) console.log(error);
             res.send({
@@ -493,7 +438,6 @@ app.get('/get-users', (req, res) => {
                 rows: results
             });
         });
-        // database.end();
     } else {
         // If the user is not logged in
         res.redirect("/");
@@ -502,12 +446,7 @@ app.get('/get-users', (req, res) => {
 
 app.post('/add-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    // if (is_heroku) {
-    //     var database = mysql.createConnection(dbConfigHeroku);
-    // } else {
-    //     var database = mysql.createConnection(dbConfigLocal);
-    // }
-    // database.connect();
+
     database.query('INSERT INTO BBY_01_user (username, email, password, isAdmin) values(?, ?, ?, ?)',
         [req.body.username, req.body.email, req.body.password, req.body.isAdmin],
         (error, results, fields) => {
@@ -517,17 +456,11 @@ app.post('/add-user', (req, res) => {
                 msg: "Record added."
             });
         });
-    // database.end();
 });
 
 app.post('/update-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    // if (is_heroku) {
-    //     var database = mysql.createConnection(dbConfigHeroku);
-    // } else {
-    //     var database = mysql.createConnection(dbConfigLocal);
-    // }
-    // database.connect();
+
     database.query('UPDATE BBY_01_user SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?',
         [req.body.username, req.body.email, req.body.password, req.body.isAdmin, req.body.id],
         (error, results) => {
@@ -538,18 +471,11 @@ app.post('/update-user', (req, res) => {
                 msg: "Recorded updated."
             });
         });
-    // database.end();
 })
 
 app.post('/delete-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    // if (is_heroku) {
-    //     var database = mysql.createConnection(dbConfigHeroku);
-    // } else {
-    //     var database = mysql.createConnection(dbConfigLocal);
-    // }
 
-    // database.connect();
     let adminLeft = `SELECT *
                     FROM BBY_01_user
                     WHERE isAdmin = 1`;
@@ -574,16 +500,9 @@ app.post('/delete-user', (req, res) => {
             deleteSQL(req, res);
         }
     });
-    // database.end();
 });
 
 function deleteSQL(req, res) {
-    // if (is_heroku) {
-    //     var database = mysql.createPool(dbConfigHeroku);
-    // } else {
-    //     var database = mysql.createPool(dbConfigLocal);
-    // }
-    // database.connect();
     let deleteSql = `DELETE 
                     FROM BBY_01_user 
                     WHERE ID = ?`;
@@ -660,5 +579,4 @@ if (is_heroku) {
     app.listen(port, () => {
         console.log("Listening on port " + port + "!");
     })
-
 }
