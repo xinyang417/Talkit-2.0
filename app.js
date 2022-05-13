@@ -469,7 +469,6 @@ app.post('/add-user', (req, res) => {
 
 app.post('/update-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    console.log(req.body.isAdmin);
     database.query('UPDATE BBY_01_user SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?',
         [req.body.username, req.body.email, req.body.password, req.body.isAdmin, req.body.id],
         (error, results) => {
