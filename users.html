@@ -13,42 +13,90 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
         </script>
-
+    <link rel="stylesheet"
+        href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="/css/users.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
-    <section id="mainBody">
-        <h2>Admin</h2>
-        <p id="status"></p>
-        <form>
-            <div id="box1">
-                <fieldset>
-                    <legend>Add a User</legend>
+    <div class="container">
+        <!--Page Name-->
+        <div id="pageName">
+            <h2><b>Dashboard</b></h2>
+            <p id="status"></p>
+        </div>
+
+        <!--Back Button-->
+        <div id="nav">
+            <button onclick="history.back()" id="back"><span
+                    class="material-symbols-outlined">arrow_back</span></button>
+        </div>
+
+        <!--Add a user table-->
+        <div id="box1">
+            <fieldset class="add-a-user">
+                <legend>Add a User</legend>
+                <div class="textInput">
                     <input type="text" placeholder="Username" id="username" />
                     <input type="email" placeholder="Email" id="email" />
                     <input type="password" placeholder="Password" id="password" />
-                    <input type="text" placeholder="isAdmin" id="isAdmin" />
-                    <div class="buttons">
-                        <input type="button" id="clear" name="clear" class="Clear" value="Clear">
-                        <input type="button" id="add" value="Add" />
-                    </div>
-                </fieldset>
-            </div>
-            <fieldset id="box2">
+                    <input type="text" placeholder="Admin?" id="isAdmin" />
+                </div>
+                <div class="buttons">
+                    <input type="button" id="clear" name="clear" class="Clear" value="Clear">
+                    <input type="button" id="add" value="Add" />
+                </div>
+            </fieldset>
+        </div>
+
+        <!--Delete a user table-->
+        <div id="box2">
+            <fieldset class="delete-a-user">
                 <legend>Delete a User</legend>
                 <input type="text" placeholder="User ID" id="deleteID" />
                 <input type="button" id="delete" value="Delete" />
             </fieldset>
-        </form>
+        </div>
+
+        <!--User table-->
         <div id="content">
             <table id="users">
-
             </table>
         </div>
-    </section>
+
+        <!--TalkIt Logo (Web Version Only)-->
+        <div id="logo">
+            <figure class="logo">
+                <img class="img" alt="..." src="images/logo-01.png" />
+            </figure>
+        </div>
+
+        <!--Bottom Menu (Web Version Only)-->
+        <div id="bottomMenu">
+            <ul>
+                <li><a href="#"></a><b>Dashboard</b> </li>
+                <li><a href="#"></a><b>Profile</b> </li>
+                <li><a href="#"></a><b>Log Out</b> </li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <div id="footer">
+            <ul>
+                <li><a href="#"><span class="material-symbols-outlined">home</span></a><b>Home</b>
+                </li>
+                <li><a href="#"><span class="material-symbols-outlined">bookmark</span></a><b>Bookmark</b> </li>
+                <li><a href="#"><span class="material-symbols-outlined">add_box</span></a><b>Share
+                        Story</b></li>
+                <li><a href="#"><span class="material-symbols-outlined">mail</span></a><b>Messages</b> </li>
+                <li><a href="#"><span class="material-symbols-outlined">notifications</span></a><b>Notifications</b>
+                </li>
+            </ul>
+        </div>
+
+    </div>
 
     <script src="./js/users.js"></script>
 
