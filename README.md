@@ -42,3 +42,8 @@ Tips for file naming files and folders:
 * use lowercase with no spaces
 * use dashes (not underscore) for word separation
 
+## References
+Code from lines 618 to 643 in app.js was made by 
+@author https://stackoverflow.com/users/395659/cloudymarble from the source 
+@see https://stackoverflow.com/questions/20210522/nodejs-mysql-error-connection-lost-the-server-closed-the-connection 
+on stackoverflow.com
