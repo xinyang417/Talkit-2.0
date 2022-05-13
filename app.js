@@ -251,9 +251,10 @@ app.get('/profile', (req, res) => {
             }
         });
         database.end();
-
         let doc = fs.readFileSync('./profile.html', "utf8");
-        res.send(doc);
+        let profileDOM = new JSDOM(doc);
+        profileDOM.window.document.getElementById("uName").innerHTML = req.session.username;
+        res.send(profileDOM.serialize());
     } else {
         // If the user is not logged in
         res.redirect("/");
@@ -264,7 +265,9 @@ app.get('/update-profile', (req, res) => {
     // If the user is loggedin
     if (req.session.loggedin) {
         let doc = fs.readFileSync('./update-profile.html', "utf-8");
-        res.send(doc);
+        let profileDOM = new JSDOM(doc);
+        profileDOM.window.document.getElementById("uName").innerHTML = req.session.username;
+        res.send(profileDOM.serialize());
     } else {
         // If the user is not logged in
         res.redirect("/");

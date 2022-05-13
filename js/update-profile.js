@@ -79,10 +79,7 @@ function displayUsername() {
         if (this.readyState == XMLHttpRequest.DONE){
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
-                if (data.status == "success") {
-                    let row = data.rows[0];
-                    document.getElementById("uName").innerHTML = row.username;
-                } else {
+                if (data.status != "success") {
                     console.log("Error!");
                 }
             } else {
