@@ -111,6 +111,7 @@ app.post('/auth', (req, res) => {
                     req.session.isAdmin = results[0].isAdmin;
                     req.session.userid = results[0].ID;
                     req.session.email = results[0].email;
+                    req.session.password = results[0].password;
 
                     // Redirect to admin page
                     res.send({
@@ -125,6 +126,8 @@ app.post('/auth', (req, res) => {
                     req.session.isAdmin = results[0].isAdmin;
                     req.session.userid = results[0].ID;
                     req.session.email = results[0].email;
+                    req.session.password = results[0].password;
+
 
                     // Redirect to home page
                     res.send({
@@ -245,7 +248,7 @@ app.get('/profile', (req, res) => {
         WHERE NOT EXISTS (SELECT userID
                             FROM profile
                             WHERE userID = ?) LIMIT 1;`;
-        database.query(sql, [req.session.userid, req.session.userid], (error, results, fields) => {
+        database.query(sql, [req.session.userid, req.session.userid, req.session.userid], (error, results, fields) => {
             if (error) {
                 console.log(error);
             }
@@ -269,6 +272,7 @@ app.get('/update-profile', (req, res) => {
         let doc = fs.readFileSync('./update-profile.html', "utf-8");
         let profileDOM = new JSDOM(doc);
         profileDOM.window.document.getElementById("email").setAttribute("value", req.session.email);
+        profileDOM.window.document.getElementById("password").setAttribute("value", req.session.password);
         if (req.session.isAdmin == 0) {
             profileDOM.window.document.querySelector("#dashboard").remove();
         }
