@@ -15,6 +15,7 @@ const {
     connect
 } = require('http2');
 const ConnectionConfig = require('mysql/lib/ConnectionConfig');
+const { profile } = require('console');
 const app = express();
 
 
@@ -109,6 +110,7 @@ app.post('/auth', (req, res) => {
                     req.session.username = username;
                     req.session.isAdmin = results[0].isAdmin;
                     req.session.userid = results[0].ID;
+                    req.session.email = results[0].email;
 
                     // Redirect to admin page
                     res.send({
@@ -122,6 +124,7 @@ app.post('/auth', (req, res) => {
                     req.session.username = username;
                     req.session.isAdmin = results[0].isAdmin;
                     req.session.userid = results[0].ID;
+                    req.session.email = results[0].email;
 
                     // Redirect to home page
                     res.send({
@@ -265,6 +268,7 @@ app.get('/update-profile', (req, res) => {
     if (req.session.loggedin) {
         let doc = fs.readFileSync('./update-profile.html', "utf-8");
         let profileDOM = new JSDOM(doc);
+        profileDOM.window.document.getElementById("email").setAttribute("value", req.session.email);
         if (req.session.isAdmin == 0) {
             profileDOM.window.document.querySelector("#dashboard").remove();
         }
