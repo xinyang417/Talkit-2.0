@@ -208,6 +208,11 @@ app.get('/home', (req, res) => {
         let profile = fs.readFileSync("./main.html", "utf8");
         let profileDOM = new JSDOM(profile);
         profileDOM.window.document.getElementById("greetUser").innerHTML = "Hello, " + req.session.username;
+        if (req.session.isAdmin == 0) {
+            profileDOM.window.document.getElementById("dBoard").remove();
+            profileDOM.window.document.getElementById("dashboard-icon").remove();
+            
+        }
         res.send(profileDOM.serialize());
     } else {
         // If the user is not logged in
@@ -253,6 +258,10 @@ app.get('/profile', (req, res) => {
         database.end();
         let doc = fs.readFileSync('./profile.html', "utf8");
         let profileDOM = new JSDOM(doc);
+        if (req.session.isAdmin == 0) {
+            // profileDOM.window.document.querySelector("#dashboard-icon").remove();
+            profileDOM.window.document.querySelector("#dashboard").remove();
+        }
         profileDOM.window.document.getElementById("uName").innerHTML = req.session.username;
         res.send(profileDOM.serialize());
     } else {
@@ -266,6 +275,10 @@ app.get('/update-profile', (req, res) => {
     if (req.session.loggedin) {
         let doc = fs.readFileSync('./update-profile.html', "utf-8");
         let profileDOM = new JSDOM(doc);
+        if (req.session.isAdmin == 0) {
+            // profileDOM.window.document.querySelector("#dashboard-icon").remove();
+            profileDOM.window.document.querySelector("#dashboard").remove();
+        }
         profileDOM.window.document.getElementById("uName").innerHTML = req.session.username;
         res.send(profileDOM.serialize());
     } else {
