@@ -610,7 +610,8 @@ app.get("/logout", (req, res) => {
 var connection;
 
 function handleDisconnect() {
-  connection = mysql.createConnection(db_config); // Recreate the connection, since
+    if (is_heroku){
+  connection = mysql.createConnection(dbConfigHeroku); // Recreate the connection, since
                                                   // the old one cannot be reused.
 
   connection.connect(function(err) {              // The server is either down
@@ -628,6 +629,7 @@ function handleDisconnect() {
       throw err;                                  // server variable configures this)
     }
   });
+}
 }
 
 handleDisconnect();
