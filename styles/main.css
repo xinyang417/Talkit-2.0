@@ -35,12 +35,11 @@ body {
     #footer ul {
         margin-bottom: 1.5em;
         padding: 0;
-        bottom: 2em;
+        top: 15em;
         margin: 0em 1em 0em 1em;
         max-width: 100%;
         position: absolute;
         list-style-type: none;
-        top: 15em;
     }
 
     ul li {
@@ -176,7 +175,6 @@ body {
         position: absolute;
         list-style-type: none;
         bottom: 4em;
-        z-index: 9999999;
     }
 
 }
