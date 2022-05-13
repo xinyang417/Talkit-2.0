@@ -52,8 +52,8 @@ displayAbout();
 
 function displayPicture() {
     const xhr = new XMLHttpRequest();
-    xhr.onload = function (){
-        if (this.readyState == XMLHttpRequest.DONE){
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
                 if (data.status == "success" && data.rows.length > 0) {
@@ -79,14 +79,14 @@ displayPicture();
 
 function displayUsername() {
     const xhr = new XMLHttpRequest();
-    xhr.onload = function (){
-        if (this.readyState == XMLHttpRequest.DONE){
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
                 if (data.status == "success") {
                     let row = data.rows[0];
                     console.log(row.username);
-                    document.getElementById("uName").innerHTML = row.username;
+                    document.getElementById("uName").innerHTML = row.username + "'s Profile";
                 } else {
                     console.log("Error!");
                 }
