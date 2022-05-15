@@ -16,9 +16,7 @@ function uploadImages(e) {
         body: formData,
     };
     fetch("/upload-images", options
-    ).then(function (res) {
-        console.log("File name: ",res);
-    }).catch(function (err) { ("Error:", err) }
+    ).catch(function (err) { ("Error:", err) }
     );
 }
 
@@ -43,10 +41,7 @@ document.getElementById("updateSave").addEventListener("click", function (e) {
 
             // 200 means everthing worked
             if (xhr.status === 200) {
-
-                console.log("DB updated");
                 window.location.assign("/profile");
-
             } else {
 
                 // not a 200, could be anything (404, 500, etc.)

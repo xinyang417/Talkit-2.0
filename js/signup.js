@@ -37,7 +37,6 @@ ready(function () {
         + formData.password + "&isAdmin=" + formData.isAdmin;
         // let signup = false;
         ajaxPOST("/check-account", function (data) {
-            console.log(data);
             if (data) {
                 let dataParsed = JSON.parse(data);
                 

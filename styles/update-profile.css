@@ -228,7 +228,6 @@ body {
         justify-content: space-between;
         float: right;
         width: 50%;
-        align-items: right;
     }
 
     .cancel {

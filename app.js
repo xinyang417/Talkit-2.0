@@ -178,12 +178,12 @@ app.post('/check-account', (req, res) => {
             if (checkEmail) {
                 res.send({
                     status: "email existed",
-                    msg: "You already signed up with the email."
+                    msg: "You already signed up with this email."
                 });
             } else if (checkUsername) {
                 res.send({
                     status: "invalid username",
-                    msg: "Someone already use the username."
+                    msg: "Username already in use."
                 });
             } else {
                 res.send({
@@ -390,7 +390,7 @@ app.post('/update-profile', (req, res) => {
     let newPassword = req.body.password;
     let sql;
     let message = "Profile updated.";
-
+    
     if (newAbout != '') {
         sql = `UPDATE profile
                 SET about = ?
@@ -415,6 +415,7 @@ app.post('/update-profile', (req, res) => {
         sql = `UPDATE bby_01_user
                 SET email = ?
                 WHERE ID = ?`;
+        req.session.email = newEmail;
         database.query(sql, [newEmail, req.session.userid], (error, results, fields) => {
             if (error) console.log(error);
             message = "Email updated."
@@ -424,6 +425,7 @@ app.post('/update-profile', (req, res) => {
         sql = `UPDATE bby_01_user
                 SET password = ?
                 WHERE ID = ?`;
+        req.session.password = newPassword;
         database.query(sql, [newPassword, req.session.userid], (error, results, fields) => {
             if (error) console.log(error);
             message = "Password updated."
@@ -438,7 +440,6 @@ app.post('/update-profile', (req, res) => {
 app.get('/get-users', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
-       
         database.query('SELECT * FROM BBY_01_user', (error, results) => {
             if (error) console.log(error);
             res.send({
@@ -468,15 +469,13 @@ app.post('/add-user', (req, res) => {
 
 app.post('/update-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-
     database.query('UPDATE BBY_01_user SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?',
         [req.body.username, req.body.email, req.body.password, req.body.isAdmin, req.body.id],
         (error, results) => {
             if (error) console.log(error);
-
             res.send({
                 status: "success",
-                msg: "Recorded updated."
+                msg: "Record updated."
             });
         });
 })
@@ -552,25 +551,23 @@ var connection;
 
 function handleDisconnect() {
     if (is_heroku){
-  connection = mysql.createConnection(dbConfigHeroku); // Recreate the connection, since
+        connection = mysql.createConnection(dbConfigHeroku); // Recreate the connection, since
                                                   // the old one cannot be reused.
 
-  connection.connect(function(err) {              // The server is either down
-    if(err) {                                     // or restarting (takes a while sometimes).
-      console.log('error when connecting to db:', err);
-      setTimeout(handleDisconnect, 2000); 
-    }                                     
-  });                                     
-                                          
-  connection.on('error', function(err) {
-    console.log('db error', err);
-    if(err.code === 'PROTOCOL_CONNECTION_LOST') { 
-      handleDisconnect();                        
-    } else {                                      
-      throw err;                                  
+        connection.connect(function(err) {              // The server is either down
+            if(err) {                                     // or restarting (takes a while sometimes).
+                console.log('error when connecting to db:', err);
+                setTimeout(handleDisconnect, 2000); 
+            }                                     
+        });                                     
+        connection.on('error', function(err) {
+            if(err.code === 'PROTOCOL_CONNECTION_LOST') { 
+                handleDisconnect();                        
+            } else {                                      
+                throw err;                                  
+            }
+        });
     }
-  });
-}
 }
 
 handleDisconnect();

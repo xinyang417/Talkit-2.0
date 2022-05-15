@@ -54,7 +54,6 @@ function edit(e) {
     let input = document.createElement("input");
     input.value = spanText;
     input.addEventListener("keyup", function (e) {
-        let s = null;
         let v = null;
         if (e.which == 13) {
             v = input.value;
@@ -71,7 +70,7 @@ function edit(e) {
                     username: parent.parentNode.querySelector(".usernames span").innerHTML,
                     email: v,
                     password: parent.parentNode.querySelector(".password span").innerHTML,
-                    isAdmin: parent.parentNode.querySelector(".admin span")
+                    isAdmin: parent.parentNode.querySelector(".admin span").innerHTML
                 };
             } else if (parent == name) {
                 dataToSend = {
@@ -79,7 +78,7 @@ function edit(e) {
                     username: v,
                     email: parent.parentNode.querySelector(".email span").innerHTML,
                     password: parent.parentNode.querySelector(".password span").innerHTML,
-                    isAdmin: parent.parentNode.querySelector(".admin span")
+                    isAdmin: parent.parentNode.querySelector(".admin span").innerHTML
                 };
             } else if (parent == password) {
                 dataToSend = {
@@ -87,7 +86,7 @@ function edit(e) {
                     username: parent.parentNode.querySelector(".usernames span").innerHTML,
                     email: parent.parentNode.querySelector(".email span").innerHTML,
                     password: v,
-                    isAdmin: parent.parentNode.querySelector(".admin span")
+                    isAdmin: parent.parentNode.querySelector(".admin span").innerHTML
                 };
             } else if (parent == isAdmin) {
                 dataToSend = {
