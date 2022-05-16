@@ -211,17 +211,17 @@ app.get('/home', (req, res) => {
         const sql = `SELECT * FROM BBY_01_timeline ORDER BY postID DESC;`
         let profile = fs.readFileSync("./main.html", "utf8");
         let profileDOM = new JSDOM(profile);
-        let titleCollection = profileDOM.window.document.getElementsByClassName("postTitle");
-        let authorCollection = profileDOM.window.document.getElementsByClassName("author");
-        database.query(sql, (error, results) => {
-            if (error) throw error;
-            for (let i = 0; i < results.length; i++) {
-                titleCollection[i].innerHTML = results[0].title;
-                authorCollection[i].innerHTML = results[0].displayName;
-            }
+        // let titleCollection = profileDOM.window.document.getElementById("postTitle").innerHTML;
+        // let authorCollection = profileDOM.window.document.getElementById("author").innerHTML;
+        // database.query(sql, (error, results) => {
+        //     if (error) throw error;
+        //     for (let i = 0; i < results.length; i++) {
+        //         titleCollection[i].innerHTML = results[0].title;
+        //         authorCollection[i].innerHTML = results[0].displayName;
+        //     }
             res.send(profileDOM.serialize());
             res.end();
-        })
+        // })
         
         profileDOM.window.document.getElementById("greetUser").innerHTML = "Hello, " + req.session.username;
         if (req.session.isAdmin == 0) {
@@ -467,6 +467,22 @@ app.get('/get-users', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
         database.query('SELECT * FROM BBY_01_user', (error, results) => {
+            if (error) console.log(error);
+            res.send({
+                status: "success",
+                rows: results
+            });
+        });
+    } else {
+        // If the user is not logged in
+        res.redirect("/");
+    }
+});
+
+app.get('/get-posts', (req, res) => {
+    // If the user is logged in
+    if (req.session.loggedin) {
+        database.query('SELECT * FROM BBY_01_timeline', (error, results) => {
             if (error) console.log(error);
             res.send({
                 status: "success",

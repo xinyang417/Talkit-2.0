@@ -53,4 +53,7 @@ CREATE TABLE IF NOT EXISTS BBY_01_comment (
         FOREIGN KEY (userID) REFERENCES bby_01_user(ID)
 );
 
+INSERT INTO BBY_01_timeline (userID, displayName, title, story, date) VALUES 
+(1, 'orange', 'MyStory', 'Hello World' )
+
 
