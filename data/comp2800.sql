@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS BBY_01_comment (
 );
 
 INSERT INTO BBY_01_timeline (userID, displayName, title, story, date) VALUES 
-(1, 'orange', 'MyStory', 'Hello World' )
+(1, 'orange', 'MyStory', 'Hello World', 2020-02-02),
+(1, 'banana', 'MyStory2', 'Hello Worldasdasdsadasd', 2020-05-02);
 
 
