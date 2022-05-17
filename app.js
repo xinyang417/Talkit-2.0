@@ -225,7 +225,6 @@ app.get('/home', (req, res) => {
         if (req.session.isAdmin == 0) {
             profileDOM.window.document.getElementById("dBoard").remove();
             profileDOM.window.document.getElementById("dashboard-icon").remove();
-            
         }
         res.send(profileDOM.serialize());
         res.end();
@@ -271,6 +270,10 @@ app.get('/story-comment', (req, res) => {
         // Render login template
         let doc = fs.readFileSync('./story_comment.html', "utf-8");
         let profileDOM = new JSDOM(doc);
+        if (req.session.isAdmin == 0) {
+            profileDOM.window.document.getElementById("dBoard").remove();
+            profileDOM.window.document.getElementById("dashboard-icon").remove();
+        }
         let sql = `SELECT * FROM BBY_01_timeline
                     INNER JOIN profile
                     ON BBY_01_timeline.userID = profile.userID
