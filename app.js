@@ -208,22 +208,11 @@ app.get('/home', (req, res) => {
     
     // If the user is logged in
     if (req.session.loggedin) {
-        const sql = `SELECT * FROM BBY_01_timeline ORDER BY postID DESC;`
         let profile = fs.readFileSync("./main.html", "utf8");
         let profileDOM = new JSDOM(profile);
-        // let titleCollection = profileDOM.window.document.getElementById("postTitle").innerHTML;
-        // let authorCollection = profileDOM.window.document.getElementById("author").innerHTML;
-        // database.query(sql, (error, results) => {
-        //     if (error) throw error;
-        //     for (let i = 0; i < results.length; i++) {
-        //         titleCollection[i].innerHTML = results[0].title;
-        //         authorCollection[i].innerHTML = results[0].displayName;
-        //     }
-            res.send(profileDOM.serialize());
-            res.end();
-        // })
-        
         profileDOM.window.document.getElementById("greetUser").innerHTML = "Hello, " + req.session.username;
+        res.send(profileDOM.serialize());
+        res.end();
         if (req.session.isAdmin == 0) {
             profileDOM.window.document.getElementById("dBoard").remove();
             profileDOM.window.document.getElementById("dashboard-icon").remove();
