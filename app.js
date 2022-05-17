@@ -260,12 +260,35 @@ app.get('/story-comment', (req, res) => {
     if (req.session.loggedin) {
         // Render login template
         let doc = fs.readFileSync('./story_comment.html', "utf-8");
-        res.send(doc);
+        let profileDOM = new JSDOM(doc);
+        let sql = `SELECT * FROM BBY_01_timeline
+                    INNER JOIN profile
+                    ON BBY_01_timeline.userID = profile.userID
+                    WHERE bby_01_timeline.postID = ?`;
+        database.query(sql, [req.session.postID], (error, results) => {
+            profileDOM.window.document.getElementById("author").innerHTML = results[0].displayName;
+            profileDOM.window.document.getElementById("postTime").innerHTML = results[0].date;
+            profileDOM.window.document.getElementById("postTitle").innerHTML = results[0].title;
+            profileDOM.window.document.getElementById("postText").innerHTML = results[0].story;
+            res.send(profileDOM.serialize());
+            res.end();
+        })
+        
     } else {
         res.redirect("/");
     }
-    res.end();
+    
 });
+
+app.post('/story-comment', (req, res) => {
+    if (req.session.loggedin) {
+        req.session.postID = req.body.postID;
+        res.send();
+        res.end();
+    } else {
+        res.redirect("/");
+    }
+})
 
 
 app.get('/profile', (req, res) => {
