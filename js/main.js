@@ -18,7 +18,6 @@ function displayPosts() {
                         newPostTemplate.getElementById("postTitle").innerHTML = `<p onclick = "sendPostId(` 
                                                                                 + row.postID + `)">` 
                                                                                 + title + `</p>`;
-                        // document.body.appendChild(newPostTemplate);
                         parent.appendChild(newPostTemplate);
                     }
                 } else {
