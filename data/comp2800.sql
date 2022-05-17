@@ -33,12 +33,13 @@ CREATE TABLE IF NOT EXISTS profile (
 CREATE TABLE IF NOT EXISTS BBY_01_timeline (
         postID int NOT NULL AUTO_INCREMENT,
         userID int NOT NULL,
-        displayName varchar(30),
         title varchar(500),
         story varchar(2000),
         date datetime,
         PRIMARY KEY (postID),
-        FOREIGN KEY (userID) REFERENCES bby_01_user(ID));
+        FOREIGN KEY (userID) REFERENCES bby_01_user(ID)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE);
        
 
 CREATE TABLE IF NOT EXISTS BBY_01_comment (
@@ -51,6 +52,8 @@ CREATE TABLE IF NOT EXISTS BBY_01_comment (
         PRIMARY KEY (commentID),
         FOREIGN KEY (postID) REFERENCES bby_01_timeline(postID),
         FOREIGN KEY (userID) REFERENCES bby_01_user(ID)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 

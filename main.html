@@ -21,7 +21,7 @@
 
 </head>
 
-<body>
+<body onload="displayPosts()">
 
   <div class="container">
     <div id="nav">
@@ -75,16 +75,19 @@
     </div>
     <div class="story-list">
       <!-- Dummy data for styling testing -->
-      <div class="post">
-        <img class="profilePic" alt="profilePic" src="/img/logo-04.png">
-        <p class="author">Doctor Who</p>
-        <p class="break1">·</p>
-        <p class="postTime">May 12, 2022</p>
-        <p class="break2">·</p>
-        <a href="#"><span class="material-symbols-outlined">bookmark</span></a>
-        <p class="postTitle">I want to share my story as a doctor</p>
-      </div>
+      <template id="postTemplate">
+        <div class="post">
+          <img class="profilePic" alt="profilePic" src="/img/logo-04.png">
+          <p id="author">Doctor Who</p>
+          <p class="break1">·</p>
+          <p id="postTime">May 12, 2022</p>
+          <p class="break2">·</p>
+          <a href="#"><span class="material-symbols-outlined">bookmark</span></a>
+          <p id="postTitle">I want to share my story as a doctor</p>
+        </div>
+      </template>
     </div>
+
 
     <!--TalkIt Logo-->
     <div id="logo">
@@ -116,7 +119,7 @@
     </div>
 
   </div>
-
+  <script src="./js/main.js"></script>
 </body>
 
 </html>

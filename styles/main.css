@@ -287,16 +287,16 @@ body {
         margin-bottom: 1em;
     }
 
-    .post .author,
+    .post #author,
     .post .break1,
-    .post .postTime {
+    .post #postTime {
         display: inline-flex;
         place-items: center;
         margin-left: 0;
         margin-bottom: 0;
     }
 
-    .post .postTitle {
+    .post #postTitle {
         display: flex;
         margin-bottom: 0;
         flex: 50%;

@@ -208,20 +208,8 @@ app.get('/home', (req, res) => {
     
     // If the user is logged in
     if (req.session.loggedin) {
-        const sql = `SELECT * FROM BBY_01_timeline ORDER BY postID DESC;`
         let profile = fs.readFileSync("./main.html", "utf8");
         let profileDOM = new JSDOM(profile);
-        let titleCollection = profileDOM.window.document.getElementsByClassName("postTitle");
-        let authorCollection = profileDOM.window.document.getElementsByClassName("author");
-        database.query(sql, (error, results) => {
-            if (error) throw error;
-            for (let i = 0; i < results.length; i++) {
-                titleCollection[i].innerHTML = results[0].title;
-                authorCollection[i].innerHTML = results[0].displayName;
-            }
-            res.send(profileDOM.serialize());
-            res.end();
-        })
         
         profileDOM.window.document.getElementById("greetUser").innerHTML = "Hello, " + req.session.username;
         if (req.session.isAdmin == 0) {
@@ -229,6 +217,8 @@ app.get('/home', (req, res) => {
             profileDOM.window.document.getElementById("dashboard-icon").remove();
             
         }
+        res.send(profileDOM.serialize());
+        res.end();
         
     } else {
         // If the user is not logged in
@@ -264,6 +254,19 @@ app.get('/admin', (req, res) => {
     }
     res.end();
 });
+
+app.get('/story-comment', (req, res) => {
+    // If the user is logged in
+    if (req.session.loggedin) {
+        // Render login template
+        let doc = fs.readFileSync('./story_comment.html', "utf-8");
+        res.send(doc);
+    } else {
+        res.redirect("/");
+    }
+    res.end();
+});
+
 
 app.get('/profile', (req, res) => {
     // If the user is logged in
@@ -467,6 +470,25 @@ app.get('/get-users', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
         database.query('SELECT * FROM BBY_01_user', (error, results) => {
+            if (error) console.log(error);
+            res.send({
+                status: "success",
+                rows: results
+            });
+        });
+    } else {
+        // If the user is not logged in
+        res.redirect("/");
+    }
+});
+
+app.get('/get-posts', (req, res) => {
+    // If the user is logged in
+    if (req.session.loggedin) {
+        let sql = `SELECT * FROM BBY_01_timeline
+                    INNER JOIN profile
+                    ON BBY_01_timeline.userID = profile.userID`;
+        database.query(sql, (error, results) => {
             if (error) console.log(error);
             res.send({
                 status: "success",
