@@ -271,8 +271,8 @@ app.get('/story-comment', (req, res) => {
         let doc = fs.readFileSync('./story_comment.html', "utf-8");
         let profileDOM = new JSDOM(doc);
         if (req.session.isAdmin == 0) {
-            profileDOM.window.document.getElementById("dBoard").remove();
-            profileDOM.window.document.getElementById("dashboard-icon").remove();
+            profileDOM.window.document.getElementById("dashboard").remove();
+            // profileDOM.window.document.getElementById("dashboard-icon").remove();
         }
         let sql = `SELECT * FROM BBY_01_timeline
                     INNER JOIN profile
@@ -283,6 +283,7 @@ app.get('/story-comment', (req, res) => {
             profileDOM.window.document.getElementById("postTime").innerHTML = results[0].date;
             profileDOM.window.document.getElementById("postTitle").innerHTML = results[0].title;
             profileDOM.window.document.getElementById("postText").innerHTML = results[0].story;
+            profileDOM.window.document.getElementById("postPic").setAttribute("src", "/img/" + results[0].profilePic)
             res.send(profileDOM.serialize());
             res.end();
         })
@@ -534,7 +535,10 @@ app.post('/post-story',(req, res) => {
 app.get('/get-users', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
-        database.query('SELECT * FROM BBY_01_user', (error, results) => {
+        let sql = `SELECT * FROM BBY_01_user
+                    INNER JOIN profile
+                    ON BBY_01_user.ID = profile.userID`;
+        database.query(sql, (error, results) => {
             if (error) console.log(error);
             res.send({
                 status: "success",
@@ -582,8 +586,12 @@ app.post('/add-user', (req, res) => {
 
 app.post('/update-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    database.query('UPDATE BBY_01_user SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?',
-        [req.body.username, req.body.email, req.body.password, req.body.isAdmin, req.body.id],
+    let sql = `UPDATE BBY_01_user 
+                SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?;
+                UPDATE profile
+                SET displayName = ?;`;
+    database.query('',
+        [req.body.username, req.body.email, req.body.password, req.body.isAdmin, req.body.id, req.body.displayname],
         (error, results) => {
             if (error) console.log(error);
             res.send({
