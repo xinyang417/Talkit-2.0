@@ -20,6 +20,8 @@
 
 <body>
     <div class="container">
+
+        <!-- Top bar -->
         <div id="nav">
             <nav>
                 <button onclick="history.back()"><span class="material-symbols-outlined">
@@ -27,48 +29,103 @@
                     </span></button>
             </nav>
         </div>
+
+        <!-- Branding -->
         <div id="logo">
             <figure class="logo">
-                <img class="img" alt="..." src="/img/logo-01.png" />
+                <img class="img" alt="..." src="/images/logo-01.png">
             </figure>
         </div>
 
-        <div id="postSection">
-            <div class="post">
-                <img id="postPic" class="profilePic" alt="profilePic" src="/img/logo-04.png">
-                <a href="#"><span class="material-symbols-outlined">bookmark</span></a>
-                <p id="author"></p>
-                <p id="postTime"></p>
-                <p id="postTitle"></p>
-                <p id="postText"></p>
+        <!-- Story title (web only) -->
+        <div id="read">
+            <div id="pageName">
+                <h2 id="postTitle">Post Title</h2>
+            </div>
+
+            <!-- Read story -->
+
+            <div id="postSection">
+                <div class="info">
+                    <img class="profilePic" alt="profilePic" src="/images/logo-04.png">
+                    <a href="#"><span class="material-symbols-outlined">bookmark</span></a>
+                    <p id="author">Author</p>
+                    <p id="postTime">Time & Date</p>
+                </div>
+
+                <p id="postText">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione sed ducimus tenetur,
+                    deserunt, ullam, provident tempora incidunt deleniti eveniet quos a doloribus molestias cum sapiente
+                    sint. Error sapiente facere repellendus excepturi, quae eveniet maxime amet, rem id ex autem soluta
+                    ipsa, corrupti architecto et nihil neque dignissimos vel quasi perspiciatis quia? Neque unde nisi
+                    facilis quas, eaque quia autem eius ea ab tempore repudiandae quidem, reiciendis, nobis beatae
+                    deserunt vel maiores possimus? Id ea a unde. Facere consequuntur ad tempora, ratione quo vitae
+                    inventore. Doloremque cumque, autem, eius dignissimos distinctio perspiciatis odit velit minima
+                    impedit deserunt quam quisquam quasi pariatur.</p>
+            </div>
+
+            <!-- Read comments -->
+            <div id="cmtSection">
+                <h4>Comments</h4>
+
+                <div class="cmt">
+                    <div class="info">
+                        <img class="profilePic" alt="profilePic" src="/images/logo-02.png">
+                        <p class="cmtName">Commenter</p>
+                        <p class="cmtTime">Time & Date</p>
+                    </div>
+                    <p class="cmtText">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui maxime minus
+                        sapiente
+                        hic? Accusamus, saepe reiciendis! Ipsam ullam, explicabo dolorem molestiae dicta necessitatibus?
+                        Culpa quasi illo a neque quisquam consectetur fugiat repellat voluptatum iusto?</p>
+                </div>
             </div>
         </div>
 
-        <div id="cmtSection">
-            <h4>Comments</h4>
-
-            <template id="commentTemplate">
-                <div class="cmt">
-                    <img id="cmtPic" class="profilePic" alt="profilePic" src="/img/logo-04.png">
-                    <p class="cmtName" id="commenter">Jason</p>
-                    <p class="cmtTime" id="commentTime">May 13, 2022</p>
-                    <p class="cmtText" id="commentText"></p>
-                </div>
-            </template>
-        </div>
-
+        <!-- Add a comment -->
         <div id="addCmt">
             <button class="collapsible">
                 Add a comment</button>
             <div class="content">
                 <form id='input'>
-                    <textarea id="addCmtText" rows="4" cols="50" placeholder="Any thoughts?"></textarea>
-                    <button id="reply" type="submit"><b>Reply</b></button>
+                    <textarea id="addCmtText" rows="10" cols="50" placeholder="Any thoughts?"></textarea>
+                    <div class="buttons">
+                        <button id="cancel"><b>Cancel</b></button>
+                        <button id="reply" type="submit"><b>Reply</b></button>
+                    </div>
                 </form>
             </div>
         </div>
 
+        <!--Footer-->
+        <div id="footer">
+            <ul>
+                <li><a href="/home"><span class="material-symbols-outlined" id="home">home</span><b>Home</b></a> </li>
+                <li><a href="#"><span class="material-symbols-outlined" id="bookmark">bookmark</span><b>Bookmark</b></a>
+                </li>
+                <li><a href="#"><span class="material-symbols-outlined" id="add">add_box</span><b>Share
+                            Story</b></a></li>
+                <li><a href="#"><span class="material-symbols-outlined" id="inbox">mail</span><b>Messages</b></a> </li>
+                <li><a href="#"><span class="material-symbols-outlined"
+                            id="notifications">notifications</span><b>Notifications</b></a>
+                </li>
+            </ul>
+        </div>
+
+        <!--Bottom Menu-->
+        <div id="bottomMenu">
+            <ul>
+                <li id="dashboard"><a href="/admin"><b>Dashboard</b></a></li>
+                <li><a href="/profile"><b>Profile</b></a> </li>
+                <li><a href="/logout"><b>Log Out</b></a> </li>
+            </ul>
+        </div>
+
+
+
+
+
     </div>
+
     <script src="/js/story_comment.js"></script>
 </body>
 

@@ -22,7 +22,7 @@ function displayComment() {
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
                 if (data.status == "success") {
-                    
+
                     for (let i = data.rows.length - 1; i >= 0; i--) {
                         let row = data.rows[i];
                         var newCommentTemplate = commentTemplate.content.cloneNode(true);
@@ -33,7 +33,7 @@ function displayComment() {
                         newCommentTemplate.getElementById("commentTime").innerHTML = time;
                         newCommentTemplate.getElementById("commentText").innerHTML = text;
                         parent.appendChild(newCommentTemplate);
-                        
+
                     }
                 } else {
                     console.log("Error!");
