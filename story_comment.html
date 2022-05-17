@@ -33,7 +33,7 @@
         <!-- Branding -->
         <div id="logo">
             <figure class="logo">
-                <img class="img" alt="..." src="/images/logo-01.png">
+                <img class="img" alt="..." src="/img/logo-01.png">
             </figure>
         </div>
 
@@ -47,37 +47,28 @@
 
             <div id="postSection">
                 <div class="info">
-                    <img class="profilePic" alt="profilePic" src="/images/logo-04.png">
+                    <img class="profilePic" alt="profilePic" src="/img/logo-04.png">
                     <a href="#"><span class="material-symbols-outlined">bookmark</span></a>
                     <p id="author">Author</p>
                     <p id="postTime">Time & Date</p>
                 </div>
 
-                <p id="postText">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione sed ducimus tenetur,
-                    deserunt, ullam, provident tempora incidunt deleniti eveniet quos a doloribus molestias cum sapiente
-                    sint. Error sapiente facere repellendus excepturi, quae eveniet maxime amet, rem id ex autem soluta
-                    ipsa, corrupti architecto et nihil neque dignissimos vel quasi perspiciatis quia? Neque unde nisi
-                    facilis quas, eaque quia autem eius ea ab tempore repudiandae quidem, reiciendis, nobis beatae
-                    deserunt vel maiores possimus? Id ea a unde. Facere consequuntur ad tempora, ratione quo vitae
-                    inventore. Doloremque cumque, autem, eius dignissimos distinctio perspiciatis odit velit minima
-                    impedit deserunt quam quisquam quasi pariatur.</p>
+                <p id="postText"></p>
             </div>
 
             <!-- Read comments -->
             <div id="cmtSection">
                 <h4>Comments</h4>
-
-                <div class="cmt">
-                    <div class="info">
-                        <img class="profilePic" alt="profilePic" src="/images/logo-02.png">
-                        <p class="cmtName">Commenter</p>
-                        <p class="cmtTime">Time & Date</p>
+                <template id="commentTemplate">
+                    <div class="cmt">
+                        <div class="info">
+                            <img class="profilePic" id="commenterPic" alt="profilePic">
+                            <p class="cmtName" id="commenter">Commenter</p>
+                            <p class="cmtTime" id="commentTime">Time & Date</p>
+                        </div>
+                        <p class="cmtText" id="commentText"></p>
                     </div>
-                    <p class="cmtText">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui maxime minus
-                        sapiente
-                        hic? Accusamus, saepe reiciendis! Ipsam ullam, explicabo dolorem molestiae dicta necessitatibus?
-                        Culpa quasi illo a neque quisquam consectetur fugiat repellat voluptatum iusto?</p>
-                </div>
+                </template>
             </div>
         </div>
 

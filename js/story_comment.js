@@ -29,6 +29,8 @@ function displayComment() {
                         let displayName = row.displayName;
                         let text = row.comment;
                         let time = row.date;
+                        let profilePic = "/img/" + row.profilePic;
+                        newCommentTemplate.getElementById("commenterPic").setAttribute("src", profilePic);
                         newCommentTemplate.getElementById("commenter").innerHTML = displayName;
                         newCommentTemplate.getElementById("commentTime").innerHTML = time;
                         newCommentTemplate.getElementById("commentText").innerHTML = text;
