@@ -471,7 +471,10 @@ app.get('/get-users', (req, res) => {
 app.get('/get-posts', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
-        database.query('SELECT * FROM BBY_01_timeline', (error, results) => {
+        let sql = `SELECT * FROM BBY_01_timeline
+                    INNER JOIN profile
+                    ON BBY_01_timeline.userID = profile.userID`;
+        database.query(sql, (error, results) => {
             if (error) console.log(error);
             res.send({
                 status: "success",

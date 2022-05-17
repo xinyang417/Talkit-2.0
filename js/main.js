@@ -1,3 +1,5 @@
+  
+  // Loads posts in database once home page is opened
   function displayPosts() {
       const xhr = new XMLHttpRequest();
       var postTemplate = document.getElementById("postTemplate");
