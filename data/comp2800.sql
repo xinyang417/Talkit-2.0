@@ -57,4 +57,7 @@ CREATE TABLE IF NOT EXISTS BBY_01_comment (
         ON UPDATE CASCADE
 );
 
+insert into bby_01_timeline  (userID, title, story, date) values 
+(1, 'MyStory', 'Hello World', 2020-02-02), 
+(1, 'MyStory2', 'Hello World2!', 2020-05-02);
 

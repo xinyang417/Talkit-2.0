@@ -210,8 +210,9 @@ app.get('/home', (req, res) => {
     if (req.session.loggedin) {
         let profile = fs.readFileSync("./main.html", "utf8");
         let profileDOM = new JSDOM(profile);
-        
         profileDOM.window.document.getElementById("greetUser").innerHTML = "Hello, " + req.session.username;
+        res.send(profileDOM.serialize());
+        res.end();
         if (req.session.isAdmin == 0) {
             profileDOM.window.document.getElementById("dBoard").remove();
             profileDOM.window.document.getElementById("dashboard-icon").remove();
@@ -507,6 +508,26 @@ app.post('/update-profile', (req, res) => {
         msg: message
     });
 });
+
+app.post('/post-story',(req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    let title = req.body.title;
+    let story = req.body.story;
+    let date = req.body.date;
+    console.log(date);
+    if (title != '' && story != '') {
+        database.query('INSERT INTO BBY_01_timeline (userID, title, story, date) values(?, ?, ?, ?)',
+        [1, title, story, date],
+        (error, results, fields) => {
+            if (error) console.log(error);
+            res.send({
+                status: "success",
+                msg: "Record added."
+            });
+        });
+    }
+});
+
 
 app.get('/get-users', (req, res) => {
     // If the user is logged in
