@@ -208,6 +208,17 @@ app.get('/home', (req, res) => {
     
     // If the user is logged in
     if (req.session.loggedin) {
+        const sql = ` INSERT INTO profile(userID, displayName, about, profilePic)
+        SELECT * FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
+        WHERE NOT EXISTS (SELECT userID
+                            FROM profile
+                            WHERE userID = ?) LIMIT 1;`;
+        database.query(sql, [req.session.userid, req.session.username, req.session.userid, req.session.userid], (error, results, fields) => {
+            if (error) {
+                console.log(error);
+            }
+        });
+
         let profile = fs.readFileSync("./main.html", "utf8");
         let profileDOM = new JSDOM(profile);
         profileDOM.window.document.getElementById("greetUser").innerHTML = "Hello, " + req.session.username;
@@ -312,17 +323,6 @@ app.post('/story-comment', (req, res) => {
 app.get('/profile', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
-
-        const sql = ` INSERT INTO profile(userID, displayName, about, profilePic)
-        SELECT * FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
-        WHERE NOT EXISTS (SELECT userID
-                            FROM profile
-                            WHERE userID = ?) LIMIT 1;`;
-        database.query(sql, [req.session.userid, req.session.username, req.session.userid, req.session.userid], (error, results, fields) => {
-            if (error) {
-                console.log(error);
-            }
-        });
         let doc = fs.readFileSync('./profile.html', "utf8");
         let profileDOM = new JSDOM(doc);
         if (req.session.isAdmin == 0) {
@@ -512,10 +512,11 @@ app.post('/post-story',(req, res) => {
     let title = req.body.title;
     let story = req.body.story;
     let date = req.body.date;
-    console.log(date);
+    let user = req.session.userid;
+
     if (title != '' && story != '') {
         database.query('INSERT INTO BBY_01_timeline (userID, title, story, date) values(?, ?, ?, ?)',
-        [1, title, story, date],
+        [user, title, story, date],
         (error, results, fields) => {
             if (error) console.log(error);
             res.send({
