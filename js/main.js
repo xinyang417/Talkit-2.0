@@ -13,9 +13,10 @@
                           var newPostTemplate = postTemplate.content.cloneNode(true);
                           let displayName = row.displayName;
                           let title = row.title;
-                          let currentTime = Date(); // delete 
+                          let currentDate = row.date; 
+                          
                           newPostTemplate.getElementById("author").innerHTML = displayName;
-                          newPostTemplate.getElementById("postTime").innerHTML = currentTime;
+                          newPostTemplate.getElementById("postTime").innerHTML = currentDate;
                           newPostTemplate.getElementById("postTitle").innerHTML = title;
                           document.body.appendChild(newPostTemplate);
                       }
@@ -32,3 +33,5 @@
       xhr.open("GET", "/get-posts");
       xhr.send();
   }
+
+  

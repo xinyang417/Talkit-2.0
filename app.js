@@ -452,6 +452,26 @@ app.post('/update-profile', (req, res) => {
     });
 });
 
+app.post('/post-story',(req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    let title = req.body.title;
+    let story = req.body.story;
+    let date = req.body.date;
+    console.log(date);
+    if (title != '' && story != '') {
+        database.query('INSERT INTO BBY_01_timeline (userID, title, story, date) values(?, ?, ?, ?)',
+        [1, title, story, date],
+        (error, results, fields) => {
+            if (error) console.log(error);
+            res.send({
+                status: "success",
+                msg: "Record added."
+            });
+        });
+    }
+});
+
+
 app.get('/get-users', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
