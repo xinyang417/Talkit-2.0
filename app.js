@@ -211,8 +211,6 @@ app.get('/home', (req, res) => {
         let profile = fs.readFileSync("./main.html", "utf8");
         let profileDOM = new JSDOM(profile);
         profileDOM.window.document.getElementById("greetUser").innerHTML = "Hello, " + req.session.username;
-        res.send(profileDOM.serialize());
-        res.end();
         if (req.session.isAdmin == 0) {
             profileDOM.window.document.getElementById("dBoard").remove();
             profileDOM.window.document.getElementById("dashboard-icon").remove();

@@ -12,13 +12,13 @@ function displayPosts() {
                         var newPostTemplate = postTemplate.content.cloneNode(true);
                         let displayName = row.displayName;
                         let title = row.title;
-                        let currentTime = row.date;
+                        let currentTime = row.date.slice(0, 19).replace('T', ' ');
+                        console.log(currentTime);
                         newPostTemplate.getElementById("author").innerHTML = displayName;
                         newPostTemplate.getElementById("postTime").innerHTML = currentTime;
                         newPostTemplate.getElementById("postTitle").innerHTML = `<p onclick = "sendPostId(` 
                                                                                 + row.postID + `)">` 
                                                                                 + title + `</p>`;
-                        // document.body.appendChild(newPostTemplate);
                         parent.appendChild(newPostTemplate);
                     }
                 } else {
