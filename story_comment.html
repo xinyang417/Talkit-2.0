@@ -35,7 +35,7 @@
 
         <div id="postSection">
             <div class="post">
-                <img class="profilePic" alt="profilePic" src="/img/logo-04.png">
+                <img id="postPic" class="profilePic" alt="profilePic" src="/img/logo-04.png">
                 <a href="#"><span class="material-symbols-outlined">bookmark</span></a>
                 <p id="author"></p>
                 <p id="postTime"></p>
@@ -46,14 +46,15 @@
 
         <div id="cmtSection">
             <h4>Comments</h4>
-            <div class="cmt">
-                <img class="profilePic" alt="profilePic" src="/img/logo-02.png">
-                <p class="cmtName">Jason</p>
-                <p class="cmtTime">May 13, 2022</p>
-                <p class="cmtText">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui maxime minus sapiente
-                    hic? Accusamus, saepe reiciendis! Ipsam ullam, explicabo dolorem molestiae dicta necessitatibus?
-                    Culpa quasi illo a neque quisquam consectetur fugiat repellat voluptatum iusto?</p>
-            </div>
+
+            <template id="commentTemplate">
+                <div class="cmt">
+                    <img id="cmtPic" class="profilePic" alt="profilePic" src="/img/logo-04.png">
+                    <p class="cmtName" id="commenter">Jason</p>
+                    <p class="cmtTime" id="commentTime">May 13, 2022</p>
+                    <p class="cmtText" id="commentText"></p>
+                </div>
+            </template>
         </div>
 
         <div id="addCmt">

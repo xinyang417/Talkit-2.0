@@ -1,5 +1,6 @@
 function displayPosts() {
     const xhr = new XMLHttpRequest();
+    var parent = document.getElementById("postList");
     var postTemplate = document.getElementById("postTemplate");
     xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE) {
@@ -17,7 +18,8 @@ function displayPosts() {
                         newPostTemplate.getElementById("postTitle").innerHTML = `<p onclick = "sendPostId(` 
                                                                                 + row.postID + `)">` 
                                                                                 + title + `</p>`;
-                        document.body.appendChild(newPostTemplate);
+                        // document.body.appendChild(newPostTemplate);
+                        parent.appendChild(newPostTemplate);
                     }
                 } else {
                     console.log("Error!");

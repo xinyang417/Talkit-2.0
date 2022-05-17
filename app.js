@@ -280,6 +280,25 @@ app.get('/story-comment', (req, res) => {
     
 });
 
+app.get('/get-comment', (req, res) => {
+    if (req.session.loggedin) {
+        let sql = `SELECT * FROM bby_01_comment
+                    INNER JOIN profile
+                    ON bby_01_comment.userID = profile.userID
+                    WHERE bby_01_comment.postID = ?`;
+        database.query(sql, [req.session.postID],  (error, results) => {
+            if (error) console.log(error);
+            res.send({
+                status: "success",
+                rows: results
+            });
+            res.end();
+        });
+    } else {
+        res.redirect("/");
+    }
+});
+
 app.post('/story-comment', (req, res) => {
     if (req.session.loggedin) {
         req.session.postID = req.body.postID;
@@ -288,7 +307,7 @@ app.post('/story-comment', (req, res) => {
     } else {
         res.redirect("/");
     }
-})
+});
 
 
 app.get('/profile', (req, res) => {
@@ -296,11 +315,11 @@ app.get('/profile', (req, res) => {
     if (req.session.loggedin) {
 
         const sql = ` INSERT INTO profile(userID, displayName, about, profilePic)
-        SELECT * FROM (SELECT ? AS userID, '' AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
+        SELECT * FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
         WHERE NOT EXISTS (SELECT userID
                             FROM profile
                             WHERE userID = ?) LIMIT 1;`;
-        database.query(sql, [req.session.userid, req.session.userid, req.session.userid], (error, results, fields) => {
+        database.query(sql, [req.session.userid, req.session.username, req.session.userid, req.session.userid], (error, results, fields) => {
             if (error) {
                 console.log(error);
             }
