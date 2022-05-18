@@ -29,13 +29,13 @@ CREATE TABLE IF NOT EXISTS profile (
         ON DELETE CASCADE
         ON UPDATE CASCADE);
 
--- Unused table for now
 CREATE TABLE IF NOT EXISTS BBY_01_timeline (
         postID int NOT NULL AUTO_INCREMENT,
         userID int NOT NULL,
         title varchar(500),
         story varchar(2000),
         date datetime,
+        storyPic varchar(500),
         PRIMARY KEY (postID),
         FOREIGN KEY (userID) REFERENCES bby_01_user(ID)
         ON DELETE CASCADE
@@ -57,7 +57,6 @@ CREATE TABLE IF NOT EXISTS BBY_01_comment (
         ON UPDATE CASCADE
 );
 
-insert into bby_01_timeline  (userID, title, story, date) values 
-(1, 'MyStory', 'Hello World', 2020-02-02), 
-(1, 'MyStory2', 'Hello World2!', 2020-05-02);
+INSERT INTO bby_01_timeline  (userID, title, story, date) VALUES 
+(1, 'Feeling stressed', 'Hi, I want to speak out how stressful it is at school currently.', '2022-02-02 12:21:30');
 
