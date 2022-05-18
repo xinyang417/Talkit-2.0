@@ -290,12 +290,16 @@ app.get('/story-comment', (req, res) => {
                     ON BBY_01_timeline.userID = bby_01_profile.userID
                     WHERE bby_01_timeline.postID = ?`;
         database.query(sql, [req.session.postID], (error, results) => {
+            if (error) throw error;
             let date = results[0].date.toISOString().slice(0, 19).replace('T', ' ');
             profileDOM.window.document.getElementById("author").innerHTML = results[0].displayName;
             profileDOM.window.document.getElementById("postTime").innerHTML = date;
             profileDOM.window.document.getElementById("postTitle").innerHTML = results[0].title;
             profileDOM.window.document.getElementById("postText").innerHTML = results[0].story;
-            profileDOM.window.document.getElementById("postPic").setAttribute("src", "/img/" + results[0].profilePic)
+            profileDOM.window.document.getElementById("postPic").setAttribute("src", "/img/" + results[0].profilePic);
+            profileDOM.window.document.getElementById("reader").innerHTML = req.session.username;
+            profileDOM.window.document.getElementById("reader").setAttribute("value", req.session.userid);
+            profileDOM.window.document.getElementById("reader").setAttribute("class", req.session.isAdmin);
             res.send(profileDOM.serialize());
             res.end();
         })
