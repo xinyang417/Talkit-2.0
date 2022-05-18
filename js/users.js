@@ -26,7 +26,7 @@ function getUsers() {
                     document.getElementById("users").innerHTML = str;
 
                     let records = document.querySelectorAll(
-                        "td.email span, td.displayName, td.usernames span, td.password span, td.admin span");
+                        "td.email span, td.displayName span, td.usernames span, td.password span, td.admin span");
                     for (let j = 0; j < records.length; j++) {
                         records[j].addEventListener("click", edit);
                     }
@@ -45,6 +45,25 @@ function getUsers() {
 }
 
 getUsers();
+
+function setDefaultDisplayName(email){
+
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {        
+            } else {
+                console.log(this.status);
+            }
+        } else {
+            console.log("ERROR", this.status);
+        }
+    }
+    xhr.open("POST", "/set-default-displayName");
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send("email=" + email);
+}
 
 function edit(e) {
     let spanText = e.target.innerHTML;
