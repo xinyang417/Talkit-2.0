@@ -114,6 +114,7 @@ body {
     .profilePic {
         height: 50px;
         width: 50px;
+        border-radius: 100%;
     }
 
     .info {
@@ -138,7 +139,7 @@ body {
         margin-top: 0;
         font-size: 16px;
         margin-bottom: 0;
-        margin-left: 4em;
+        margin-left: 4.2em;
     }
 
 
@@ -165,7 +166,7 @@ body {
     .cmtText {
         margin-bottom: 1.5em;
         margin-top: 0;
-        margin-left: 4em;
+        margin-left: 4.2em;
     }
 
     .collapsible {
@@ -308,8 +309,10 @@ body {
     }
 
     .profilePic {
-        max-width: 45px;
         float: left;
+        width: 45px;
+        height: 45px;
+        border-radius: 100%;
     }
 
     #postSection {

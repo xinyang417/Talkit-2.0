@@ -141,8 +141,10 @@ body {
 
     .profilePic {
         max-width: 55px;
+        max-height: 55px;
         float: left;
         margin: 0 0 1em 0;
+        border-radius: 100%;
     }
 
     .post .bookmark {
@@ -327,7 +329,9 @@ body {
     }
 
     .profilePic {
-        max-width: 45px;
+        width: 45px;
+        height: 45px;
+        border-radius: 100%;
         float: left;
         margin: 0 1em 1em 0;
     }
