@@ -27,6 +27,7 @@ function displayComment() {
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
                 if (data.status == "success") {
+                    let id = document.getElementById("reader").getAttributeNode("value").value;
                     for (let i = data.rows.length - 1; i >= 0; i--) {
                         let row = data.rows[i];
                         var newCommentTemplate = commentTemplate.content.cloneNode(true);
@@ -39,11 +40,16 @@ function displayComment() {
                         newCommentTemplate.getElementById("commenter").innerHTML = displayName;
                         newCommentTemplate.getElementById("commentTime").innerHTML = time;
                         newCommentTemplate.getElementById("commentText").innerHTML = text;
-                        newCommentTemplate.getElementById("postDelete").setAttribute("onclick", `deleteComment(${row.commentID})`);
                         newCommentTemplate.getElementById("commenter").setAttribute("id", "commenter" + row.commentID);
-                        newCommentTemplate.getElementById("postDelete").setAttribute("id", "delete" + row.commentID);
                         newCommentTemplate.getElementById("commentTime").setAttribute("id", "commentTime" + row.commentID);
                         newCommentTemplate.getElementById("commentText").setAttribute("id", "commentText" + row.commentID);
+                        if (id != row.userID) {
+                            newCommentTemplate.getElementById("postDelete").remove();
+                        } else {
+                            newCommentTemplate.getElementById("postDelete").setAttribute("onclick", `deleteComment(${row.commentID})`);
+                            newCommentTemplate.getElementById("postDelete").setAttribute("id", "delete" + row.commentID);
+                        }
+                        
                         parent.appendChild(newCommentTemplate);
                     }     
                 } else {
