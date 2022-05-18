@@ -15,8 +15,12 @@ const {
     connect
 } = require('http2');
 const ConnectionConfig = require('mysql/lib/ConnectionConfig');
-const { profile } = require('console');
-const { resourceLimits } = require('worker_threads');
+const {
+    profile
+} = require('console');
+const {
+    resourceLimits
+} = require('worker_threads');
 const app = express();
 
 
@@ -206,7 +210,7 @@ app.post('/check-account', (req, res) => {
 })
 
 app.get('/home', (req, res) => {
-    
+
     // If the user is logged in
     if (req.session.loggedin) {
         const sql = ` INSERT INTO bby_01_profile(userID, displayName, about, profilePic)
@@ -229,25 +233,32 @@ app.get('/home', (req, res) => {
         }
         res.send(profileDOM.serialize());
         res.end();
-        
+
     } else {
         // If the user is not logged in
         res.redirect("/");
         res.end();
     }
-    
+
 });
 
 app.get('/share-story', (req, res) => {
     if (req.session.loggedin) {
         // Render login template
         let doc = fs.readFileSync('./share_story.html', "utf-8");
-        res.send(doc);
+        let profileDOM = new JSDOM(doc);
+        if (req.session.isAdmin == 0) {
+            profileDOM.window.document.getElementById("dashboard").remove();
+        }
+        res.send(profileDOM.serialize());
+        res.end();
+
     } else {
         // If the user is not logged in
         res.redirect("/");
+        res.end();
     }
-    res.end();
+
 });
 
 app.get('/admin', (req, res) => {
@@ -292,11 +303,11 @@ app.get('/story-comment', (req, res) => {
             res.send(profileDOM.serialize());
             res.end();
         })
-        
+
     } else {
         res.redirect("/");
     }
-    
+
 });
 
 app.get('/get-comment', (req, res) => {
@@ -305,7 +316,7 @@ app.get('/get-comment', (req, res) => {
                     INNER JOIN bby_01_profile
                     ON bby_01_comment.userID = bby_01_profile.userID
                     WHERE bby_01_comment.postID = ?`;
-        database.query(sql, [req.session.postID],  (error, results) => {
+        database.query(sql, [req.session.postID], (error, results) => {
             if (error) console.log(error);
             res.send({
                 status: "success",
@@ -341,7 +352,7 @@ app.post('/comment', (req, res) => {
             });
             res.end();
         });
-    
+
     } else {
         res.redirect("/");
     }
@@ -447,11 +458,11 @@ app.get('/get-displayname', (req, res) => {
 app.get('/get-about', (req, res) => {
     // If the user is loggedin
     if (req.session.loggedin) {
-    
+
         const sql = `SELECT * 
                 FROM bby_01_profile 
                 WHERE userID = ?`;
-    
+
         database.query(sql, [req.session.userid], (error, results) => {
             if (error) console.log(error);
             res.send({
@@ -498,7 +509,7 @@ app.get('/get-username', (req, res) => {
                 rows: results
             });
         });
-    
+
     } else {
         // If the user is not logged in
         res.redirect("/");
@@ -513,7 +524,7 @@ app.post('/update-profile', (req, res) => {
     let newPassword = req.body.password;
     let sql;
     let message = "Profile updated.";
-    
+
     if (newAbout != '') {
         sql = `UPDATE bby_01_profile
                 SET about = ?
@@ -560,7 +571,7 @@ app.post('/update-profile', (req, res) => {
     });
 });
 
-app.post('/post-story',(req, res) => {
+app.post('/post-story', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     let title = req.body.title;
     let story = req.body.story;
@@ -569,14 +580,14 @@ app.post('/post-story',(req, res) => {
 
     if (title != '' && story != '') {
         database.query('INSERT INTO BBY_01_timeline (userID, title, story, date) values(?, ?, ?, ?)',
-        [user, title, story, date],
-        (error, results, fields) => {
-            if (error) console.log(error);
-            res.send({
-                status: "success",
-                msg: "Record added."
+            [user, title, story, date],
+            (error, results, fields) => {
+                if (error) console.log(error);
+                res.send({
+                    status: "success",
+                    msg: "Record added."
+                });
             });
-        });
     }
 });
 
@@ -592,15 +603,15 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
             sql = `UPDATE bby_01_timeline
             SET storyPic = ?
             WHERE postID = ?`;
-        database.query(sql, [req.files[0].filename, results[0].postID], (error, results) => {
-            if (error) console.log(error);
-        res.send({
-            status: "success",
-            rows: results
+            database.query(sql, [req.files[0].filename, results[0].postID], (error, results) => {
+                if (error) console.log(error);
+                res.send({
+                    status: "success",
+                    rows: results
+                });
             });
-        });
         }
-    });            
+    });
 });
 
 app.get('/get-users', (req, res) => {
@@ -661,7 +672,7 @@ app.post('/add-user', (req, res) => {
                             FROM bby_01_profile
                             WHERE userID = ?) LIMIT 1;`;
                 database.query(sql, [results[0].ID, results[0].username, results[0].ID], (error, results) => {
-                    if(error) throw error;
+                    if (error) throw error;
                     res.send({
                         status: "success",
                         msg: "Record added."
@@ -677,7 +688,8 @@ app.post('/update-user', (req, res) => {
                 SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?;`;
     database.query(sql,
         [req.body.username, req.body.email, req.body.password, req.body.isAdmin,
-            req.body.id],
+            req.body.id
+        ],
         (error, results) => {
             if (error) console.log(error);
             sql = `UPDATE bby_01_profile
@@ -764,21 +776,21 @@ app.get("/logout", (req, res) => {
 var connection;
 
 function handleDisconnect() {
-    if (is_heroku){
+    if (is_heroku) {
         connection = mysql.createConnection(dbConfigHeroku); // Recreate the connection, since
-                                                  // the old one cannot be reused.
+        // the old one cannot be reused.
 
-        connection.connect(function(err) {              // The server is either down
-            if(err) {                                     // or restarting (takes a while sometimes).
+        connection.connect(function (err) { // The server is either down
+            if (err) { // or restarting (takes a while sometimes).
                 console.log('error when connecting to db:', err);
-                setTimeout(handleDisconnect, 2000); 
-            }                                     
-        });                                     
-        connection.on('error', function(err) {
-            if(err.code === 'PROTOCOL_CONNECTION_LOST') { 
-                handleDisconnect();                        
-            } else {                                      
-                throw err;                                  
+                setTimeout(handleDisconnect, 2000);
+            }
+        });
+        connection.on('error', function (err) {
+            if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+                handleDisconnect();
+            } else {
+                throw err;
             }
         });
     }
