@@ -8,7 +8,6 @@ function getUsers() {
                     let str = `<tr>
                                     <th class ="userid_header"><span>ID</span></th>
                                     <th class ="username_header"><span>User Name</span></th>
-                                    <th class ="displayName_header"><span>Display Name</span></th>
                                     <th class ="email_header"><span>Email</span></th>
                                     <th class ="password_header"><span>Password</span></th>
                                     <th class ="admin_header"><span>isAdmin</span></th>
@@ -17,7 +16,6 @@ function getUsers() {
                         let row = data.rows[i];
                         str += ("<tr><td class = 'id'>" + row.ID +
                             "</td><td class = 'usernames'><span>" + row.username +
-                            "</span></td><td class = 'displayName'><span>" + row.displayName +
                             "</span></td><td class = 'email'><span>" + row.email +
                             "</span></td><td class = 'password'><span>" + row.password +
                             "</span></td><td class = 'admin'><span>" + row.isAdmin +
@@ -72,7 +70,6 @@ function edit(e) {
     let email = parent.parentNode.querySelector(".email");
     let name = parent.parentNode.querySelector(".usernames");
     let isAdmin = parent.parentNode.querySelector(".admin");
-    let displayName = parent.parentNode.querySelector(".displayName");
     let input = document.createElement("input");
     input.value = spanText;
     input.addEventListener("keyup", function (e) {
@@ -90,7 +87,6 @@ function edit(e) {
                 dataToSend = {
                     id: parent.parentNode.querySelector(".id").innerHTML,
                     username: parent.parentNode.querySelector(".usernames span").innerHTML,
-                    displayname: parent.parentNode.querySelector(".displayName span").innerHTML,
                     email: v,
                     password: parent.parentNode.querySelector(".password span").innerHTML,
                     isAdmin: parent.parentNode.querySelector(".admin span").innerHTML
@@ -99,7 +95,6 @@ function edit(e) {
                 dataToSend = {
                     id: parent.parentNode.querySelector(".id").innerHTML,
                     username: v,
-                    displayname: parent.parentNode.querySelector(".displayName span").innerHTML,
                     email: parent.parentNode.querySelector(".email span").innerHTML,
                     password: parent.parentNode.querySelector(".password span").innerHTML,
                     isAdmin: parent.parentNode.querySelector(".admin span").innerHTML
@@ -108,7 +103,6 @@ function edit(e) {
                 dataToSend = {
                     id: parent.parentNode.querySelector(".id").innerHTML,
                     username: parent.parentNode.querySelector(".usernames span").innerHTML,
-                    displayname: parent.parentNode.querySelector(".displayName span").innerHTML,
                     email: parent.parentNode.querySelector(".email span").innerHTML,
                     password: v,
                     isAdmin: parent.parentNode.querySelector(".admin span").innerHTML
@@ -117,19 +111,9 @@ function edit(e) {
                 dataToSend = {
                     id: parent.parentNode.querySelector(".id").innerHTML,
                     username: parent.parentNode.querySelector(".usernames span").innerHTML,
-                    displayname: parent.parentNode.querySelector(".displayName").innerHTML,
                     email: parent.parentNode.querySelector(".email span").innerHTML,
                     password: parent.parentNode.querySelector(".password span").innerHTML,
                     isAdmin: v
-                };
-            } else if (parent == displayName) {
-                dataToSend = {
-                    id: parent.parentNode.querySelector(".id").innerHTML,
-                    username: parent.parentNode.querySelector(".usernames span").innerHTML,
-                    displayname: v,
-                    email: parent.parentNode.querySelector(".email span").innerHTML,
-                    password: parent.parentNode.querySelector(".password span").innerHTML,
-                    isAdmin: parent.parentNode.querySelector(".admin span").innerHTML
                 };
             }
             const xhr = new XMLHttpRequest();
@@ -150,8 +134,8 @@ function edit(e) {
             xhr.open("POST", "/update-user");
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send("id=" + dataToSend.id + "&username=" + dataToSend.username 
-                + "&displayname=" + dataToSend.displayname 
+            xhr.send("id=" + dataToSend.id 
+                + "&username=" + dataToSend.username 
                 +"&email=" + dataToSend.email 
                 + "&password=" + dataToSend.password 
                 + "&isAdmin=" + dataToSend.isAdmin);
