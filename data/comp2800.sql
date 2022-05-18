@@ -18,7 +18,7 @@ INSERT INTO BBY_01_user (username, email, password, isAdmin) VALUES
 ('Chi Lan', 'chilan@gmail.com', 'chilan123', 1),
 ('Xinyang', 'xinyang@gmail.com', 'xinyang123', 0);
 
-CREATE TABLE IF NOT EXISTS profile (
+CREATE TABLE IF NOT EXISTS BBY_01_profile (
         profileID int NOT NULL AUTO_INCREMENT,
         userID int NOT NULL,
         displayName varchar(30),

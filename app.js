@@ -208,10 +208,10 @@ app.get('/home', (req, res) => {
     
     // If the user is logged in
     if (req.session.loggedin) {
-        const sql = ` INSERT INTO profile(userID, displayName, about, profilePic)
+        const sql = ` INSERT INTO bby_01_profile(userID, displayName, about, profilePic)
                         SELECT * FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
                         WHERE NOT EXISTS (SELECT userID
-                                            FROM profile
+                                            FROM bby_01_profile
                                             WHERE userID = ?) LIMIT 1;`;
         database.query(sql, [req.session.userid, req.session.username, req.session.userid, req.session.userid], (error, results, fields) => {
             if (error) {
@@ -275,8 +275,8 @@ app.get('/story-comment', (req, res) => {
             // profileDOM.window.document.getElementById("dashboard-icon").remove();
         }
         let sql = `SELECT * FROM BBY_01_timeline
-                    INNER JOIN profile
-                    ON BBY_01_timeline.userID = profile.userID
+                    INNER JOIN bbY_01_profile
+                    ON BBY_01_timeline.userID = bby_01_profile.userID
                     WHERE bby_01_timeline.postID = ?`;
         database.query(sql, [req.session.postID], (error, results) => {
             let date = results[0].date.toISOString().slice(0, 19).replace('T', ' ');
@@ -298,8 +298,8 @@ app.get('/story-comment', (req, res) => {
 app.get('/get-comment', (req, res) => {
     if (req.session.loggedin) {
         let sql = `SELECT * FROM bby_01_comment
-                    INNER JOIN profile
-                    ON bby_01_comment.userID = profile.userID
+                    INNER JOIN bby_01_profile
+                    ON bby_01_comment.userID = bby_01_profile.userID
                     WHERE bby_01_comment.postID = ?`;
         database.query(sql, [req.session.postID],  (error, results) => {
             if (error) console.log(error);
@@ -380,7 +380,7 @@ app.get('/update-profile', (req, res) => {
 
 app.post('/upload-images', upload.array("files"), (req, res) => {
 
-    const sql = `UPDATE profile
+    const sql = `UPDATE bby_01_profile
                 SET profilePic = ?
                 WHERE userID = ?`;
     database.query(sql, [req.files[0].filename, req.session.userid], (error, results) => {
@@ -397,7 +397,7 @@ app.get('/get-displayname', (req, res) => {
     if (req.session.loggedin) {
 
         const sql = `SELECT * 
-                FROM profile 
+                FROM bby_01_profile 
                 WHERE userID = ?`;
 
         database.query(sql, [req.session.userid], (error, results) => {
@@ -418,7 +418,7 @@ app.get('/get-about', (req, res) => {
     if (req.session.loggedin) {
     
         const sql = `SELECT * 
-                FROM profile 
+                FROM bby_01_profile 
                 WHERE userID = ?`;
     
         database.query(sql, [req.session.userid], (error, results) => {
@@ -438,7 +438,7 @@ app.get('/get-profilePic', (req, res) => {
     if (req.session.loggedin) {
 
         const sql = `SELECT *
-                    FROM profile
+                    FROM bby_01_profile
                     WHERE userID = ?`;
 
         database.query(sql, [req.session.userid], (error, results) => {
@@ -484,7 +484,7 @@ app.post('/update-profile', (req, res) => {
     let message = "Profile updated.";
     
     if (newAbout != '') {
-        sql = `UPDATE profile
+        sql = `UPDATE bby_01_profile
                 SET about = ?
                 WHERE userID = ?`;
         database.query(sql, [newAbout, req.session.userid],
@@ -494,7 +494,7 @@ app.post('/update-profile', (req, res) => {
             });
     }
     if (newName != '') {
-        sql = `UPDATE profile
+        sql = `UPDATE bby_01_profile
                 SET displayName = ?
                 WHERE userID = ?`;
         database.query(sql, [newName, req.session.userid],
@@ -576,8 +576,8 @@ app.get('/get-users', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
         let sql = `SELECT * FROM BBY_01_user
-                    LEFT JOIN profile
-                    ON BBY_01_user.ID = profile.userID
+                    LEFT JOIN bby_01_profile
+                    ON BBY_01_user.ID = bby_01_profile.userID
                     ORDER BY ID ASC;`;
         database.query(sql, (error, results) => {
             if (error) console.log(error);
@@ -596,8 +596,8 @@ app.get('/get-posts', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
         let sql = `SELECT * FROM BBY_01_timeline
-                    INNER JOIN profile
-                    ON BBY_01_timeline.userID = profile.userID`;
+                    INNER JOIN bby_01_profile
+                    ON BBY_01_timeline.userID = bby_01_profile.userID`;
         database.query(sql, (error, results) => {
             if (error) console.log(error);
             res.send({
@@ -623,11 +623,11 @@ app.post('/add-user', (req, res) => {
                     ORDER BY ID DESC LIMIT 1;`;
             database.query(sql, (error, results) => {
                 if (error) throw error;
-                sql = `INSERT INTO profile(userID, displayName, about, profilePic)
+                sql = `INSERT INTO bby_01_profile(userID, displayName, about, profilePic)
                         SELECT * 
                         FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
                         WHERE NOT EXISTS (SELECT userID
-                            FROM profile
+                            FROM bby_01_profile
                             WHERE userID = ?) LIMIT 1;`;
                 database.query(sql, [results[0].ID, results[0].username, results[0].ID], (error, results) => {
                     if(error) throw error;
@@ -649,7 +649,7 @@ app.post('/update-user', (req, res) => {
             req.body.id],
         (error, results) => {
             if (error) console.log(error);
-            sql = `UPDATE profile
+            sql = `UPDATE bby_01_profile
                     SET displayName = ?
                     WHERE userID = ?`
             database.query(sql, [req.body.displayname, req.body.id], (error, results) => {
