@@ -231,9 +231,6 @@ body {
     }
 
     .cancel {
-        background-color: #909090;
-        border: none;
-        color: white;
         height: 50px;
         width: 45%;
         text-align: center;
@@ -241,6 +238,9 @@ body {
         font-size: 18px;
         font-family: 'Inter', sans-serif;
         font-weight: bold;
+        color: #909090;
+        background-color: white;
+        border: 1px solid #909090
     }
 
     .save {
@@ -474,12 +474,13 @@ body {
         margin: 0;
         text-align: center;
         font-family: 'Inter', sans-serif;
-        color: white;
-        border: none;
-        background-color: #909090;
         border-radius: 10px;
         display: inline-block;
         font-size: 18px;
+        font-weight: bold;
+        color: #909090;
+        background-color: white;
+        border: 1px solid #909090
     }
 
     .save {
