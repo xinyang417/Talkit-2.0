@@ -40,7 +40,9 @@ document.getElementById("post").addEventListener("click", function (e) {
 function uploadImages() {
     const imageUpload = document.querySelector('#inputPhoto');
     const formData = new FormData();
+    if (imageUpload.files.length > 0) {
 
+    
     for (let i = 0; i < imageUpload.files.length; i++) {
         formData.append("files", imageUpload.files[i]);
     }
@@ -52,4 +54,5 @@ function uploadImages() {
     fetch("/upload-timeline-image", options
     ).catch(function (err) { ("Error:", err) }
     );
+}
 }
