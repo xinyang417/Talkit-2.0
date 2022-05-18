@@ -40,6 +40,7 @@ document.getElementById("post").addEventListener("click", function (e) {
 function uploadImages() {
     const imageUpload = document.querySelector('#inputPhoto');
     const formData = new FormData();
+    console.log(imageUpload.files.length);
     if (imageUpload.files.length > 0) {
 
     
