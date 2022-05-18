@@ -160,13 +160,24 @@ body {
     }
 
     .cmt {
-        margin-bottom: 1em;
+        margin-bottom: 2em;
     }
 
     .cmtText {
-        margin-bottom: 1.5em;
+        margin-bottom: 0;
         margin-top: 0;
         margin-left: 4.2em;
+    }
+
+    .cmt button {
+        float: right;
+        border: none;
+        color: #909090;
+        font-weight: bold;
+        text-decoration: underline;
+        font-size: 13px;
+        background-color: white;
+        margin-bottom: 1.5em;
     }
 
     .collapsible {
@@ -180,7 +191,7 @@ body {
         background-color: white;
         border-radius: 0 0 25px 25px;
         padding: 1em 4em 2em 4em;
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.108);
+        border-top: 1px solid #e4e4e4;
     }
 
     #addCmtText {
@@ -334,6 +345,18 @@ body {
         max-width: 100%;
     }
 
+    .cmt button {
+        float: right;
+        border: none;
+        color: #909090;
+        font-weight: bold;
+        text-decoration: underline;
+        font-size: 12px;
+        background-color: white;
+        margin-bottom: 1.5em;
+        margin-left: 1em;
+    }
+
     #author,
     #postTime,
     .cmtName,
@@ -385,7 +408,7 @@ body {
 
 
     #helper {
-        height: 5em;
+        height: 6.5em;
     }
 
     #addCmtText {
