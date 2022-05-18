@@ -532,6 +532,7 @@ app.post('/post-story',(req, res) => {
     }
 });
 
+<<<<<<< HEAD
 app.post('/set-default-displayName', (req, res) => {
     if (req.session.loggedin) {
         let sql = `INSERT INTO profile(userID, displayName, about, profilePic)
@@ -544,6 +545,30 @@ app.post('/set-default-displayName', (req, res) => {
         res.redirect("/");
     }
 })
+=======
+app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
+
+    var sql = `SELECT * FROM bby_01_timeline
+                ORDER BY postID DESC LIMIT 1`;
+
+    database.query(sql, (error, results) => {
+        if (error) {
+            console.log(error);
+        } else {
+            sql = `UPDATE bby_01_timeline
+            SET storyPic = ?
+            WHERE postID = ?`;
+        database.query(sql, [req.files[0].filename, results[0].postID+1], (error, results) => {
+            if (error) console.log(error);
+        res.send({
+            status: "success",
+            rows: results
+            });
+        });
+        }
+    });            
+});
+>>>>>>> 7b068b17faef776c5cdf13cf2b786b2b65a6f92d
 
 app.get('/get-users', (req, res) => {
     // If the user is logged in
