@@ -286,9 +286,9 @@ app.get('/story-comment', (req, res) => {
             profileDOM.window.document.getElementById("postTitle").innerHTML = results[0].title;
             profileDOM.window.document.getElementById("postText").innerHTML = results[0].story;
             profileDOM.window.document.getElementById("postPic").setAttribute("src", "/img/" + results[0].profilePic);
-            // console.log(`ID: ${req.session.userid}  username: ${req.session.username}`);
             profileDOM.window.document.getElementById("reader").innerHTML = req.session.username;
             profileDOM.window.document.getElementById("reader").setAttribute("value", req.session.userid);
+            profileDOM.window.document.getElementById("reader").setAttribute("class", req.session.isAdmin);
             res.send(profileDOM.serialize());
             res.end();
         })
