@@ -209,10 +209,10 @@ app.get('/home', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
         const sql = ` INSERT INTO profile(userID, displayName, about, profilePic)
-        SELECT * FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
-        WHERE NOT EXISTS (SELECT userID
-                            FROM profile
-                            WHERE userID = ?) LIMIT 1;`;
+                        SELECT * FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
+                        WHERE NOT EXISTS (SELECT userID
+                                            FROM profile
+                                            WHERE userID = ?) LIMIT 1;`;
         database.query(sql, [req.session.userid, req.session.username, req.session.userid, req.session.userid], (error, results, fields) => {
             if (error) {
                 console.log(error);
@@ -409,7 +409,6 @@ app.get('/get-about', (req, res) => {
                 rows: results
             });
         });
-     
     } else {
         // If the user is not logged in
         res.redirect("/");
@@ -422,7 +421,7 @@ app.get('/get-profilePic', (req, res) => {
         const sql = `SELECT *
                     FROM profile
                     WHERE userID = ?`;
-  
+
         database.query(sql, [req.session.userid], (error, results) => {
             if (error) console.log(error);
             res.send({
@@ -430,7 +429,6 @@ app.get('/get-profilePic', (req, res) => {
                 rows: results
             });
         });
-     
     } else {
         res.redirect("/");
     }
@@ -532,20 +530,6 @@ app.post('/post-story',(req, res) => {
     }
 });
 
-<<<<<<< HEAD
-app.post('/set-default-displayName', (req, res) => {
-    if (req.session.loggedin) {
-        let sql = `INSERT INTO profile(userID, displayName, about, profilePic)
-                    SELECT * 
-                    FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
-                    WHERE NOT EXISTS (SELECT userID
-                            FROM profile
-                            WHERE userID = ?) LIMIT 1;`;
-    } else {
-        res.redirect("/");
-    }
-})
-=======
 app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
 
     var sql = `SELECT * FROM bby_01_timeline
@@ -568,7 +552,6 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
         }
     });            
 });
->>>>>>> 7b068b17faef776c5cdf13cf2b786b2b65a6f92d
 
 app.get('/get-users', (req, res) => {
     // If the user is logged in
@@ -616,9 +599,23 @@ app.post('/add-user', (req, res) => {
         [req.body.username, req.body.email, req.body.password, req.body.isAdmin],
         (error, results, fields) => {
             if (error) console.log(error);
-            res.send({
-                status: "success",
-                msg: "Record added."
+            sql = `SELECT * FROM bby_01_user
+                    ORDER BY ID DESC LIMIT 1;`;
+            database.query(sql, (error, results) => {
+                if (error) throw error;
+                sql = `INSERT INTO profile(userID, displayName, about, profilePic)
+                        SELECT * 
+                        FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
+                        WHERE NOT EXISTS (SELECT userID
+                            FROM profile
+                            WHERE userID = ?) LIMIT 1;`;
+                database.query(sql, [results[0].ID, results[0].username, results[0].ID], (error, results) => {
+                    if(error) throw error;
+                    res.send({
+                        status: "success",
+                        msg: "Record added."
+                    });
+                });
             });
         });
 });
@@ -629,12 +626,19 @@ app.post('/update-user', (req, res) => {
                 SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?;`;
     database.query(sql,
         [req.body.username, req.body.email, req.body.password, req.body.isAdmin,
-            req.body.id, req.body.displayname, req.body.id],
+            req.body.id],
         (error, results) => {
             if (error) console.log(error);
-            res.send({
-                status: "success",
-                msg: "Record updated."
+            sql = `UPDATE profile
+                    SET displayName = ?
+                    WHERE userID = ?`
+            database.query(sql, [req.body.displayname, req.body.id], (error, results) => {
+                if (error) throw error;
+                res.send({
+                    status: "success",
+                    msg: "Record updated."
+                });
+                res.end();
             });
         });
 })
