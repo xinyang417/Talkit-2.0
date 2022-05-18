@@ -532,6 +532,18 @@ app.post('/post-story',(req, res) => {
     }
 });
 
+app.post('/set-default-displayName', (req, res) => {
+    if (req.session.loggedin) {
+        let sql = `INSERT INTO profile(userID, displayName, about, profilePic)
+                    SELECT * 
+                    FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
+                    WHERE NOT EXISTS (SELECT userID
+                            FROM profile
+                            WHERE userID = ?) LIMIT 1;`;
+    } else {
+        res.redirect("/");
+    }
+})
 
 app.get('/get-users', (req, res) => {
     // If the user is logged in
