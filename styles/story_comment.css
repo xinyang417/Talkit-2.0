@@ -82,7 +82,7 @@ body {
         grid-row: 1 / span 3;
         grid-column: 2 / span 1;
         overflow-y: scroll;
-        margin: 2em 2em 0 2em;
+        margin: 2em 2em 0 2em !important;
         background-color: white;
         border-radius: 25px 25px 0 0;
     }
@@ -90,11 +90,12 @@ body {
     #pageName {
         padding-left: 2em;
         margin-left: 2em;
+        margin-top: 0;
     }
 
     #pageName h2 {
-        margin-top: 2em;
         margin-bottom: 0;
+        margin-top: 2em;
         font-size: 35px;
         font-weight: bold;
     }
@@ -258,12 +259,21 @@ body {
         overflow-y: scroll;
     }
 
+
+    #read {
+        grid-row: 1 / span 3;
+        margin-top: 4em;
+        margin-bottom: 4em;
+        height: 100%;
+    }
+
     #pageName {
-        margin: 3em 1em 1em 1em;
+        margin-left: 1em;
     }
 
     #pageName h2 {
         font-size: 25px;
+        margin: 20px 0 20px 0;
         font-weight: bold;
     }
 
@@ -303,15 +313,12 @@ body {
     }
 
     #postSection {
-        grid-row: 2 / span 1;
         margin: 1em;
         margin-top: 1em;
     }
 
     #cmtSection {
-        grid-row: 3 / span 1;
         margin: 1em;
-        margin-bottom: 6.5em;
         border-top: 1px solid #e4e4e4;
         max-width: 100%;
     }
@@ -330,7 +337,11 @@ body {
     .cmtTime {
         margin: 5px 0 0 55px;
         font-size: 12px;
+    }
 
+    #author,
+    .cmtName {
+        padding-top: 4px;
     }
 
     .cmt {
@@ -367,6 +378,11 @@ body {
         padding-left: 1em;
         padding-right: 1em;
         width: 100%;
+    }
+
+
+    #helper {
+        height: 5em;
     }
 
     #addCmtText {
