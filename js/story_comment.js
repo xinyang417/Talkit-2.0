@@ -28,7 +28,7 @@ function displayComment() {
                         var newCommentTemplate = commentTemplate.content.cloneNode(true);
                         let displayName = row.displayName;
                         let text = row.comment;
-                        let time = row.date;
+                        let time = row.date.slice(0, 19).replace('T', ' ');
                         let profilePic = "/img/" + row.profilePic;
                         newCommentTemplate.getElementById("commenterPic").setAttribute("src", profilePic);
                         newCommentTemplate.getElementById("commenter").innerHTML = displayName;
@@ -52,3 +52,28 @@ function displayComment() {
 }
 
 displayComment();
+
+function comment(){
+    console.log("comment function active");
+    let formData = {
+        comment: document.getElementById("addCmtText").value,
+    }
+    document.getElementById("addCmtText").value = "";
+
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                displayComment();
+            } else {
+                console.log(this.status);
+            }
+        } else {
+            console.log("ERROR", this.status);
+        }
+    }
+    xhr.open("POST", "/comment");
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send("comment=" + formData.comment);
+}
