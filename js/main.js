@@ -60,9 +60,13 @@ var modal = document.getElementById('simpleModal');
 
 var modalBtn = document.getElementById('logout');
 
+var modalBtn2 = document.getElementById('logout2');
+
 var goBack = document.getElementById('modal-return');
 
+
 modalBtn.addEventListener('click', showModal);
+modalBtn2.addEventListener('click', showModal);
 goBack.addEventListener('click', closeModal);
 window.addEventListener('click', clickOutside);
 
