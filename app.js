@@ -542,7 +542,7 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
             sql = `UPDATE bby_01_timeline
             SET storyPic = ?
             WHERE postID = ?`;
-        database.query(sql, [req.files[0].filename, results[0].postID+1], (error, results) => {
+        database.query(sql, [req.files[0].filename, results[0].postID], (error, results) => {
             if (error) console.log(error);
         res.send({
             status: "success",
