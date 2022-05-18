@@ -59,14 +59,24 @@
 
         <!--Log Out Button-->
         <li id="logout-icon">
-          <form action="/logout" method="get">
+          
             <button type="submit" value="Logout" id="logout"><span
                 class="material-symbols-outlined">logout</span></button>
-          </form>
         </li>
-
       </ul>
     </div>
+
+    <!--Modal-->
+    <div id ="simpleModal" class="modal">
+      <div class="modal-content">
+        <h5>Are you sure you want to log out?</h5>
+        <form><button id="modal-return">No, go back</button></form>
+        <form action="/logout" method="get">
+        <button type="submit" value="Logout" id="modal-succuess">Log out</button>
+      </form> 
+      </div>
+    </div>
+
 
     <!--Story List-->
     <div id="pageName">
