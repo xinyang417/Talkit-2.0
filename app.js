@@ -217,6 +217,7 @@ app.get('/home', (req, res) => {
             if (error) {
                 console.log(error);
             }
+            console.log(req.session.userid);
         });
 
         let profile = fs.readFileSync("./main.html", "utf8");
@@ -536,7 +537,7 @@ app.get('/get-users', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
         let sql = `SELECT * FROM BBY_01_user
-                    INNER JOIN profile
+                    LEFT JOIN profile
                     ON BBY_01_user.ID = profile.userID`;
         database.query(sql, (error, results) => {
             if (error) console.log(error);
@@ -572,8 +573,9 @@ app.get('/get-posts', (req, res) => {
 
 app.post('/add-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-
-    database.query('INSERT INTO BBY_01_user (username, email, password, isAdmin) values(?, ?, ?, ?)',
+    let sql = `INSERT INTO BBY_01_user (username, email, password, isAdmin) 
+                values(?, ?, ?, ?);`
+    database.query(sql,
         [req.body.username, req.body.email, req.body.password, req.body.isAdmin],
         (error, results, fields) => {
             if (error) console.log(error);
@@ -587,11 +589,10 @@ app.post('/add-user', (req, res) => {
 app.post('/update-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     let sql = `UPDATE BBY_01_user 
-                SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?;
-                UPDATE profile
-                SET displayName = ?;`;
-    database.query('',
-        [req.body.username, req.body.email, req.body.password, req.body.isAdmin, req.body.id, req.body.displayname],
+                SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?;`;
+    database.query(sql,
+        [req.body.username, req.body.email, req.body.password, req.body.isAdmin,
+            req.body.id, req.body.displayname, req.body.id],
         (error, results) => {
             if (error) console.log(error);
             res.send({
