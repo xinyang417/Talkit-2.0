@@ -27,7 +27,6 @@ function displayComment() {
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
                 if (data.status == "success") {
-
                     for (let i = data.rows.length - 1; i >= 0; i--) {
                         let row = data.rows[i];
                         var newCommentTemplate = commentTemplate.content.cloneNode(true);
@@ -35,13 +34,18 @@ function displayComment() {
                         let text = row.comment;
                         let time = row.date.slice(0, 19).replace('T', ' ');
                         let profilePic = "/img/" + row.profilePic;
+                        newCommentTemplate.getElementById("comment").setAttribute("id", row.commentID);
                         newCommentTemplate.getElementById("commenterPic").setAttribute("src", profilePic);
                         newCommentTemplate.getElementById("commenter").innerHTML = displayName;
                         newCommentTemplate.getElementById("commentTime").innerHTML = time;
                         newCommentTemplate.getElementById("commentText").innerHTML = text;
+                        newCommentTemplate.getElementById("postDelete").setAttribute("onclick", `deleteComment(${row.commentID})`);
+                        newCommentTemplate.getElementById("commenter").setAttribute("id", "commenter" + row.commentID);
+                        newCommentTemplate.getElementById("postDelete").setAttribute("id", "delete" + row.commentID);
+                        newCommentTemplate.getElementById("commentTime").setAttribute("id", "commentTime" + row.commentID);
+                        newCommentTemplate.getElementById("commentText").setAttribute("id", "commentText" + row.commentID);
                         parent.appendChild(newCommentTemplate);
-
-                    }
+                    }     
                 } else {
                     console.log("Error!");
                 }
@@ -59,7 +63,6 @@ function displayComment() {
 displayComment();
 
 function comment() {
-    console.log("comment function active");
     let formData = {
         comment: document.getElementById("addCmtText").value,
     }
@@ -81,4 +84,23 @@ function comment() {
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send("comment=" + formData.comment);
+}
+
+function deleteComment(commentID) {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                location.reload();
+            } else {
+                console.log(this.status);
+            }
+        } else {
+            console.log("ERROR", this.status);
+        }
+    }
+    xhr.open("POST", "/delete-comment");
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send("commentID=" + commentID);
 }

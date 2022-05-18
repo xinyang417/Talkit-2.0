@@ -16,6 +16,7 @@ const {
 } = require('http2');
 const ConnectionConfig = require('mysql/lib/ConnectionConfig');
 const { profile } = require('console');
+const { resourceLimits } = require('worker_threads');
 const app = express();
 
 
@@ -272,7 +273,6 @@ app.get('/story-comment', (req, res) => {
         let profileDOM = new JSDOM(doc);
         if (req.session.isAdmin == 0) {
             profileDOM.window.document.getElementById("dashboard").remove();
-            // profileDOM.window.document.getElementById("dashboard-icon").remove();
         }
         let sql = `SELECT * FROM BBY_01_timeline
                     INNER JOIN bbY_01_profile
@@ -338,6 +338,33 @@ app.post('/comment', (req, res) => {
             res.end();
         });
     
+    } else {
+        res.redirect("/");
+    }
+});
+
+app.post('/delete-comment', (req, res) => {
+    if (req.session.loggedin) {
+        let sql = `SELECT * FROM BBY_01_comment WHERE commentID = ?`;
+        database.query(sql, [req.body.commentID], (error, results) => {
+            if (error) throw error;
+            if (results[0].userID == req.session.userid || req.session.isAdmin == 1) {
+                sql = `DELETE FROM BBY_01_COMMENT WHERE commentID = ?`;
+                database.query(sql, [req.body.commentID], (error, results) => {
+                    if (error) throw error;
+                    res.send({
+                        status: "success",
+                        msg: "Comment deleted."
+                    });
+                })
+            } else {
+                res.send({
+                    status: "fail",
+                    msg: "No authority to delete or edit this comment."
+                });
+                res.end();
+            }
+        });
     } else {
         res.redirect("/");
     }
