@@ -12,9 +12,9 @@ function displayPosts() {
                         var newPostTemplate = postTemplate.content.cloneNode(true);
                         let displayName = row.displayName;
                         let title = row.title;
-                        let currentTime = row.date.slice(0, 19).replace('T', ' ');
+                        let time = row.date.slice(0, 19).replace('T', ' ');
                         newPostTemplate.getElementById("author").innerHTML = displayName;
-                        newPostTemplate.getElementById("postTime").innerHTML = currentTime;
+                        newPostTemplate.getElementById("postTime").innerHTML = time;
                         newPostTemplate.getElementById("postTitle").innerHTML = `<p onclick = "sendPostId(` 
                                                                                 + row.postID + `)">` 
                                                                                 + title + `</p>`;

@@ -217,7 +217,6 @@ app.get('/home', (req, res) => {
             if (error) {
                 console.log(error);
             }
-            console.log(req.session.userid);
         });
 
         let profile = fs.readFileSync("./main.html", "utf8");
@@ -280,8 +279,9 @@ app.get('/story-comment', (req, res) => {
                     ON BBY_01_timeline.userID = profile.userID
                     WHERE bby_01_timeline.postID = ?`;
         database.query(sql, [req.session.postID], (error, results) => {
+            let date = results[0].date.toISOString().slice(0, 19).replace('T', ' ');
             profileDOM.window.document.getElementById("author").innerHTML = results[0].displayName;
-            profileDOM.window.document.getElementById("postTime").innerHTML = results[0].date;
+            profileDOM.window.document.getElementById("postTime").innerHTML = date;
             profileDOM.window.document.getElementById("postTitle").innerHTML = results[0].title;
             profileDOM.window.document.getElementById("postText").innerHTML = results[0].story;
             profileDOM.window.document.getElementById("postPic").setAttribute("src", "/img/" + results[0].profilePic)
@@ -319,6 +319,25 @@ app.post('/story-comment', (req, res) => {
         req.session.postID = req.body.postID;
         res.send();
         res.end();
+    } else {
+        res.redirect("/");
+    }
+});
+
+app.post('/comment', (req, res) => {
+    if (req.session.loggedin) {
+        let sql = `INSERT INTO bby_01_comment (postID, userID, comment, date)
+                        VALUES (?, ?, ?, ?)`
+        let date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        database.query(sql, [req.session.postID, req.session.userid, req.body.comment, date], (error, results) => {
+            if (error) throw error;
+            res.send({
+                status: "success",
+                msg: "Record added."
+            });
+            res.end();
+        });
+    
     } else {
         res.redirect("/");
     }
@@ -558,7 +577,8 @@ app.get('/get-users', (req, res) => {
     if (req.session.loggedin) {
         let sql = `SELECT * FROM BBY_01_user
                     LEFT JOIN profile
-                    ON BBY_01_user.ID = profile.userID`;
+                    ON BBY_01_user.ID = profile.userID
+                    ORDER BY ID ASC;`;
         database.query(sql, (error, results) => {
             if (error) console.log(error);
             res.send({
