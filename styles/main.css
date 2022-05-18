@@ -118,9 +118,9 @@ body {
         place-items: center;
     }
 
-    .post p,
-    a {
-        margin: 0 0 1em 0.5em;
+    .post p {
+        margin-bottom: 1em;
+        margin-left: 1em;
     }
 
     .post a {
@@ -391,14 +391,16 @@ body {
         display: none;
     }
 
-    #footer li a:active {
-        transition: all 0.3s ease;
-        color: black !important;
+    #footer li a {
+        padding-top: 10px;
     }
 
     #footer li .active {
-        transition: all 0.3s ease;
-        color: black !important;
+        border-top: 3px solid black;
+    }
+
+    .active .material-symbols-outlined {
+        color: black;
     }
 
     #bottomMenu {

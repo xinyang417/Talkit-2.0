@@ -13,6 +13,11 @@ for (i = 0; i < coll.length; i++) {
     });
 }
 
+document.getElementById("back").addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.assign("/home");
+})
+
 function displayComment() {
     const xhr = new XMLHttpRequest();
     var parent = document.getElementById("cmtSection");
@@ -53,7 +58,7 @@ function displayComment() {
 
 displayComment();
 
-function comment(){
+function comment() {
     console.log("comment function active");
     let formData = {
         comment: document.getElementById("addCmtText").value,

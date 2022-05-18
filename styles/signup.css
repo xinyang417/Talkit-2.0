@@ -67,6 +67,21 @@ button:hover {
         text-align: center;
     }
 
+    #psw {
+        margin: 0;
+        width: 100%;
+    }
+
+    form i {
+        float: right;
+        right: 10px;
+        margin-left: -40px;
+        margin-top: -41px;
+        position: relative;
+        z-index: 2;
+        cursor: pointer;
+    }
+
     input[type=text],
     input[type=email],
     input[type=password] {
@@ -178,6 +193,26 @@ button:hover {
     #loginForm {
         text-align: center;
         font-size: 18px;
+    }
+
+    #psw {
+        margin: 0;
+        width: 100%;
+    }
+
+    #psw i {
+        margin-left: -30px;
+        cursor: pointer;
+    }
+
+    form i {
+        float: right;
+        right: 10px;
+        margin-left: -40px;
+        margin-top: 15px;
+        position: relative;
+        z-index: 2;
+        cursor: pointer;
     }
 
     input[type=text],

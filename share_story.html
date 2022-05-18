@@ -39,23 +39,30 @@
         <div id="pageName">
             <h2><b> Share Story</b></h2>
         </div>
+
         <div id="text">
             <form id='input'>
                 <input type="text" id="title" placeholder="Add a title" />
                 <textarea id="story" rows="4" cols="50" placeholder="What's on your mind?"></textarea>
             </form>
         </div>
+
         <div id="photo">
             <h3><b> Would you like to add a photo?</b></h3>
             <form action="/">
                 <input type="file" name="photo" id="inputPhoto" accept=".jpg, .jpeg, .png" />
-                <button id='delete' type="reset"><b> Discard Photo</b></button>
-
+                <button id='delete' type="reset"><b> Delete Photo</b></button>
             </form>
         </div>
-        <div id="button">
-            <button id="post" type="submit"><b>Post</b></button>
+
+        <div id="buttons">
+            <div id="btn">
+                <button id="discard" type="submit"><b>Discard</b></button>
+                <button id="post" type="submit"><b>Post</b></button>
+            </div>
         </div>
+
+
         <div id="footer">
             <ul>
                 <li><a href="/home"><span class="material-symbols-outlined">home</span><b>Home</b></a> </li>
@@ -70,6 +77,7 @@
         </div>
         <div id="bottomMenu">
             <ul>
+                <li id="dashboard"><a href="/admin"><b>Dashboard</b></a></li>
                 <li><a href="/profile"><b>Profile</b></a> </li>
                 <li><a href="/logout"><b>Log Out</b></a> </li>
             </ul>
