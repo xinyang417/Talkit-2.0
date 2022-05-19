@@ -99,22 +99,36 @@ function comment() {
 }
 
 function deletePost(postID) {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-        if (this.readyState == XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                window.location.replace("/home");
-            } else {
-                console.log(this.status);
-            }
-        } else {
-            console.log("ERROR", this.status);
+    var modal = document.getElementById('simpleModal3');
+    var goBack = document.getElementById('modal-return-delete-post');
+    var deletePst = document.getElementById('modal-succuess-delete-post');
+    modal.style.display = 'block';
+    goBack.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+    window.addEventListener('click', function(e) {
+        if(e.target == modal) {
+            modal.style.display = 'none';
         }
-    }
-    xhr.open("POST", "/delete-post");
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send("postID=" + postID);
+    });
+    deletePst.addEventListener('click', () => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (this.readyState == XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    window.location.replace("/home");
+                } else {
+                    console.log(this.status);
+                }
+            } else {
+                console.log("ERROR", this.status);
+            }
+        }
+        xhr.open("POST", "/delete-post");
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send("postID=" + postID);
+    });
 }
 
 
