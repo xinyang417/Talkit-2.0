@@ -385,6 +385,20 @@ app.post('/delete-comment', (req, res) => {
     }
 });
 
+app.post('/edit-comment', (req,res) => {
+    if (req.session.loggedin) {
+        
+        let sql = `UPDATE BBY_01_comment SET comment = ? WHERE commentID = ?`;
+        database.query(sql, [req.body.comment, req.body.commentID], (error, results) => {
+            if (error) throw error;
+            res.send();
+            res.end();
+        })
+    } else {
+        res.redirect("/");
+    }
+})
+
 
 app.get('/profile', (req, res) => {
     // If the user is logged in

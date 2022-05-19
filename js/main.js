@@ -13,7 +13,6 @@ function displayPosts() {
                         let displayName = row.displayName;
                         let title = row.title;
                         let time = row.date.slice(0, 19).replace('T', ' ');
-                        console.log(row);
                         newPostTemplate.getElementById("author").innerHTML = displayName;
                         newPostTemplate.getElementById("postTime").innerHTML = time;
                         newPostTemplate.getElementById("postTitle").innerHTML = `<p onclick = "sendPostId(` 

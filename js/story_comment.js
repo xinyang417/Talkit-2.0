@@ -46,13 +46,16 @@ function displayComment() {
                         newCommentTemplate.getElementById("commentText").setAttribute("id", "commentText" + row.commentID);
                         if (id != row.userID && isAdmin == 0) {
                             newCommentTemplate.getElementById("postDelete").remove();
+                            newCommentTemplate.getElementById("postEdit").remove();
                         } else {
                             newCommentTemplate.getElementById("postDelete").setAttribute("onclick", `deleteComment(${row.commentID})`);
                             newCommentTemplate.getElementById("postDelete").setAttribute("id", "delete" + row.commentID);
+                            newCommentTemplate.getElementById("postEdit").setAttribute("onclick", `editComment(${row.commentID})`);
+                            // newCommentTemplate.getElementById("postEdit").addEventListener("click", editComment);
                         }
                         
                         parent.appendChild(newCommentTemplate);
-                    }     
+                    }
                 } else {
                     console.log("Error!");
                 }
@@ -110,4 +113,79 @@ function deleteComment(commentID) {
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send("commentID=" + commentID);
+}
+
+function editComment(commentID) {
+    let commentText = document.getElementById("commentText" + commentID);
+    let parent = commentText.parentNode;
+    let textArea = document.createElement("textarea");
+    textArea.value = commentText.innerHTML;
+    textArea.setAttribute('class', 'commentEditArea');
+    parent.replaceChild(textArea, commentText);
+    let submit = document.createElement("button");
+    submit.innerHTML = 'Submit';
+    submit.setAttribute("class", "editSubmit");
+    let cancel = document.createElement("button");
+    cancel.innerHTML = "Cancel";
+    cancel.setAttribute("class", "editCancel");
+    parent.appendChild(submit);
+    parent.appendChild(cancel);
+    cancel.addEventListener("click", () => {
+        parent.replaceChild(commentText, textArea);
+        parent.removeChild(cancel);
+        parent.removeChild(submit);
+    });
+    submit.addEventListener("click", () => {
+        let v = textArea.value;
+        let newText = document.createElement("p");
+            newText.innerHTML = textArea.value;
+            newText.setAttribute("class", "cmtText");
+            parent.replaceChild(newText, textArea);
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                if (this.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        parent.removeChild(cancel);
+                        parent.removeChild(submit);
+                    } else {
+                        console.log(this.status);
+                    }
+                } else {
+                    console.log("ERROR", this.status);
+                }
+            }
+            xhr.open("POST", "/edit-comment");
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send("comment=" + v + "&commentID=" + commentID);
+    });
+    textArea.addEventListener("keyup", function (e) {
+        let v = null;
+        if (e.which == 13) {
+            v = textArea.value;
+            let newText = document.createElement("p");
+            newText.innerHTML = textArea.value;
+            newText.setAttribute("class", "cmtText");
+            parent.replaceChild(newText, textArea);
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                if (this.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        parent.removeChild(cancel);
+                        parent.removeChild(submit);
+                    } else {
+                        console.log(this.status);
+                    }
+                } else {
+                    console.log("ERROR", this.status);
+                }
+            }
+            xhr.open("POST", "/edit-comment");
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send("comment=" + v + "&commentID=" + commentID);
+        }
+        
+    });
+    
 }
