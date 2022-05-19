@@ -53,7 +53,7 @@
                     </label>
                 </div>
                 <input id="submit" type="submit" value="Submit Photo" />
-                <p class="username">Username: <span id="uName"></span></p>
+                <p id="uName"></p>
             </form>
         </div>
 
@@ -62,14 +62,30 @@
             <form id="profile-form">
                 <div id="textInput">
                     <p>
+                        <label for="email">Email</label>
                         <input type="text" id="email" placeholder="Change Email" />
                     </p>
                     <p>
+                        <label for="password">Password</label>
                         <input type="password" id="password" placeholder="Change Passoword" />
-                        <i class="bi bi-eye-slash" id="togglePassword"></i></p>
+                        <i class="bi bi-eye-slash" id="togglePassword"></i>
+                    </p>
+
+                    <p>
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Username" />
+                    </p>
+                    <p>
+                        <label for="displayName">Display Name</label>
+                        <input type="text" id="displayName" placeholder="Display Name (Optional)" />
+                    </p>
                 </div>
-                <input type="text" id="displayName" placeholder="Display Name (Optional)" />
-                <textarea id="about" rows="4" cols="50" placeholder="About (Optional)"></textarea>
+
+                <p class="about">
+                    <label for="about">About</label>
+                    <textarea id="about" rows="4" cols="50" placeholder="About (Optional)"></textarea>
+                </p>
+
                 <div class="buttons">
                     <input type="button" class="cancel" value="Cancel" id="updateCancel" />
                     <input type="button" class="save" value="Save" id="updateSave" />
