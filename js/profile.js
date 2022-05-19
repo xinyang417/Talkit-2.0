@@ -1,3 +1,4 @@
+"use strict";
 function displayName() {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {

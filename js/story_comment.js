@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 
 var coll = document.getElementsByClassName("collapsible");
 var i;
