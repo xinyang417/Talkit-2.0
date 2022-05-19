@@ -85,8 +85,11 @@
                 Add a comment</button>
             <div class="content">
                 <form id='input'>
-                    <div id="reader"></div>
+
                     <textarea id="addCmtText" rows="10" cols="50" placeholder="Any thoughts?"></textarea>
+                    <p id="nameMsg"> Commenting as <b><span id="reader"></span></b>. You can change your display name <a
+                            href="/update-profile">here</a> anytime.
+                    </p>
                     <div class="buttons">
                         <button id="cancel"><b>Cancel</b></button>
                         <button id="reply" type="submit" onclick="comment()"><b>Reply</b></button>
@@ -115,11 +118,24 @@
             <ul>
                 <li id="dashboard"><a href="/admin"><b>Dashboard</b></a></li>
                 <li><a href="/profile"><b>Profile</b></a> </li>
-                <li><a href="/logout"><b>Log Out</b></a> </li>
+                <li><a href="#" id="logout"> <b>Log Out</b> </a></li>
             </ul>
         </div>
 
     </div>
+
+    <!--Modal-->
+    <div id="simpleModal" class="modal">
+        <div class="modal-content">
+          <h5>Are you sure you want to log out?</h5>
+          <div class="buttons">
+            <form><button id="modal-return">Cancel</button></form>
+            <form action="/logout" method="get">
+              <button type="submit" value="Logout" id="modal-succuess">Log Out</button>
+            </form>
+          </div>
+        </div>
+      </div>
 
     <script src="/js/story_comment.js"></script>
 </body>
