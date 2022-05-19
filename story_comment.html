@@ -85,8 +85,11 @@
                 Add a comment</button>
             <div class="content">
                 <form id='input'>
-                    <div id="reader"></div>
+
                     <textarea id="addCmtText" rows="10" cols="50" placeholder="Any thoughts?"></textarea>
+                    <p id="nameMsg"> Commenting as <b><span id="reader"></span></b>. You can change your display name <a
+                            href="/update-profile">here</a> anytime.
+                    </p>
                     <div class="buttons">
                         <button id="cancel"><b>Cancel</b></button>
                         <button id="reply" type="submit" onclick="comment()"><b>Reply</b></button>

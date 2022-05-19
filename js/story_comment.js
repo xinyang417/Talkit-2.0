@@ -50,9 +50,9 @@ function displayComment() {
                             newCommentTemplate.getElementById("postDelete").setAttribute("onclick", `deleteComment(${row.commentID})`);
                             newCommentTemplate.getElementById("postDelete").setAttribute("id", "delete" + row.commentID);
                         }
-                        
+
                         parent.appendChild(newCommentTemplate);
-                    }     
+                    }
                 } else {
                     console.log("Error!");
                 }
