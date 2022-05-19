@@ -129,3 +129,30 @@ function displayName() {
 }
 
 displayName();
+
+
+// Modal Functions
+var modal = document.getElementById('simpleModal');
+
+var modalBtn = document.getElementById('logout');
+
+var goBack = document.getElementById('modal-return');
+
+
+modalBtn.addEventListener('click', showModal);
+goBack.addEventListener('click', closeModal);
+window.addEventListener('click', clickOutside);
+
+function showModal() {
+    modal.style.display = 'block';
+}
+
+function closeModal() {
+    modal.style.display = 'none';
+}
+
+function clickOutside(e) {
+    if (e.target == modal) {
+        modal.style.display = 'none';
+    }
+}
