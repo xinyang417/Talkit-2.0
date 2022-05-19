@@ -225,7 +225,7 @@ body {
         background-color: white;
         height: 50px;
         border-radius: 10px;
-        width: 48%;
+        width: 46%;
         font-size: 18px;
         border: 1px solid #909090
     }
@@ -236,14 +236,14 @@ body {
         background-color: #9595c5;
         height: 50px;
         border-radius: 10px;
-        width: 48%;
+        width: 46%;
         font-size: 18px;
     }
 
     .buttons {
         display: flex;
         justify-content: space-between;
-        width: 30%;
+        width: 34%;
         float: right;
     }
 
@@ -299,7 +299,7 @@ body {
         font-weight: bold;
     }
 
-    .buttons {
+    .btns {
         display: flex;
         justify-content: space-between;
         width: 80%;
