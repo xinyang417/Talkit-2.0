@@ -1,3 +1,4 @@
+"use strict";
 
 document.getElementById("post").addEventListener("click", function (e) {
     e.preventDefault();

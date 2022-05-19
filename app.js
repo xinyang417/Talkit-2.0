@@ -528,7 +528,6 @@ app.post('/delete-post', (req, res) => {
 app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
     var sql = `SELECT * FROM bby_01_timeline
                 ORDER BY postID DESC LIMIT 1`;
-
     database.query(sql, (error, results) => {
         if (error) {
             console.log(error);
