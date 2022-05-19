@@ -50,7 +50,7 @@ function displayComment() {
                             newCommentTemplate.getElementById("cmtDelete").remove();
                             newCommentTemplate.getElementById("cmtEdit").remove();
                         } else {
-                            newCommentTemplate.getElementById("cmtDelete").setAttribute("onclick", `deleteComment(${row.commentID})`);
+                            newCommentTemplate.getElementById("cmtDelete").setAttribute("onclick", `showDeleteCmtModal(${row.commentID})`);
                             newCommentTemplate.getElementById("cmtDelete").setAttribute("id", "cmtDelete" + row.commentID);
                             newCommentTemplate.getElementById("cmtEdit").setAttribute("onclick", `editComment(${row.commentID})`);
                             newCommentTemplate.getElementById("cmtEdit").setAttribute("id", "cmtEdit" + row.commentID);
@@ -99,41 +99,70 @@ function comment() {
 }
 
 function deletePost(postID) {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-        if (this.readyState == XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                window.location.replace("/home");
-            } else {
-                console.log(this.status);
-            }
-        } else {
-            console.log("ERROR", this.status);
+    var modal = document.getElementById('simpleModal3');
+    var goBack = document.getElementById('modal-return-delete-post');
+    var deletePst = document.getElementById('modal-succuess-delete-post');
+    modal.style.display = 'block';
+    goBack.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+    window.addEventListener('click', function(e) {
+        if(e.target == modal) {
+            modal.style.display = 'none';
         }
-    }
-    xhr.open("POST", "/delete-post");
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send("postID=" + postID);
+    });
+    deletePst.addEventListener('click', () => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (this.readyState == XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    window.location.replace("/home");
+                } else {
+                    console.log(this.status);
+                }
+            } else {
+                console.log("ERROR", this.status);
+            }
+        }
+        xhr.open("POST", "/delete-post");
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send("postID=" + postID);
+    });
 }
 
-function deleteComment(commentID) {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-        if (this.readyState == XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                location.reload();
-            } else {
-                console.log(this.status);
-            }
-        } else {
-            console.log("ERROR", this.status);
+
+function showDeleteCmtModal(commentID) {
+    var modal = document.getElementById('simpleModal2');
+    var goBack = document.getElementById('modal-return-delete-comment');
+    var deleteCmt = document.getElementById('modal-succuess-delete-comment');
+    modal.style.display = 'block';
+    goBack.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+    window.addEventListener('click', function(e) {
+        if(e.target == modal) {
+            modal.style.display = 'none';
         }
-    }
-    xhr.open("POST", "/delete-comment");
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send("commentID=" + commentID);
+    });
+    deleteCmt.addEventListener('click', () => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (this.readyState == XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    location.reload();
+                } else {
+                    console.log(this.status);
+                }
+            } else {
+                console.log("ERROR", this.status);
+            }
+        }
+        xhr.open("POST", "/delete-comment");
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send("commentID=" + commentID);
+    });
 }
 
 function editPost(postID) {
@@ -257,6 +286,7 @@ function showModal() {
 
 function closeModal() {
     modal.style.display = 'none';
+    return;
 }
 
 function clickOutside(e) {
@@ -264,3 +294,4 @@ function clickOutside(e) {
         modal.style.display = 'none';
     }
 }
+
