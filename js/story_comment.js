@@ -150,7 +150,7 @@ function editPost(postID) {
     cancel.setAttribute("id", "cancelPost");
 
     let submit = document.createElement("button");
-    submit.innerHTML = 'Submit';
+    submit.innerHTML = 'Save';
     submit.setAttribute("id", "submitPost");
 
     parent.appendChild(cancel);
@@ -198,7 +198,7 @@ function editComment(commentID) {
     parent.replaceChild(textArea, commentText);
 
     let submit = document.createElement("button");
-    submit.innerHTML = 'Submit';
+    submit.innerHTML = 'Save';
     submit.setAttribute("class", "editSubmit");
 
     let cancel = document.createElement("button");
