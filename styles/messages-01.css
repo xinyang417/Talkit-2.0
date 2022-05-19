@@ -401,6 +401,7 @@ body {
         font-size: 14px;
         margin: 0;
         font-weight: bold;
+        display: flex;
     }
 
     .chat-message {
@@ -411,6 +412,7 @@ body {
         display: inline-block;
         text-overflow: ellipsis;
         white-space: nowrap;
+        display: flex;
     }
 
     .chat-list .chat-date {
@@ -419,6 +421,7 @@ body {
         color: #909090;
         margin-top: auto;
         margin-bottom: 0;
+        display: flex;
     }
 
     #logo {
