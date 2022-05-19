@@ -1,3 +1,4 @@
+"use strict";
 function displayPosts() {
     const xhr = new XMLHttpRequest();
     var parent = document.getElementById("postList");

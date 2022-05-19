@@ -1,3 +1,5 @@
+"use strict";
+
 function getUsers() {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {

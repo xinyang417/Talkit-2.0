@@ -1,3 +1,4 @@
+"use strict";
 const upLoadForm = document.getElementById("upload-images-form");
 upLoadForm.addEventListener("submit", uploadImages);
 
