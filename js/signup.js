@@ -1,4 +1,20 @@
 "use strict";
+const togglePassword = document.querySelector("#togglePassword");
+const password = document.querySelector("#password");
+
+togglePassword.addEventListener("click", function () {
+
+    const type = password.getAttribute("type") === "password" ? "text" : "password";
+    password.setAttribute("type", type);
+
+    this.classList.toggle("bi-eye");
+});
+
+const form = document.querySelector("form");
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
+});
+
 ready(function () {
     function ajaxPOST(url, callback, data) {
         let params = typeof data == 'string' ? data : Object.keys(data).map(
@@ -19,10 +35,10 @@ ready(function () {
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send(params);
     }
-    
+
     document.getElementById("submit").addEventListener("click", function (e) {
         e.preventDefault();
-    
+
         let formData = {
             username: document.getElementById("username").value,
             email: document.getElementById("email").value,
@@ -32,14 +48,14 @@ ready(function () {
         document.getElementById("username").value = "";
         document.getElementById("email").value = "";
         document.getElementById("password").value = "";
-    
-        let queryString = "username=" + formData.username + "&email=" + formData.email + "&password=" 
-        + formData.password + "&isAdmin=" + formData.isAdmin;
+
+        let queryString = "username=" + formData.username + "&email=" + formData.email + "&password=" +
+            formData.password + "&isAdmin=" + formData.isAdmin;
         // let signup = false;
         ajaxPOST("/check-account", function (data) {
             if (data) {
                 let dataParsed = JSON.parse(data);
-                
+
                 if (dataParsed.status == "email existed") {
                     document.getElementById("errorMsg").innerHTML = dataParsed.msg;
                 } else if (dataParsed.status == "invalid username") {
@@ -65,7 +81,7 @@ ready(function () {
                     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                     xhr.send("username=" + formData.username + "&email=" + formData.email + "&password=" + formData
-                    .password + "&isAdmin=" + formData.isAdmin);
+                        .password + "&isAdmin=" + formData.isAdmin);
                 }
             }
         }, queryString);
@@ -79,4 +95,3 @@ function ready(callback) {
         document.addEventListener("DOMContentLoaded", callback);
     }
 }
-

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Dashboard</title>
+    <title>Talkit</title>
 
     <meta name="comp1800 template" content="My 1800 App">
     <meta charset="utf-8">
@@ -16,6 +16,7 @@
     <link rel="stylesheet"
         href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="/css/users.css">
+    <link href="/img/favicon.ico" rel="icon" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
 </head>
@@ -81,7 +82,7 @@
             <ul>
                 <li><a href="/admin"><b>Dashboard</b></a></li>
                 <li><a href="/profile"><b>Profile</b></a></li>
-                <li><a href="/logout"><b>Log Out</b></a></li>
+                <li><a href="#" id="logout"> <b>Log Out</b> </a></li>
             </ul>
         </div>
 
@@ -100,7 +101,18 @@
         </div>
 
     </div>
-
+    <!--Modal-->
+    <div id="simpleModal" class="modal">
+        <div class="modal-content">
+            <h5>Are you sure you want to log out?</h5>
+            <div class="btns">
+                <form><button id="modal-return">Cancel</button></form>
+                <form action="/logout" method="get">
+                    <button type="submit" value="Logout" id="modal-succuess">Log Out</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <script src="./js/users.js"></script>
 
 </body>

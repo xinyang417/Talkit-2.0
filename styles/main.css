@@ -118,9 +118,9 @@ body {
         place-items: center;
     }
 
-    .post p,
-    a {
-        margin: 0 0 1em 0.5em;
+    .post p {
+        margin-bottom: 1em;
+        margin-left: 1em;
     }
 
     .post a {
@@ -141,8 +141,10 @@ body {
 
     .profilePic {
         max-width: 55px;
+        max-height: 55px;
         float: left;
         margin: 0 0 1em 0;
+        border-radius: 100%;
     }
 
     .post .bookmark {
@@ -175,6 +177,74 @@ body {
         position: absolute;
         list-style-type: none;
         bottom: 4em;
+    }
+
+    #modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+    }
+
+    .modal-content {
+        background-color: white;
+        border-radius: 10px;
+        text-align: center;
+        margin: 20% auto;
+        padding-top: 40px;
+        padding-bottom: 30px;
+        padding-left: 40px;
+        padding-right: 40px;
+        width: 30%;
+        height: 20%;
+        display: block;
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px rgba(0, 0, 0, 0.17);
+    }
+
+    .modal-content h5 {
+        margin-bottom: 1.5em;
+        font-weight: bold;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #modal-return {
+        background-color: white;
+        border: 1px solid #909090;
+        color: #909090;
+        border-radius: 10px;
+        height: 40px;
+        width: 110px;
+        font-size: 18px;
+        float: right;
+        font-weight: bold;
+    }
+
+    #modal-succuess {
+        background-color: #9595c5;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        height: 40px;
+        width: 110px;
+        font-size: 18px;
+        float: right;
+        font-weight: bold;
+    }
+
+    #modal-return:hover,
+    #modal-succuess:hover {
+        box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.108), 0 3px 5px 0 rgba(0, 0, 0, 0.076);
     }
 
 }
@@ -287,16 +357,16 @@ body {
         margin-bottom: 1em;
     }
 
-    .post .author,
+    .post #author,
     .post .break1,
-    .post .postTime {
+    .post #postTime {
         display: inline-flex;
         place-items: center;
         margin-left: 0;
         margin-bottom: 0;
     }
 
-    .post .postTitle {
+    .post #postTitle {
         display: flex;
         margin-bottom: 0;
         flex: 50%;
@@ -327,7 +397,9 @@ body {
     }
 
     .profilePic {
-        max-width: 45px;
+        width: 45px;
+        height: 45px;
+        border-radius: 100%;
         float: left;
         margin: 0 1em 1em 0;
     }
@@ -391,18 +463,84 @@ body {
         display: none;
     }
 
-    #footer li a:active {
-        transition: all 0.3s ease;
-        color: black !important;
+    #footer li a {
+        padding-top: 10px;
     }
 
     #footer li .active {
-        transition: all 0.3s ease;
-        color: black !important;
+        border-top: 3px solid black;
+    }
+
+    .active .material-symbols-outlined {
+        color: black;
     }
 
     #bottomMenu {
         display: none;
+    }
+
+    #modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+    }
+
+    .modal-content {
+        position: relative;
+        top: 40%;
+        transform: translateY(-50%);
+        background-color: white;
+        border-radius: 10px;
+        text-align: center;
+        margin: 20% auto;
+        padding-top: 30px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        width: 80%;
+        height: 15%;
+        display: block;
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.101), 0 7px 20px rgba(0, 0, 0, 0.078);
+    }
+
+    .modal-content h5 {
+        margin-bottom: 1em;
+        font-size: 14px;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #modal-return {
+        background-color: white;
+        border: 1px solid #909090;
+        color: #909090;
+        border-radius: 10px;
+        height: 35px;
+        width: 100px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    #modal-succuess {
+        background-color: #9595c5;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        height: 35px;
+        width: 100px;
+        font-size: 14px;
+        font-weight: bold;
     }
 
 }

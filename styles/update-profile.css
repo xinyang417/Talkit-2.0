@@ -30,7 +30,6 @@ body {
         margin-top: 2em;
     }
 
-
     #footer ul {
         margin-bottom: 1.5em;
         padding: 0;
@@ -58,7 +57,7 @@ body {
         cursor: pointer;
     }
 
-    .material-symbols-outlined {
+    ul .material-symbols-outlined {
         display: none !important;
     }
 
@@ -160,10 +159,10 @@ body {
         float: right;
         text-align: right;
         font-family: 'Inter', sans-serif;
-        font-weight: bold;
-        font-size: 18px;
+        font-size: 16px;
         margin-top: 0.5em;
         margin-right: 4em;
+        font-weight: bold;
     }
 
     .profile-update {
@@ -183,15 +182,11 @@ body {
 
     #email,
     #password {
-        width: 47%;
-    }
-
-    #displayName {
         width: 100%;
-        margin-top: 1em;
     }
 
-    input[type=text] {
+    input[type=text],
+    input[type=password] {
         height: 40px;
         padding-left: 10px;
         border: none;
@@ -202,10 +197,25 @@ body {
         font-size: 16px;
     }
 
+    #textInput p {
+        margin: 0;
+        width: 48%;
+    }
+
+    form i {
+        margin-left: -30px;
+        cursor: pointer;
+    }
+
     #textInput {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+    }
+
+    #displayName {
+        width: 100%;
+        margin-top: 1em;
     }
 
     textarea {
@@ -223,24 +233,25 @@ body {
     }
 
     .buttons {
-        margin-top: 4em;
         display: flex;
         justify-content: space-between;
-        float: right;
-        width: 50%;
+        bottom: 4em;
+        right: 6em;
+        position: absolute;
+        width: 30%;
     }
 
     .cancel {
-        background-color: #909090;
-        border: none;
-        color: white;
         height: 50px;
-        width: 45%;
+        width: 46%;
         text-align: center;
         border-radius: 10px;
         font-size: 18px;
         font-family: 'Inter', sans-serif;
         font-weight: bold;
+        color: #909090;
+        background-color: white;
+        border: 1px solid #909090
     }
 
     .save {
@@ -248,7 +259,7 @@ body {
         border: none;
         color: white;
         height: 50px;
-        width: 45%;
+        width: 46%;
         text-align: center;
         border-radius: 10px;
         font-size: 18px;
@@ -280,6 +291,74 @@ body {
         position: absolute;
         bottom: 4em;
         list-style-type: none;
+    }
+
+    #modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+    }
+
+    .modal-content {
+        background-color: white;
+        border-radius: 10px;
+        text-align: center;
+        margin: 20% auto;
+        padding-top: 40px;
+        padding-bottom: 30px;
+        padding-left: 40px;
+        padding-right: 40px;
+        width: 30%;
+        height: 20%;
+        display: block;
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px rgba(0, 0, 0, 0.17);
+    }
+
+    .modal-content h5 {
+        margin-bottom: 1.5em;
+        font-weight: bold;
+    }
+
+    .btns {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #modal-return {
+        background-color: white;
+        border: 1px solid #909090;
+        color: #909090;
+        border-radius: 10px;
+        height: 40px;
+        width: 110px;
+        font-size: 18px;
+        float: right;
+        font-weight: bold;
+    }
+
+    #modal-succuess {
+        background-color: #9595c5;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        height: 40px;
+        width: 110px;
+        font-size: 18px;
+        float: right;
+        font-weight: bold;
+    }
+
+    #modal-return:hover,
+    #modal-succuess:hover {
+        box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.108), 0 3px 5px 0 rgba(0, 0, 0, 0.076);
     }
 }
 
@@ -433,7 +512,8 @@ body {
         font-size: 14px;
     }
 
-    input[type=text] {
+    input[type=text],
+    input[type=password] {
         width: 100%;
         height: 40px;
         margin: 5px 0 12px 0;
@@ -445,6 +525,16 @@ body {
         background: #e4e4e4;
         font-family: 'Inter', sans-serif;
         font-size: 14px;
+    }
+
+    #textInput p {
+        margin: 0;
+        width: 100%;
+    }
+
+    form i {
+        margin-left: -30px;
+        cursor: pointer;
     }
 
     #about {
@@ -474,12 +564,13 @@ body {
         margin: 0;
         text-align: center;
         font-family: 'Inter', sans-serif;
-        color: white;
-        border: none;
-        background-color: #909090;
         border-radius: 10px;
         display: inline-block;
         font-size: 18px;
+        font-weight: bold;
+        color: #909090;
+        background-color: white;
+        border: 1px solid #909090
     }
 
     .save {

@@ -248,6 +248,74 @@ body {
     display: none;
   }
 
+  #modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+  }
+
+  .modal-content {
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    margin: 20% auto;
+    padding-top: 40px;
+    padding-bottom: 30px;
+    padding-left: 40px;
+    padding-right: 40px;
+    width: 30%;
+    height: 20%;
+    display: block;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px rgba(0, 0, 0, 0.17);
+  }
+
+  .modal-content h5 {
+    margin-bottom: 1.5em;
+    font-weight: bold;
+  }
+
+  .btns {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #modal-return {
+    background-color: white;
+    border: 1px solid #909090;
+    color: #909090;
+    border-radius: 10px;
+    height: 40px;
+    width: 110px;
+    font-size: 18px;
+    float: right;
+    font-weight: bold;
+  }
+
+  #modal-succuess {
+    background-color: #9595c5;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    height: 40px;
+    width: 110px;
+    font-size: 18px;
+    float: right;
+    font-weight: bold;
+  }
+
+  #modal-return:hover,
+  #modal-succuess:hover {
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.108), 0 3px 5px 0 rgba(0, 0, 0, 0.076);
+  }
+
 }
 
 

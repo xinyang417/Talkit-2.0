@@ -1,0 +1,592 @@
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+@media screen and (min-width: 701px) {
+
+    .container {
+        display: grid;
+        height: 100vh;
+        max-width: 100vw;
+        overflow-y: scroll;
+        grid-template-rows: 1fr 5fr 2fr 3fr;
+        grid-template-columns: 1fr 3fr;
+        padding: 0;
+        margin: 0;
+        margin-right: 0;
+        background-color: #DDDDF0;
+    }
+
+    #logo {
+        grid-row: 1 / span 1;
+        grid-column: 1 / span 1;
+        margin: 4em 0 0 2em;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    #footer {
+        grid-row: 2 / span 1;
+        grid-column: 1 / span 1;
+        border-top: 0.5px solid #e4e4e4;
+        margin-left: 2em;
+        margin-top: 2em;
+    }
+
+
+    #footer ul {
+        margin-bottom: 1.5em;
+        padding: 0;
+        top: 15em;
+        margin: 0em 1em 0em 1em;
+        max-width: 100%;
+        position: absolute;
+        list-style-type: none;
+    }
+
+    ul li {
+        padding: 0.5em 3em 0.5em 3em;
+        font-size: 18px;
+    }
+
+    ul li a {
+        color: black;
+        text-decoration: none;
+        margin: 0;
+    }
+
+    ul li a:hover {
+        color: #9595c5;
+        text-decoration: none;
+    }
+
+    ul .material-symbols-outlined {
+        display: none;
+    }
+
+    #nav {
+        max-width: 0;
+        max-height: 0;
+    }
+
+    nav {
+        display: none;
+    }
+
+    #read {
+        grid-row: 1 / span 3;
+        grid-column: 2 / span 1;
+        overflow-y: scroll;
+        margin: 2em 2em 0 2em !important;
+        background-color: white;
+        border-radius: 25px 25px 0 0;
+    }
+
+    #pageName {
+        padding-left: 2em;
+        margin-left: 2em;
+        margin-top: 0;
+    }
+
+    #pageName h2 {
+        margin-bottom: 0;
+        margin-top: 2em;
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    #postSection {
+        margin: 2em 2em 0 2em;
+        background-color: white;
+        padding-left: 2em;
+        padding-right: 2em;
+    }
+
+    #postSection .postTitle {
+        display: none;
+    }
+
+    .profilePic {
+        height: 50px;
+        width: 50px;
+        border-radius: 100%;
+    }
+
+    .info {
+        display: flex;
+        place-items: center;
+    }
+
+    #author,
+    #postTime,
+    .cmtName,
+    .cmtTime {
+        margin-left: 1em;
+        margin-bottom: 0;
+        font-size: 16px;
+    }
+
+    #postSection .material-symbols-outlined {
+        display: none;
+    }
+
+    #postText {
+        margin-top: 0;
+        font-size: 16px;
+        margin-bottom: 0;
+        margin-left: 4.2em;
+    }
+
+
+    #cmtSection {
+        margin: 0 2em 0 2em;
+        background-color: white;
+        padding-left: 2em;
+        padding-right: 2em;
+        margin-top: 2em;
+    }
+
+    #cmtSection h4 {
+        font-size: 25px;
+        font-weight: bold;
+        border-top: 1px solid #e4e4e4;
+        margin-bottom: 1em;
+        padding-top: 0.5em;
+    }
+
+    .cmt {
+        margin-bottom: 2em;
+    }
+
+    .cmtText {
+        margin-bottom: 0;
+        margin-top: 0;
+        margin-left: 4.2em;
+    }
+
+    .cmt button {
+        float: right;
+        border: none;
+        color: #909090;
+        font-weight: bold;
+        text-decoration: underline;
+        font-size: 13px;
+        background-color: white;
+        margin-bottom: 1.5em;
+    }
+
+    .collapsible {
+        display: none;
+    }
+
+    #addCmt {
+        grid-row: 4 / span 1;
+        grid-column: 2 / span 1;
+        margin: 0 2em 2em 2em;
+        background-color: white;
+        border-radius: 0 0 25px 25px;
+        padding: 1em 4em 2em 4em;
+        border-top: 1px solid #e4e4e4;
+    }
+
+    #addCmtText {
+        width: 100%;
+        height: 100px;
+        margin: 5px 0 12px 0;
+        padding-left: 10px;
+        padding-top: 10px;
+        display: inline-block;
+        border: none;
+        border-radius: 10px;
+        color: black;
+        font-size: 16px;
+        background-color: #e4e4e4;
+        font-family: 'Inter', sans-serif;
+    }
+
+    #nameMsg {
+        color: black;
+        font-size: 16px;
+    }
+
+    #nameMsg a {
+        color: #9595c5;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    #cancel {
+        color: #909090;
+        background-color: white;
+        height: 50px;
+        border-radius: 10px;
+        width: 46%;
+        font-size: 18px;
+        border: 1px solid #909090
+    }
+
+    #reply {
+        border: none;
+        color: #ffffff;
+        background-color: #9595c5;
+        height: 50px;
+        border-radius: 10px;
+        width: 46%;
+        font-size: 18px;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 34%;
+        float: right;
+    }
+
+    #cancel:hover,
+    #reply:hover {
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.108), 0 5px 10px 0 rgba(0, 0, 0, 0.076);
+    }
+
+    #bottomMenu {
+        grid-row: 3 / span 2;
+        grid-column: 1 / span 1;
+        margin: 6em 2em 0em 2em;
+    }
+
+    #bottomMenu ul {
+        margin-bottom: 1.5em;
+        padding: 0;
+        margin: 0em 1em 0em 1em;
+        max-width: 100%;
+        position: absolute;
+        bottom: 4em;
+        list-style-type: none;
+    }
+
+    #modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+    }
+
+    .modal-content {
+        background-color: white;
+        border-radius: 10px;
+        text-align: center;
+        margin: 20% auto;
+        padding-top: 40px;
+        padding-bottom: 30px;
+        padding-left: 40px;
+        padding-right: 40px;
+        width: 30%;
+        height: 20%;
+        display: block;
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px rgba(0, 0, 0, 0.17);
+    }
+
+    .modal-content h5 {
+        margin-bottom: 1.5em;
+        font-weight: bold;
+    }
+
+    .btns {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #modal-return {
+        background-color: white;
+        border: 1px solid #909090;
+        color: #909090;
+        border-radius: 10px;
+        height: 40px;
+        width: 110px;
+        font-size: 18px;
+        float: right;
+        font-weight: bold;
+    }
+
+    #modal-succuess {
+        background-color: #9595c5;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        height: 40px;
+        width: 110px;
+        font-size: 18px;
+        float: right;
+        font-weight: bold;
+    }
+
+    #modal-return:hover,
+    #modal-succuess:hover {
+        box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.108), 0 3px 5px 0 rgba(0, 0, 0, 0.076);
+    }
+}
+
+
+@media screen and (max-width: 700px) {
+    .container {
+        display: grid;
+        height: 100vh;
+        max-width: 100vw;
+        grid-template-rows: 1fr 5fr 5fr 3fr;
+        grid-template-columns: 1fr;
+        padding: 0;
+        margin: 0;
+        overflow-y: scroll;
+    }
+
+
+    #read {
+        grid-row: 1 / span 3;
+        margin-top: 4em;
+        margin-bottom: 4em;
+        height: 100%;
+    }
+
+    #pageName {
+        margin-left: 1em;
+    }
+
+    #pageName h2 {
+        font-size: 25px;
+        margin: 20px 0 20px 0;
+        font-weight: bold;
+    }
+
+    #logo {
+        max-width: 0;
+        max-height: 0;
+    }
+
+    #logo img {
+        display: none;
+    }
+
+    #nav {
+        grid-row: 1 / span 1;
+        width: 100%;
+        border-bottom: 0.5px solid #e4e4e4;
+        position: fixed;
+        background-color: white;
+    }
+
+    nav button {
+        border: none;
+        background-color: white;
+    }
+
+    nav .material-symbols-outlined {
+        margin-top: 30px;
+        font-size: 30px;
+        font-weight: bold;
+        color: #909090;
+        border: none;
+    }
+
+    .profilePic {
+        float: left;
+        width: 45px;
+        height: 45px;
+        border-radius: 100%;
+    }
+
+    #postSection {
+        margin: 1em;
+        margin-top: 1em;
+    }
+
+    #cmtSection {
+        margin: 1em;
+        border-top: 1px solid #e4e4e4;
+        max-width: 100%;
+    }
+
+    #cmtSection h4 {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 20px 0 20px 0;
+        position: relative;
+        max-width: 100%;
+    }
+
+    .cmt button {
+        float: right;
+        border: none;
+        color: #909090;
+        font-weight: bold;
+        text-decoration: underline;
+        font-size: 12px;
+        background-color: white;
+        margin-bottom: 1.5em;
+        margin-left: 1em;
+    }
+
+    #author,
+    #postTime,
+    .cmtName,
+    .cmtTime {
+        margin: 5px 0 0 55px;
+        font-size: 12px;
+    }
+
+    #author,
+    .cmtName {
+        padding-top: 4px;
+    }
+
+    .cmt {
+        box-sizing: border-box;
+        width: 100%;
+        margin-bottom: 1.5em;
+    }
+
+    #postSection .material-symbols-outlined {
+        float: right;
+        color: #9595c5;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    #postText,
+    .cmtText {
+        text-align: left;
+        margin: 10px 0 0 0;
+        margin-left: 3.5em;
+    }
+
+    #postTitle {
+        margin: 15px 0 0 0;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    #addCmt {
+        grid-row: 4 / span 1;
+        position: fixed;
+        bottom: 0;
+        background-color: rgb(255, 255, 255);
+        padding-left: 1em;
+        padding-right: 1em;
+        width: 100%;
+    }
+
+    #nameMsg {
+        color: black;
+        font-size: 14px;
+        margin-bottom: 2em;
+    }
+
+    #nameMsg a {
+        color: #9595c5;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    #helper {
+        height: 6.5em;
+    }
+
+    #addCmtText {
+        width: 100%;
+        height: 100px;
+        margin: 5px 0 12px 0;
+        padding-left: 10px;
+        padding-top: 10px;
+        display: inline-block;
+        border: none;
+        border-radius: 10px;
+        color: black;
+        font-size: 14px;
+        background-color: #e4e4e4;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .collapsible {
+        width: 100%;
+        height: 40px;
+        background-color: rgb(255, 255, 255);
+        padding: 0;
+        margin-bottom: 1.5em;
+        position: sticky;
+        float: right;
+        color: #9595c5;
+        border: 1px solid #9595c5;
+        border-radius: 10px;
+        font-weight: bold;
+    }
+
+
+    .collapsible.active {
+        display: none;
+    }
+
+    .content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-in-out;
+        bottom: 0;
+        background-color: white;
+        width: 100%;
+        margin-bottom: 1em;
+        padding-top: 10px;
+    }
+
+    #input {
+        height: 250px;
+    }
+
+    #cancel {
+        color: #909090;
+        background-color: white;
+        height: 40px;
+        border-radius: 10px;
+        width: 48%;
+        font-size: 16px;
+        border: 1px solid #909090
+    }
+
+    #reply {
+        border: none;
+        color: #ffffff;
+        background-color: #9595c5;
+        height: 40px;
+        border-radius: 10px;
+        width: 48%;
+        font-size: 16px;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    #bottomMenu {
+        height: 0;
+        width: 0;
+    }
+
+    #footer {
+        height: 0;
+        width: 0;
+    }
+
+    ul {
+        display: none;
+    }
+}

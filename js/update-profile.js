@@ -1,3 +1,4 @@
+"use strict";
 const upLoadForm = document.getElementById("upload-images-form");
 upLoadForm.addEventListener("submit", uploadImages);
 
@@ -15,11 +16,26 @@ function uploadImages(e) {
         method: 'POST',
         body: formData,
     };
-    fetch("/upload-images", options
-    ).catch(function (err) { ("Error:", err) }
-    );
+    fetch("/upload-images", options).catch(function (err) {
+        ("Error:", err)
+    });
 }
 
+const togglePassword = document.querySelector("#togglePassword");
+const password = document.querySelector("#password");
+
+togglePassword.addEventListener("click", function () {
+
+    const type = password.getAttribute("type") === "password" ? "text" : "password";
+    password.setAttribute("type", type);
+
+    this.classList.toggle("bi-eye");
+});
+
+const form = document.querySelector("form");
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
+});
 
 
 // Update profile when save button is clicked
@@ -68,8 +84,8 @@ document.getElementById("updateCancel").addEventListener("click", (e) => {
 
 function displayUsername() {
     const xhr = new XMLHttpRequest();
-    xhr.onload = function (){
-        if (this.readyState == XMLHttpRequest.DONE){
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
                 if (data.status != "success") {
@@ -114,3 +130,30 @@ function displayName() {
 }
 
 displayName();
+
+
+// Modal Functions
+var modal = document.getElementById('simpleModal');
+
+var modalBtn = document.getElementById('logout');
+
+var goBack = document.getElementById('modal-return');
+
+
+modalBtn.addEventListener('click', showModal);
+goBack.addEventListener('click', closeModal);
+window.addEventListener('click', clickOutside);
+
+function showModal() {
+    modal.style.display = 'block';
+}
+
+function closeModal() {
+    modal.style.display = 'none';
+}
+
+function clickOutside(e) {
+    if (e.target == modal) {
+        modal.style.display = 'none';
+    }
+}

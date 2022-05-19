@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <title>Talkit</title>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +18,8 @@
         href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <link rel="stylesheet" href="/css/share_story.css">
-    <title>Share Story</title>
+    <link href="/img/favicon.ico" rel="icon" type="image/x-icon" />
+
 </head>
 
 <body>
@@ -30,47 +33,71 @@
         </div>
         <div id="logo">
             <figure class="logo">
-                <img class="img" alt="..." src="images/logo-01.png" />
+                <img class="img" alt="..." src="/img/logo-01.png" />
             </figure>
         </div>
         <div id="pageName">
             <h2><b> Share Story</b></h2>
         </div>
+
         <div id="text">
             <form id='input'>
                 <input type="text" id="title" placeholder="Add a title" />
                 <textarea id="story" rows="4" cols="50" placeholder="What's on your mind?"></textarea>
             </form>
         </div>
+
         <div id="photo">
             <h3><b> Would you like to add a photo?</b></h3>
             <form action="/">
                 <input type="file" name="photo" id="inputPhoto" accept=".jpg, .jpeg, .png" />
-                <button id='delete' type="reset"><b> Discard Photo</b></button>
-
+                <button id='delete' type="reset"><b> Delete Photo</b></button>
             </form>
         </div>
-        <div id="button">
-            <button id="post" type="submit"><b>Post</b></button>
+
+        <div id="buttons">
+            <div id="btn">
+                <button id="discard" type="submit"><b>Discard</b></button>
+                <button id="post" type="submit"><b>Post</b></button>
+            </div>
         </div>
+
+
         <div id="footer">
             <ul>
-                <li><a href="#"><span class="material-symbols-outlined">home</span></a><b>Home</b> </li>
-                <li><a href="#"><span class="material-symbols-outlined">bookmark</span></a><b>Bookmark</b> </li>
-                <li><a href="#" class="active"><span class="material-symbols-outlined">add_box</span></a><b>Share
-                        Story</b></li>
-                <li><a href="#"><span class="material-symbols-outlined">mail</span></a><b>Messages</b> </li>
-                <li><a href="#"><span class="material-symbols-outlined">notifications</span></a><b>Notifications</b>
+                <li><a href="/home"><span class="material-symbols-outlined">home</span><b>Home</b></a> </li>
+                <li><a href="#"><span class="material-symbols-outlined">bookmark</span><b>Bookmark</b></a> </li>
+                <li><a href="/share-story" class="active"><span class="material-symbols-outlined">add_box</span><b>Share
+                            Story</b></a>
+                </li>
+                <li><a href="#"><span class="material-symbols-outlined">mail</span><b>Messages</b></a> </li>
+                <li><a href="#"><span class="material-symbols-outlined">notifications</span><b>Notifications</b></a>
                 </li>
             </ul>
         </div>
         <div id="bottomMenu">
             <ul>
-                <li><a href="#"></a><b>Profile</b> </li>
-                <li><a href="#"></a><b>Log Out</b> </li>
+                <li id="dashboard"><a href="/admin"><b>Dashboard</b></a></li>
+                <li><a href="/profile"><b>Profile</b></a> </li>
+                <li><a href="#" id="logout"> <b>Log Out</b> </a></li>
             </ul>
         </div>
     </div>
+
+     <!--Modal-->
+     <div id="simpleModal" class="modal">
+        <div class="modal-content">
+          <h5>Are you sure you want to log out?</h5>
+          <div class="buttons">
+            <form><button id="modal-return">Cancel</button></form>
+            <form action="/logout" method="get">
+              <button type="submit" value="Logout" id="modal-succuess">Log Out</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    <script src="./js/share-story.js"></script>
 </body>
 
 </html>
