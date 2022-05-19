@@ -297,7 +297,7 @@ app.get('/story-comment', (req, res) => {
             profileDOM.window.document.getElementById("postTitle").innerHTML = results[0].title;
             profileDOM.window.document.getElementById("postText").innerHTML = results[0].story;
             profileDOM.window.document.getElementById("postPic").setAttribute("src", "/img/" + results[0].profilePic);
-            profileDOM.window.document.getElementById("reader").innerHTML = req.session.username;
+            profileDOM.window.document.getElementById("reader").innerHTML = results[0].displayName;
             profileDOM.window.document.getElementById("reader").setAttribute("value", req.session.userid);
             profileDOM.window.document.getElementById("reader").setAttribute("class", req.session.isAdmin);
             res.send(profileDOM.serialize());
@@ -585,6 +585,25 @@ app.post('/update-profile', (req, res) => {
     });
 });
 
+app.get('/get-posts', (req, res) => {
+    // If the user is logged in
+    if (req.session.loggedin) {
+        let sql = `SELECT * FROM BBY_01_timeline
+                    INNER JOIN bby_01_profile
+                    ON BBY_01_timeline.userID = bby_01_profile.userID`;
+        database.query(sql, (error, results) => {
+            if (error) console.log(error);
+            res.send({
+                status: "success",
+                rows: results
+            });
+        });
+    } else {
+        // If the user is not logged in
+        res.redirect("/");
+    }
+});
+
 app.post('/post-story', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     let title = req.body.title;
@@ -648,24 +667,7 @@ app.get('/get-users', (req, res) => {
     }
 });
 
-app.get('/get-posts', (req, res) => {
-    // If the user is logged in
-    if (req.session.loggedin) {
-        let sql = `SELECT * FROM BBY_01_timeline
-                    INNER JOIN bby_01_profile
-                    ON BBY_01_timeline.userID = bby_01_profile.userID`;
-        database.query(sql, (error, results) => {
-            if (error) console.log(error);
-            res.send({
-                status: "success",
-                rows: results
-            });
-        });
-    } else {
-        // If the user is not logged in
-        res.redirect("/");
-    }
-});
+
 
 app.post('/add-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');

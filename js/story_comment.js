@@ -45,13 +45,13 @@ function displayComment() {
                         newCommentTemplate.getElementById("commentTime").setAttribute("id", "commentTime" + row.commentID);
                         newCommentTemplate.getElementById("commentText").setAttribute("id", "commentText" + row.commentID);
                         if (id != row.userID && isAdmin == 0) {
-                            newCommentTemplate.getElementById("postDelete").remove();
-                            newCommentTemplate.getElementById("postEdit").remove();
+                            newCommentTemplate.getElementById("cmtDelete").remove();
+                            newCommentTemplate.getElementById("cmtEdit").remove();
                         } else {
-                            newCommentTemplate.getElementById("postDelete").setAttribute("onclick", `deleteComment(${row.commentID})`);
-                            newCommentTemplate.getElementById("postDelete").setAttribute("id", "delete" + row.commentID);
-                            newCommentTemplate.getElementById("postEdit").setAttribute("onclick", `editComment(${row.commentID})`);
-                            // newCommentTemplate.getElementById("postEdit").addEventListener("click", editComment);
+                            newCommentTemplate.getElementById("cmtDelete").setAttribute("onclick", `deleteComment(${row.commentID})`);
+                            newCommentTemplate.getElementById("cmtDelete").setAttribute("id", "cmtDelete" + row.commentID);
+                            newCommentTemplate.getElementById("cmtEdit").setAttribute("onclick", `editComment(${row.commentID})`);
+                            newCommentTemplate.getElementById("cmtEdit").setAttribute("id", "cmtEdit" + row.commentID);
                         }
 
                         parent.appendChild(newCommentTemplate);
@@ -94,6 +94,25 @@ function comment() {
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send("comment=" + formData.comment);
+}
+
+function deletePost(postID) {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                window.location.replace("/home");
+            } else {
+                console.log(this.status);
+            }
+        } else {
+            console.log("ERROR", this.status);
+        }
+    }
+    xhr.open("POST", "/delete-post");
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send("postID=" + postID);
 }
 
 function deleteComment(commentID) {
@@ -139,6 +158,7 @@ function editComment(commentID) {
         let v = textArea.value;
         let newText = document.createElement("p");
             newText.innerHTML = textArea.value;
+            newText.setAttribute("id", "commentText" + commentID);
             newText.setAttribute("class", "cmtText");
             parent.replaceChild(newText, textArea);
             const xhr = new XMLHttpRequest();
@@ -166,6 +186,7 @@ function editComment(commentID) {
             let newText = document.createElement("p");
             newText.innerHTML = textArea.value;
             newText.setAttribute("class", "cmtText");
+            newText.setAttribute("id", "commentText" + commentID);
             parent.replaceChild(newText, textArea);
             const xhr = new XMLHttpRequest();
             xhr.onload = function () {
