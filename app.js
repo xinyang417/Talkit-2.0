@@ -528,7 +528,6 @@ app.post('/delete-post', (req, res) => {
 app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
     var sql = `SELECT * FROM bby_01_timeline
                 ORDER BY postID DESC LIMIT 1`;
-
     database.query(sql, (error, results) => {
         if (error) {
             console.log(error);
@@ -536,6 +535,7 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
             sql = `UPDATE bby_01_timeline
             SET storyPic = ?
             WHERE postID = ?`;
+            if (!is_heroku) {
             database.query(sql, [req.files[0].filename, results[0].postID], (error, results) => {
                 if (error) console.log(error);
                 res.send({
@@ -543,6 +543,15 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
                     rows: results
                 });
             });
+        } else {
+            database.query(sql, [req.files[0].filename, results[0].postID+10], (error, results) => {
+                if (error) console.log(error);
+                res.send({
+                    status: "success",
+                    rows: results
+                });
+            });
+        }
         }
     });
 });
