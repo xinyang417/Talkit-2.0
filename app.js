@@ -21,6 +21,7 @@ const {
 const {
     resourceLimits
 } = require('worker_threads');
+const { newObjectInRealm } = require('jsdom/lib/jsdom/living/generated/utils');
 const app = express();
 
 
@@ -276,6 +277,145 @@ app.get('/admin', (req, res) => {
     res.end();
 });
 
+app.get('/get-users', (req, res) => {
+    // If the user is logged in
+    if (req.session.loggedin) {
+        let sql = `SELECT * FROM BBY_01_user
+                    LEFT JOIN bby_01_profile
+                    ON BBY_01_user.ID = bby_01_profile.userID
+                    ORDER BY ID ASC;`;
+        database.query(sql, (error, results) => {
+            if (error) console.log(error);
+            res.send({
+                status: "success",
+                rows: results
+            });
+        });
+    } else {
+        // If the user is not logged in
+        res.redirect("/");
+    }
+});
+
+app.post('/add-user', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    let sql = `INSERT INTO BBY_01_user (username, email, password, isAdmin) 
+                values(?, ?, ?, ?);`
+    database.query(sql,
+        [req.body.username, req.body.email, req.body.password, req.body.isAdmin],
+        (error, results, fields) => {
+            if (error) console.log(error);
+            sql = `SELECT * FROM bby_01_user
+                    ORDER BY ID DESC LIMIT 1;`;
+            database.query(sql, (error, results) => {
+                if (error) throw error;
+                sql = `INSERT INTO bby_01_profile(userID, displayName, about, profilePic)
+                        SELECT * 
+                        FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
+                        WHERE NOT EXISTS (SELECT userID
+                            FROM bby_01_profile
+                            WHERE userID = ?) LIMIT 1;`;
+                database.query(sql, [results[0].ID, results[0].username, results[0].ID], (error, results) => {
+                    if (error) throw error;
+                    res.send({
+                        status: "success",
+                        msg: "Record added."
+                    });
+                });
+            });
+        });
+});
+
+app.post('/update-user', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    let sql = `UPDATE BBY_01_user 
+                SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?;`;
+    database.query(sql,
+        [req.body.username, req.body.email, req.body.password, req.body.isAdmin,
+            req.body.id
+        ],
+        (error, results) => {
+            if (error) console.log(error);
+            sql = `UPDATE bby_01_profile
+                    SET displayName = ?
+                    WHERE userID = ?`
+            database.query(sql, [req.body.displayname, req.body.id], (error, results) => {
+                if (error) throw error;
+                res.send({
+                    status: "success",
+                    msg: "Record updated."
+                });
+                res.end();
+            });
+        });
+});
+
+app.post('/delete-user', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+
+    let adminLeft = `SELECT *
+                    FROM BBY_01_user
+                    WHERE isAdmin = 1`;
+    let checkAdmin = `SELECT isAdmin
+                    FROM bby_01_user
+                    WHERE ID = ?`;
+    var numberOfAdmin;
+    var accountType;
+    database.query(checkAdmin, [req.body.id], (error, results) => {
+        if (error) console.log(error);
+        accountType = results[0].isAdmin;
+    });
+    database.query(adminLeft, (error, results) => {
+        if (error) console.log(error);
+        numberOfAdmin = results.length;
+        if (numberOfAdmin == 1 && accountType == 1) {
+            res.send({
+                status: "fail",
+                msg: "The account is the last admin account."
+            });
+        } else {
+            deleteSQL(req, res);
+        }
+    });
+});
+
+function deleteSQL(req, res) {
+    let deleteSql = `DELETE 
+                    FROM BBY_01_user 
+                    WHERE ID = ?`;
+    database.query(deleteSql,
+        [req.body.id],
+        (error, results) => {
+            if (error) console.log(error);
+
+            res.send({
+                status: "success",
+                msg: "Record deleted"
+            });
+        });
+}
+
+app.get('/get-username', (req, res) => {
+    if (req.session.loggedin) {
+
+        const sql = `SELECT * 
+                FROM bby_01_user 
+                WHERE ID = ?`;
+
+        database.query(sql, [req.session.userid], (error, results) => {
+            if (error) console.log(error);
+            res.send({
+                status: "success",
+                rows: results
+            });
+        });
+
+    } else {
+        // If the user is not logged in
+        res.redirect("/");
+    }
+});
+
 app.get('/story-comment', (req, res) => {
     // If the user is logged in
     if (req.session.loggedin) {
@@ -297,17 +437,114 @@ app.get('/story-comment', (req, res) => {
             profileDOM.window.document.getElementById("postTitle").innerHTML = results[0].title;
             profileDOM.window.document.getElementById("postText").innerHTML = results[0].story;
             profileDOM.window.document.getElementById("postPic").setAttribute("src", "/img/" + results[0].profilePic);
-            profileDOM.window.document.getElementById("reader").innerHTML = results[0].displayName;
+            
             profileDOM.window.document.getElementById("reader").setAttribute("value", req.session.userid);
             profileDOM.window.document.getElementById("reader").setAttribute("class", req.session.isAdmin);
-            res.send(profileDOM.serialize());
-            res.end();
+            if (results[0].userID != req.session.userid && req.session.isAdmin == 0) {
+                profileDOM.window.document.getElementById("deletePost").remove();
+                profileDOM.window.document.getElementById("editPost").remove();
+            } else {
+                profileDOM.window.document.getElementById("deletePost").setAttribute("onclick", `deletePost(${req.session.postID})`);
+                profileDOM.window.document.getElementById("editPost").setAttribute("onclick", `editPost(${req.session.postID})`);
+            }
+            sql = `SELECT * FROM bby_01_profile WHERE userID = ?`;
+            database.query(sql, [req.session.userid], (error, results) => {
+                if (error) throw error;
+                profileDOM.window.document.getElementById("reader").innerHTML = results[0].displayName;
+                res.send(profileDOM.serialize());
+                res.end();
+            })
+            
         })
 
     } else {
         res.redirect("/");
     }
 
+});
+
+app.get('/get-posts', (req, res) => {
+    // If the user is logged in
+    if (req.session.loggedin) {
+        let sql = `SELECT * FROM BBY_01_timeline
+                    INNER JOIN bby_01_profile
+                    ON BBY_01_timeline.userID = bby_01_profile.userID`;
+        database.query(sql, (error, results) => {
+            if (error) console.log(error);
+            res.send({
+                status: "success",
+                rows: results
+            });
+        });
+    } else {
+        // If the user is not logged in
+        res.redirect("/");
+    }
+});
+
+app.post('/post-story', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    let title = req.body.title;
+    let story = req.body.story;
+    let date = req.body.date;
+    let user = req.session.userid;
+
+    if (title != '' && story != '') {
+        database.query('INSERT INTO BBY_01_timeline (userID, title, story, date) values(?, ?, ?, ?)',
+            [user, title, story, date],
+            (error, results, fields) => {
+                if (error) console.log(error);
+                res.send({
+                    status: "success",
+                    msg: "Record added."
+                });
+            });
+    }
+});
+
+app.post('/edit-post', (req, res) => {
+    if (req.session.loggedin) {
+        let sql = `UPDATE BBY_01_timeline SET story = ? WHERE postID = ?`;
+        database.query(sql, [req.body.story, req.body.postID], (error, results) => {
+            if (error) throw error;
+            res.send();
+            res.end();
+        })
+    } else {
+        res.redirect("/");
+    }
+});
+
+app.post('/delete-post', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    let sql = `DELETE FROM BBY_01_timeline WHERE postID = ?`;
+    database.query(sql, [req.body.postID], (error, results) => {
+        if(error) throw error;
+        res.send();
+        res.end();
+    })
+});
+
+app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
+    var sql = `SELECT * FROM bby_01_timeline
+                ORDER BY postID DESC LIMIT 1`;
+
+    database.query(sql, (error, results) => {
+        if (error) {
+            console.log(error);
+        } else {
+            sql = `UPDATE bby_01_timeline
+            SET storyPic = ?
+            WHERE postID = ?`;
+            database.query(sql, [req.files[0].filename, results[0].postID], (error, results) => {
+                if (error) console.log(error);
+                res.send({
+                    status: "success",
+                    rows: results
+                });
+            });
+        }
+    });
 });
 
 app.get('/get-comment', (req, res) => {
@@ -397,8 +634,7 @@ app.post('/edit-comment', (req,res) => {
     } else {
         res.redirect("/");
     }
-})
-
+});
 
 app.get('/profile', (req, res) => {
     // If the user is logged in
@@ -414,38 +650,6 @@ app.get('/profile', (req, res) => {
         // If the user is not logged in
         res.redirect("/");
     }
-});
-
-app.get('/update-profile', (req, res) => {
-    // If the user is loggedin
-    if (req.session.loggedin) {
-        let doc = fs.readFileSync('./update-profile.html', "utf-8");
-        let profileDOM = new JSDOM(doc);
-        profileDOM.window.document.getElementById("email").setAttribute("value", req.session.email);
-        profileDOM.window.document.getElementById("password").setAttribute("value", req.session.password);
-        if (req.session.isAdmin == 0) {
-            profileDOM.window.document.querySelector("#dashboard").remove();
-        }
-        profileDOM.window.document.getElementById("uName").innerHTML = req.session.username;
-        res.send(profileDOM.serialize());
-    } else {
-        // If the user is not logged in
-        res.redirect("/");
-    }
-})
-
-app.post('/upload-images', upload.array("files"), (req, res) => {
-
-    const sql = `UPDATE bby_01_profile
-                SET profilePic = ?
-                WHERE userID = ?`;
-    database.query(sql, [req.files[0].filename, req.session.userid], (error, results) => {
-        if (error) console.log(error);
-        res.send({
-            status: "success",
-            rows: results
-        });
-    });
 });
 
 app.get('/get-displayname', (req, res) => {
@@ -490,6 +694,40 @@ app.get('/get-about', (req, res) => {
     }
 });
 
+app.get('/update-profile', (req, res) => {
+    // If the user is loggedin
+    if (req.session.loggedin) {
+        let doc = fs.readFileSync('./update-profile.html', "utf-8");
+        let profileDOM = new JSDOM(doc);
+        profileDOM.window.document.getElementById("email").setAttribute("value", req.session.email);
+        profileDOM.window.document.getElementById("password").setAttribute("value", req.session.password);
+        if (req.session.isAdmin == 0) {
+            profileDOM.window.document.querySelector("#dashboard").remove();
+        }
+        profileDOM.window.document.getElementById("uName").innerHTML = req.session.username;
+        res.send(profileDOM.serialize());
+    } else {
+        // If the user is not logged in
+        res.redirect("/");
+    }
+})
+
+app.post('/upload-images', upload.array("files"), (req, res) => {
+
+    const sql = `UPDATE bby_01_profile
+                SET profilePic = ?
+                WHERE userID = ?`;
+    database.query(sql, [req.files[0].filename, req.session.userid], (error, results) => {
+        if (error) console.log(error);
+        res.send({
+            status: "success",
+            rows: results
+        });
+    });
+});
+
+
+
 app.get('/get-profilePic', (req, res) => {
     if (req.session.loggedin) {
 
@@ -509,26 +747,7 @@ app.get('/get-profilePic', (req, res) => {
     }
 });
 
-app.get('/get-username', (req, res) => {
-    if (req.session.loggedin) {
 
-        const sql = `SELECT * 
-                FROM bby_01_user 
-                WHERE ID = ?`;
-
-        database.query(sql, [req.session.userid], (error, results) => {
-            if (error) console.log(error);
-            res.send({
-                status: "success",
-                rows: results
-            });
-        });
-
-    } else {
-        // If the user is not logged in
-        res.redirect("/");
-    }
-});
 
 app.post('/update-profile', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
@@ -584,188 +803,6 @@ app.post('/update-profile', (req, res) => {
         msg: message
     });
 });
-
-app.get('/get-posts', (req, res) => {
-    // If the user is logged in
-    if (req.session.loggedin) {
-        let sql = `SELECT * FROM BBY_01_timeline
-                    INNER JOIN bby_01_profile
-                    ON BBY_01_timeline.userID = bby_01_profile.userID`;
-        database.query(sql, (error, results) => {
-            if (error) console.log(error);
-            res.send({
-                status: "success",
-                rows: results
-            });
-        });
-    } else {
-        // If the user is not logged in
-        res.redirect("/");
-    }
-});
-
-app.post('/post-story', (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    let title = req.body.title;
-    let story = req.body.story;
-    let date = req.body.date;
-    let user = req.session.userid;
-
-    if (title != '' && story != '') {
-        database.query('INSERT INTO BBY_01_timeline (userID, title, story, date) values(?, ?, ?, ?)',
-            [user, title, story, date],
-            (error, results, fields) => {
-                if (error) console.log(error);
-                res.send({
-                    status: "success",
-                    msg: "Record added."
-                });
-            });
-    }
-});
-
-app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
-
-    var sql = `SELECT * FROM bby_01_timeline
-                ORDER BY postID DESC LIMIT 1`;
-
-    database.query(sql, (error, results) => {
-        if (error) {
-            console.log(error);
-        } else {
-            sql = `UPDATE bby_01_timeline
-            SET storyPic = ?
-            WHERE postID = ?`;
-            database.query(sql, [req.files[0].filename, results[0].postID], (error, results) => {
-                if (error) console.log(error);
-                res.send({
-                    status: "success",
-                    rows: results
-                });
-            });
-        }
-    });
-});
-
-app.get('/get-users', (req, res) => {
-    // If the user is logged in
-    if (req.session.loggedin) {
-        let sql = `SELECT * FROM BBY_01_user
-                    LEFT JOIN bby_01_profile
-                    ON BBY_01_user.ID = bby_01_profile.userID
-                    ORDER BY ID ASC;`;
-        database.query(sql, (error, results) => {
-            if (error) console.log(error);
-            res.send({
-                status: "success",
-                rows: results
-            });
-        });
-    } else {
-        // If the user is not logged in
-        res.redirect("/");
-    }
-});
-
-
-
-app.post('/add-user', (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    let sql = `INSERT INTO BBY_01_user (username, email, password, isAdmin) 
-                values(?, ?, ?, ?);`
-    database.query(sql,
-        [req.body.username, req.body.email, req.body.password, req.body.isAdmin],
-        (error, results, fields) => {
-            if (error) console.log(error);
-            sql = `SELECT * FROM bby_01_user
-                    ORDER BY ID DESC LIMIT 1;`;
-            database.query(sql, (error, results) => {
-                if (error) throw error;
-                sql = `INSERT INTO bby_01_profile(userID, displayName, about, profilePic)
-                        SELECT * 
-                        FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
-                        WHERE NOT EXISTS (SELECT userID
-                            FROM bby_01_profile
-                            WHERE userID = ?) LIMIT 1;`;
-                database.query(sql, [results[0].ID, results[0].username, results[0].ID], (error, results) => {
-                    if (error) throw error;
-                    res.send({
-                        status: "success",
-                        msg: "Record added."
-                    });
-                });
-            });
-        });
-});
-
-app.post('/update-user', (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    let sql = `UPDATE BBY_01_user 
-                SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?;`;
-    database.query(sql,
-        [req.body.username, req.body.email, req.body.password, req.body.isAdmin,
-            req.body.id
-        ],
-        (error, results) => {
-            if (error) console.log(error);
-            sql = `UPDATE bby_01_profile
-                    SET displayName = ?
-                    WHERE userID = ?`
-            database.query(sql, [req.body.displayname, req.body.id], (error, results) => {
-                if (error) throw error;
-                res.send({
-                    status: "success",
-                    msg: "Record updated."
-                });
-                res.end();
-            });
-        });
-})
-
-app.post('/delete-user', (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-
-    let adminLeft = `SELECT *
-                    FROM BBY_01_user
-                    WHERE isAdmin = 1`;
-    let checkAdmin = `SELECT isAdmin
-                    FROM bby_01_user
-                    WHERE ID = ?`;
-    var numberOfAdmin;
-    var accountType;
-    database.query(checkAdmin, [req.body.id], (error, results) => {
-        if (error) console.log(error);
-        accountType = results[0].isAdmin;
-    });
-    database.query(adminLeft, (error, results) => {
-        if (error) console.log(error);
-        numberOfAdmin = results.length;
-        if (numberOfAdmin == 1 && accountType == 1) {
-            res.send({
-                status: "fail",
-                msg: "The account is the last admin account."
-            });
-        } else {
-            deleteSQL(req, res);
-        }
-    });
-});
-
-function deleteSQL(req, res) {
-    let deleteSql = `DELETE 
-                    FROM BBY_01_user 
-                    WHERE ID = ?`;
-    database.query(deleteSql,
-        [req.body.id],
-        (error, results) => {
-            if (error) console.log(error);
-
-            res.send({
-                status: "success",
-                msg: "Record deleted"
-            });
-        });
-}
 
 app.get("/logout", (req, res) => {
     // If the user is logged in

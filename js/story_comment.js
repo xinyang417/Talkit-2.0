@@ -1,3 +1,5 @@
+'use strict'
+
 var coll = document.getElementsByClassName("collapsible");
 var i;
 
@@ -134,6 +136,58 @@ function deleteComment(commentID) {
     xhr.send("commentID=" + commentID);
 }
 
+function editPost(postID) {
+    let postText = document.getElementById("postText");
+    let parent = postText.parentNode;
+    let textArea = document.createElement("textarea");
+
+    textArea.value = postText.innerHTML;
+    textArea.setAttribute("id", "postEditArea");
+    parent.replaceChild(textArea, postText);
+
+    let submit = document.createElement("button");
+    submit.innerHTML = 'Submit';
+    submit.setAttribute("id", "submitPost");
+
+    let cancel = document.createElement("button");
+    cancel.innerHTML = 'Cancel';
+    cancel.setAttribute("id", "cancelPost");
+
+    parent.appendChild(submit);
+    parent.appendChild(cancel);
+
+    cancel.addEventListener("click", () => {
+        parent.replaceChild(postText, textArea);
+        parent.removeChild(cancel);
+        parent.removeChild(submit);
+    });
+
+    submit.addEventListener("click", () => {
+        let v = textArea.value;
+        let newText = document.createElement("p");
+            newText.innerHTML = textArea.value;
+            newText.setAttribute("id", "postText");
+            parent.replaceChild(newText, textArea);
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                if (this.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        parent.removeChild(cancel);
+                        parent.removeChild(submit);
+                    } else {
+                        console.log(this.status);
+                    }
+                } else {
+                    console.log("ERROR", this.status);
+                }
+            }
+            xhr.open("POST", "/edit-post");
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send("story=" + v + "&postID=" + postID);
+    });
+}
+
 function editComment(commentID) {
     let commentText = document.getElementById("commentText" + commentID);
     let parent = commentText.parentNode;
@@ -179,7 +233,7 @@ function editComment(commentID) {
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.send("comment=" + v + "&commentID=" + commentID);
     });
-    textArea.addEventListener("keyup", function (e) {
+    textArea.addEventListener("keyup", (e) => {
         let v = null;
         if (e.which == 13) {
             v = textArea.value;
