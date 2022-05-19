@@ -111,6 +111,16 @@ body {
         display: none;
     }
 
+    #postSection textarea {
+        background-color: #e4e4e4;
+        width: 92%;
+        height: 100px;
+        border: none;
+        border-radius: 10px;
+        margin-left: 4em;
+        padding: 10px;
+    }
+
     .profilePic {
         height: 50px;
         width: 50px;
@@ -159,6 +169,51 @@ body {
         padding-top: 0.5em;
     }
 
+    #cmtSection textarea {
+        background-color: #e4e4e4;
+        width: 92%;
+        height: 100px;
+        border: none;
+        border-radius: 10px;
+        margin-left: 4em;
+        padding: 10px;
+    }
+
+    .editSubmit,
+    #submitPost {
+        border: none;
+        color: #9595c5;
+        font-weight: bold;
+        text-decoration: underline;
+        font-size: 14px;
+        background-color: white;
+        margin-bottom: 1.5em;
+    }
+
+    .editSubmit:hover,
+    #submitPost:hover {
+        background-color: #DDDDF0;
+        border-radius: 5px;
+    }
+
+    .editCancel,
+    #cancelPost {
+        margin-left: 4.5em;
+        border: none;
+        color: #909090;
+        font-weight: bold;
+        text-decoration: underline;
+        font-size: 14px;
+        background-color: white;
+        margin-bottom: 1.5em;
+    }
+
+    .editCancel:hover,
+    #cancelPost:hover {
+        background-color: #e4e4e4;
+        border-radius: 5px;
+    }
+
     .cmt {
         margin-bottom: 2em;
     }
@@ -169,15 +224,25 @@ body {
         margin-left: 4.2em;
     }
 
-    .cmt button {
+    .edBtns {
+        display: flex;
+        float: right;
+    }
+
+    .edBtns button {
         float: right;
         border: none;
         color: #909090;
         font-weight: bold;
         text-decoration: underline;
-        font-size: 13px;
+        font-size: 14px;
         background-color: white;
         margin-bottom: 1.5em;
+    }
+
+    .edBtns button:hover {
+        background-color: #e4e4e4;
+        border-radius: 5px;
     }
 
     .collapsible {
@@ -198,8 +263,7 @@ body {
         width: 100%;
         height: 100px;
         margin: 5px 0 12px 0;
-        padding-left: 10px;
-        padding-top: 10px;
+        padding: 10px;
         display: inline-block;
         border: none;
         border-radius: 10px;
@@ -406,8 +470,19 @@ body {
     }
 
     #postSection {
-        margin: 1em;
-        margin-top: 1em;
+        margin: 1em 1em 2em 1em;
+    }
+
+    #postSection textarea {
+        background-color: #e4e4e4;
+        width: 80%;
+        height: 70px;
+        border: none;
+        border-radius: 10px;
+        margin-top: 5px;
+        margin-left: 4em;
+        font-size: 14px;
+        padding: 10px;
     }
 
     #cmtSection {
@@ -424,7 +499,24 @@ body {
         max-width: 100%;
     }
 
-    .cmt button {
+    #cmtSection textarea {
+        background-color: #e4e4e4;
+        width: 80%;
+        height: 70px;
+        border: none;
+        border-radius: 10px;
+        margin-top: 5px;
+        margin-left: 4em;
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .edBtns {
+        display: flex;
+        float: right;
+    }
+
+    .edBtns button {
         float: right;
         border: none;
         color: #909090;
@@ -432,8 +524,27 @@ body {
         text-decoration: underline;
         font-size: 12px;
         background-color: white;
-        margin-bottom: 1.5em;
-        margin-left: 1em;
+    }
+
+    .editSubmit,
+    #submitPost {
+        border: none;
+        color: #9595c5;
+        font-weight: bold;
+        text-decoration: underline;
+        font-size: 12px;
+        background-color: white;
+    }
+
+    .editCancel,
+    #cancelPost {
+        margin-left: 4.5em;
+        border: none;
+        color: #909090;
+        font-weight: bold;
+        text-decoration: underline;
+        font-size: 12px;
+        background-color: white;
     }
 
     #author,
@@ -466,7 +577,8 @@ body {
     .cmtText {
         text-align: left;
         margin: 10px 0 0 0;
-        margin-left: 3.5em;
+        margin-left: 4em;
+        font-size: 14px;
     }
 
     #postTitle {
@@ -505,8 +617,7 @@ body {
         width: 100%;
         height: 100px;
         margin: 5px 0 12px 0;
-        padding-left: 10px;
-        padding-top: 10px;
+        padding: 10px;
         display: inline-block;
         border: none;
         border-radius: 10px;

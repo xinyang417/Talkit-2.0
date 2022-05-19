@@ -145,16 +145,16 @@ function editPost(postID) {
     textArea.setAttribute("id", "postEditArea");
     parent.replaceChild(textArea, postText);
 
-    let submit = document.createElement("button");
-    submit.innerHTML = 'Submit';
-    submit.setAttribute("id", "submitPost");
-
     let cancel = document.createElement("button");
     cancel.innerHTML = 'Cancel';
     cancel.setAttribute("id", "cancelPost");
 
-    parent.appendChild(submit);
+    let submit = document.createElement("button");
+    submit.innerHTML = 'Submit';
+    submit.setAttribute("id", "submitPost");
+
     parent.appendChild(cancel);
+    parent.appendChild(submit);
 
     cancel.addEventListener("click", () => {
         parent.replaceChild(postText, textArea);
@@ -165,26 +165,26 @@ function editPost(postID) {
     submit.addEventListener("click", () => {
         let v = textArea.value;
         let newText = document.createElement("p");
-            newText.innerHTML = textArea.value;
-            newText.setAttribute("id", "postText");
-            parent.replaceChild(newText, textArea);
-            const xhr = new XMLHttpRequest();
-            xhr.onload = function () {
-                if (this.readyState == XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        parent.removeChild(cancel);
-                        parent.removeChild(submit);
-                    } else {
-                        console.log(this.status);
-                    }
+        newText.innerHTML = textArea.value;
+        newText.setAttribute("id", "postText");
+        parent.replaceChild(newText, textArea);
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (this.readyState == XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    parent.removeChild(cancel);
+                    parent.removeChild(submit);
                 } else {
-                    console.log("ERROR", this.status);
+                    console.log(this.status);
                 }
+            } else {
+                console.log("ERROR", this.status);
             }
-            xhr.open("POST", "/edit-post");
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send("story=" + v + "&postID=" + postID);
+        }
+        xhr.open("POST", "/edit-post");
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send("story=" + v + "&postID=" + postID);
     });
 }
 
@@ -192,17 +192,22 @@ function editComment(commentID) {
     let commentText = document.getElementById("commentText" + commentID);
     let parent = commentText.parentNode;
     let textArea = document.createElement("textarea");
+
     textArea.value = commentText.innerHTML;
     textArea.setAttribute('class', 'commentEditArea');
     parent.replaceChild(textArea, commentText);
+
     let submit = document.createElement("button");
     submit.innerHTML = 'Submit';
     submit.setAttribute("class", "editSubmit");
+
     let cancel = document.createElement("button");
     cancel.innerHTML = "Cancel";
     cancel.setAttribute("class", "editCancel");
-    parent.appendChild(submit);
+
     parent.appendChild(cancel);
+    parent.appendChild(submit);
+
     cancel.addEventListener("click", () => {
         parent.replaceChild(commentText, textArea);
         parent.removeChild(cancel);
@@ -211,27 +216,27 @@ function editComment(commentID) {
     submit.addEventListener("click", () => {
         let v = textArea.value;
         let newText = document.createElement("p");
-            newText.innerHTML = textArea.value;
-            newText.setAttribute("id", "commentText" + commentID);
-            newText.setAttribute("class", "cmtText");
-            parent.replaceChild(newText, textArea);
-            const xhr = new XMLHttpRequest();
-            xhr.onload = function () {
-                if (this.readyState == XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        parent.removeChild(cancel);
-                        parent.removeChild(submit);
-                    } else {
-                        console.log(this.status);
-                    }
+        newText.innerHTML = textArea.value;
+        newText.setAttribute("id", "commentText" + commentID);
+        newText.setAttribute("class", "cmtText");
+        parent.replaceChild(newText, textArea);
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (this.readyState == XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    parent.removeChild(cancel);
+                    parent.removeChild(submit);
                 } else {
-                    console.log("ERROR", this.status);
+                    console.log(this.status);
                 }
+            } else {
+                console.log("ERROR", this.status);
             }
-            xhr.open("POST", "/edit-comment");
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send("comment=" + v + "&commentID=" + commentID);
+        }
+        xhr.open("POST", "/edit-comment");
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send("comment=" + v + "&commentID=" + commentID);
     });
     textArea.addEventListener("keyup", (e) => {
         let v = null;
@@ -260,7 +265,7 @@ function editComment(commentID) {
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.send("comment=" + v + "&commentID=" + commentID);
         }
-        
+
     });
 }
 // Modal Functions
