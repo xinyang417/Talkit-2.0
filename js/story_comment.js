@@ -238,35 +238,6 @@ function editComment(commentID) {
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send("comment=" + v + "&commentID=" + commentID);
     });
-    textArea.addEventListener("keyup", (e) => {
-        let v = null;
-        if (e.which == 13) {
-            v = textArea.value;
-            let newText = document.createElement("p");
-            newText.innerHTML = textArea.value;
-            newText.setAttribute("class", "cmtText");
-            newText.setAttribute("id", "commentText" + commentID);
-            parent.replaceChild(newText, textArea);
-            const xhr = new XMLHttpRequest();
-            xhr.onload = function () {
-                if (this.readyState == XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        parent.removeChild(cancel);
-                        parent.removeChild(submit);
-                    } else {
-                        console.log(this.status);
-                    }
-                } else {
-                    console.log("ERROR", this.status);
-                }
-            }
-            xhr.open("POST", "/edit-comment");
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send("comment=" + v + "&commentID=" + commentID);
-        }
-
-    });
 }
 // Modal Functions
 var modal = document.getElementById('simpleModal');
