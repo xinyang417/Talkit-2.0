@@ -843,4 +843,8 @@ body {
         font-size: 14px;
         font-weight: bold;
     }
+
+    #easterEgg {
+        display: none;
+    }
 }
