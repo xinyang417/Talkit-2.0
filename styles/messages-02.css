@@ -346,25 +346,17 @@ body {
         margin-top: 30px;
     }
 
-    #pageName {
+    #chatUser {
         grid-row: 2 / span 1;
         margin: 0em 1em 0em 1em;
         margin-bottom: 0;
     }
 
     #search-bar {
-        width: 100%;
-        background-color: #e4e4e4;
-        color: #909090;
-        font-family: 'Inter', sans-serif;
-        font-size: 14px;
-        height: 40px;
-        border-radius: 10px;
-        border: none;
-        padding-left: 10px;
+        display: none;
     }
 
-    #pageName h2 {
+    #chatUser h4 {
         margin-top: 30px;
         margin-bottom: 30px;
         font-size: 25px;
@@ -372,56 +364,16 @@ body {
         font-weight: bold;
     }
 
+    #pageName {
+        display: none;
+    }
+
+    #pageName h2 {
+        display: none;
+    }
 
     .inbox-container {
-        grid-row: 3 / span 3;
-        border: none;
-        margin: 1em 1em 0em 1em;
-        overflow-y: scroll;
-    }
-
-    .chat-list {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color: black;
-        text-decoration: none;
-        margin-bottom: 1.5em;
-    }
-
-    .flexBox {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 6;
-        margin-left: 1em;
-    }
-
-    .chat-list .chat-name {
-        place-items: center;
-        font-size: 14px;
-        margin: 0;
-        font-weight: bold;
-        
-    }
-
-    .chat-message {
-        font-size: 13px;
-        margin: 0;
-        width: 200px;
-        overflow: hidden;
-        display: inline-block;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        
-    }
-
-    .chat-list .chat-date {
-        font-size: 13px;
-        flex-grow: 1;
-        color: #909090;
-        margin-top: auto;
-        margin-bottom: 0;
-        
+        display: none
     }
 
     #logo {
@@ -431,21 +383,121 @@ body {
     }
 
     #chat-box {
-        display: none;
-    }
-
-    #chatUser {
-        display: none;
-    }
-
-    #contact {
-        display: none;
+        grid-row: 3 / span 2;
+        border: none;
+        margin: 1em 1em 0em 1em;
+        overflow-y: scroll;
     }
 
     .userPic {
         max-width: 45px;
         float: left;
         flex-grow: 1;
+    }
+
+    .myPic {
+        max-width: 45px;
+        float: right;
+        flex-grow: 1;
+    }
+
+    #chat-box .userPic,
+    #chat-box .myPic {
+        max-width: 40px;
+    }
+
+    .userBubble {
+        float: left;
+        width: 60%;
+    }
+
+    .myBubble {
+        float: right;
+        width: 60%;
+    }
+
+    .userMsg {
+        display: flex;
+        align-items: flex-start;
+        float: left;
+        width: fit-content;
+        justify-content: space-between;
+        margin-bottom: 0.5em;
+    }
+
+    .myMsg {
+        display: flex;
+        align-items: flex-start;
+        float: right;
+        width: fit-content;
+        justify-content: space-between;
+        margin-bottom: 0.5em;
+    }
+
+    .userText {
+        background-color: white;
+        border: 1.5px solid #9595c5;
+        border-radius: 20px;
+        margin-left: 1em;
+        margin-bottom: 0;
+        flex-grow: 4;
+        padding: 10px;
+    }
+
+    .myText {
+        width: fit-content;
+        background-color: #9595c5;
+        border: 1.5px solid #9595c5;
+        border-radius: 20px;
+        color: white;
+        margin-right: 1em;
+        margin-bottom: 0;
+        flex-grow: 4;
+        padding: 10px;
+    }
+
+    #chat-form {
+        grid-row: 5 / span 1;
+        border-radius: 0 0 25px 0;
+        background-color: white;
+        display: flex;
+    }
+
+    textarea {
+        width: 100%;
+        height: 40px;
+        padding: 10px;
+        display: inline-block;
+        border: none;
+        border-radius: 10px;
+        color: black;
+        background: #e4e4e4;
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        text-align: left;
+        margin: 0em 0.5em 0em 1em;
+    }
+
+    #send {
+        width: 150px;
+        height: 40px;
+        border-radius: 10px;
+        background: #9595c5;
+        border: none;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        float: right;
+        margin: 0em 1em 0em 0.5em;
+    }
+
+    #send:hover {
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.108), 0 5px 10px 0 rgba(0, 0, 0, 0.076);
+    }
+
+    #contact {
+        display: none;
     }
 
     .material-symbols-outlined {
@@ -482,10 +534,6 @@ body {
     }
 
     ul b {
-        display: none;
-    }
-
-    #chat-form {
         display: none;
     }
 
