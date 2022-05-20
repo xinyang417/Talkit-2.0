@@ -13,7 +13,9 @@ function displayPosts() {
                         var newPostTemplate = postTemplate.content.cloneNode(true);
                         let displayName = row.displayName;
                         let title = row.title;
-                        let time = row.date.slice(0, 19).replace('T', ' ');
+                        let tz = new Date(row.date);
+                        let offset = tz.getTimezoneOffset() * 60000;
+                        let time = new Date(tz.getTime() - offset).toISOString().slice(0, 19).replace('T', ' ');
                         newPostTemplate.getElementById("author").innerHTML = displayName;
                         newPostTemplate.getElementById("postTime").innerHTML = time;
                         newPostTemplate.getElementById("postTitle").innerHTML = `<p onclick = "sendPostId(` 

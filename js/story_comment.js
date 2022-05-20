@@ -107,7 +107,10 @@ function displayComment() {
                         var newCommentTemplate = commentTemplate.content.cloneNode(true);
                         let displayName = row.displayName;
                         let text = row.comment;
-                        let time = row.date.slice(0, 19).replace('T', ' ');
+                        let tz = new Date(row.date);
+                        let offset = tz.getTimezoneOffset() * 60000;
+                        tz = new Date(tz.getTime() - offset);
+                        let time = tz.toISOString().slice(0, 19).replace('T', ' ');
                         let profilePic = "/img/" + row.profilePic;
                         newCommentTemplate.getElementById("comment").setAttribute("id", row.commentID);
                         newCommentTemplate.getElementById("commenterPic").setAttribute("src", profilePic);
