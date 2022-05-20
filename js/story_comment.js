@@ -1,5 +1,36 @@
 "use strict";
 
+function displayImages() {
+    const xhr = new XMLHttpRequest();
+    var parent = document.getElementById("slide");
+    var postTemplate = document.getElementById("imageGalleryTemplate");
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let data = JSON.parse(this.responseText);
+                if (data.status == "success") {
+                    for (let i = 0; i < data.rows.length; i++) {
+                        let row = data.rows[i];
+                        var newPostTemplate = postTemplate.content.cloneNode(true);
+                        newPostTemplate.getElementById("postImage").src = "/img/" + row.storyPic;
+                        newPostTemplate.getElementById("numbertext").innerHTML = i+1 + " / " + data.rows.length;
+                        parent.appendChild(newPostTemplate);
+                    }
+                } else {
+                    console.log("Error!");
+                }
+            } else {
+                console.log(this.status);
+            }
+        } else {
+            console.log("Error", this.status);
+        }
+    }
+    xhr.open("GET", "/get-post-images");
+    xhr.send();
+}
+
+
 var coll = document.getElementsByClassName("collapsible");
 var i;
 

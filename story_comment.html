@@ -21,7 +21,7 @@
 
 </head>
 
-<body>
+<body onload ="displayImages()">
     <div class="container">
 
         <!-- Top bar -->
@@ -47,8 +47,17 @@
             </div>
 
             <!-- Read story -->
-
             <div id="postSection">
+                <div class="slideshow-container">
+                    <div id="slide">
+                        <template id="imageGalleryTemplate">
+                            <div id="numbertext">1 / 1</div>
+                            <img id="postImage" src="/img/logo-01.png" style="width:100%">
+                        </template>
+                    </div>
+                    <br>
+                </div>
+
                 <div class="info">
                     <img class="profilePic" id="postPic" alt="profilePic" src="/img/logo-01.png">
                     <a href="#"><span class="material-symbols-outlined">bookmark</span></a>
@@ -167,6 +176,8 @@
         </div>
     </div>
 </div>
+
+
     <script src="/js/story_comment.js"></script>
 </body>
 

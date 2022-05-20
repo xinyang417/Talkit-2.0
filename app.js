@@ -492,6 +492,22 @@ app.get('/get-posts', (req, res) => {
     }
 });
 
+app.get('/get-post-images', (req, res) => {
+    if (req.session.loggedin) {
+        let sql = `SELECT * FROM BBY_01_timeline_images WHERE postID = ?`;
+        database.query(sql, [req.session.postID], (error, results) => {
+            if (error) console.log(error);
+            res.send({
+                status: "success",
+                rows: results
+            });
+        });
+    } else {
+        // If the user is not logged in
+        res.redirect("/");
+    }
+});
+
 app.post('/post-story', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     let title = req.body.title;

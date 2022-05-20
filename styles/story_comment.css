@@ -9,6 +9,13 @@ body {
     display: none;
 }
 
+/* Slideshow container */
+.slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+  }
+
 @media screen and (min-width: 701px) {
 
     .container {
