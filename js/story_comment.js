@@ -286,9 +286,7 @@ function editPost(postID) {
     });
 
     submit.addEventListener("click", () => {
-        console.log(imgIDs.length);
         if (imgIDs.length > 0) {
-            console.log(imgIDs.length);
             deleteImage(imgIDs);
         } else {
             let v = textArea.value;

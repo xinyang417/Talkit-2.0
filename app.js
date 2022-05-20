@@ -82,6 +82,9 @@ if (is_heroku) {
 }
 
 var isTimeEdit = false;
+var tz = new Date();
+var offset = tz.getTimezoneOffset() * 60 * 1000;
+
 
 app.get('/', (req, res) => {
     if (!req.session.loggedin) {
@@ -441,6 +444,10 @@ app.get('/story-comment', (req, res) => {
             database.query(sql, [req.session.postID], (error, results) => {
                 if (error) throw error;
                 if (results.length > 0) {
+                    let d = new Date(results[0].date.getTime() - offset);
+                    console.log(d);
+                    console.log(d.toString());
+                    console.log(d.toISOString());
                     let postDate = results[0].date.toISOString().slice(0, 19).replace('T', ' ');
                     profileDOM.window.document.getElementById("author").innerHTML = results[0].displayName;
                     profileDOM.window.document.getElementById("postTime").innerHTML = postDate;
@@ -531,7 +538,7 @@ app.post('/post-story', (req, res) => {
 app.post('/edit-post', (req, res) => {
     if (req.session.loggedin) {
         isTimeEdit = true;
-        let updatedDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        let updatedDate = new Date(tz.getTime() - offset).toISOString().slice(0, 19).replace('T', ' ');
         let sql = `UPDATE BBY_01_timeline SET story = ?, date = ? WHERE postID = ?`;
         database.query(sql, [req.body.story, updatedDate, req.body.postID], (error, results) => {
             if (error) throw error;
@@ -659,7 +666,7 @@ app.post('/comment', (req, res) => {
     if (req.session.loggedin) {
         let sql = `INSERT INTO bby_01_comment (postID, userID, comment, date)
                         VALUES (?, ?, ?, ?)`
-        let date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        let date = new Date(tz.getTime() - offset).toISOString().slice(0, 19).replace('T', ' ');
         database.query(sql, [req.session.postID, req.session.userid, req.body.comment, date], (error, results) => {
             if (error) throw error;
             res.send({
