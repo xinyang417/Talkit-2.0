@@ -280,6 +280,7 @@ function editPost(postID) {
         parent.replaceChild(postText, textArea);
         parent.removeChild(cancel);
         parent.removeChild(submit);
+        document.getElementById("slideContainer").removeChild(msg);
         imgUpload.style.display = 'none';
         imgUpload.value = '';
     });
