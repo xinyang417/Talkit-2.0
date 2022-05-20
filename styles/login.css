@@ -36,10 +36,12 @@ input[type=submit]:hover {
         margin-right: auto;
         width: 90%;
         margin-bottom: 4em;
+        z-index: 0;
     }
 
     .logo {
         position: sticky;
+        z-index: 0;
     }
 
     .branding p {
@@ -62,6 +64,7 @@ input[type=submit]:hover {
         padding: 70px 0;
         padding: 2em;
         max-height: 100%;
+        z-index: 1;
     }
 
     #loginForm h3 {
@@ -167,6 +170,7 @@ input[type=submit]:hover {
         top: 0;
         -o-object-fit: contain;
         object-fit: contain;
+        z-index: 2;
     }
 }
 

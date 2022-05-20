@@ -61,6 +61,7 @@ body {
 
     img {
         width: 100%;
+        z-index: 0;
     }
 
     /* not shown in web version */
@@ -192,12 +193,14 @@ body {
         max-width: 60px;
         float: left;
         flex-grow: 1;
+        z-index: 1;
     }
 
     .myPic {
         max-width: 60px;
         float: right;
         flex-grow: 1;
+        z-index: 1;
     }
 
     .chat-list {
@@ -333,6 +336,7 @@ body {
         top: 0;
         -o-object-fit: contain;
         object-fit: contain;
+        z-index: 2;
     }
 }
 

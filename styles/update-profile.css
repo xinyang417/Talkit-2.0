@@ -78,6 +78,7 @@ body {
 
     #logo img {
         width: 100%;
+        z-index: 0;
     }
 
     #pageName {
@@ -98,6 +99,7 @@ body {
         grid-column: 2 / span 1;
         margin: 0em 2em 0 2em;
         background-color: white;
+        z-index: 1;
     }
 
     .pic-holder {
@@ -369,6 +371,7 @@ body {
         top: 0;
         -o-object-fit: contain;
         object-fit: contain;
+        z-index: 2;
     }
 }
 
