@@ -91,7 +91,7 @@
         </div>
     </div>
 
-    <!--Modal-->
+    <!--Logout Modal-->
     <div id="simpleModal" class="modal">
         <div class="modal-content">
             <h5>Are you sure you want to log out?</h5>
@@ -100,6 +100,17 @@
                 <form action="/logout" method="get">
                     <button type="submit" value="Logout" id="modal-succuess">Log Out</button>
                 </form>
+            </div>
+        </div>
+    </div>
+
+     <!--Discard Modal-->
+     <div id="simpleModal2" class="modal">
+        <div class="modal-content">
+            <h5>Are you sure you want to Discard?</h5>
+            <div class="buttons">
+                <button id="modal-return-cancel">Cancel</button>
+                <form action="/home"><button id="modal-return-discard">Discard</button></form>
             </div>
         </div>
     </div>

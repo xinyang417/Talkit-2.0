@@ -9,6 +9,13 @@ body {
     display: none;
 }
 
+/* Slideshow container */
+/* .slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+  } */
+
 @media screen and (min-width: 701px) {
 
     .container {
@@ -168,7 +175,6 @@ body {
 
     #slide img {
         margin-right: 1em;
-        width: 30%
     }
 
     #numbertext {
@@ -372,13 +378,9 @@ body {
         padding-left: 40px;
         padding-right: 40px;
         width: 30%;
-        height: 25%;
+        height: 20%;
         display: block;
         box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px rgba(0, 0, 0, 0.17);
-    }
-
-    #simpleModal .modal-content {
-        height: 22%;
     }
 
     .modal-content h5 {
@@ -394,10 +396,7 @@ body {
         margin-right: auto;
     }
 
-    #modal-return,
-    #modal-return-delete-comment,
-    #modal-return-delete-post,
-    #modal-return-delete-image {
+    #modal-return {
         background-color: white;
         border: 1px solid #909090;
         color: #909090;
@@ -409,10 +408,7 @@ body {
         font-weight: bold;
     }
 
-    #modal-succuess,
-    #modal-succuess-delete-comment,
-    #modal-succuess-delete-post,
-    #modal-succuess-delete-image {
+    #modal-succuess {
         background-color: #9595c5;
         color: white;
         border: none;
@@ -425,13 +421,7 @@ body {
     }
 
     #modal-return:hover,
-    #modal-succuess:hover,
-    #modal-return-delete-comment:hover,
-    #modal-succuess-delete-comment:hover,
-    #modal-return-delete-post:hover,
-    #modal-succuess-delete-post:hover,
-    #modal-return-delete-image:hover,
-    #modal-succuess-delete-image:hover {
+    #modal-succuess:hover {
         box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.108), 0 3px 5px 0 rgba(0, 0, 0, 0.076);
     }
 
@@ -496,13 +486,11 @@ body {
         border-bottom: 0.5px solid #e4e4e4;
         position: fixed;
         background-color: white;
-        margin-left: 1em;
     }
 
     nav button {
         border: none;
         background-color: white;
-        padding: 0;
     }
 
     nav .material-symbols-outlined {
@@ -534,21 +522,6 @@ body {
         margin-left: 4em;
         font-size: 14px;
         padding: 10px;
-    }
-
-    #slide img {
-        width: 100%
-    }
-
-    .slideshow-container {
-        margin-top: 1em;
-        margin-bottom: 1em;
-    }
-
-    #numbertext {
-        margin-bottom: 1em;
-        font-size: 12px;
-        float: right;
     }
 
     #cmtSection {
@@ -768,79 +741,5 @@ body {
 
     #easterEgg {
         display: none;
-    }
-
-    #modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        height: 100%;
-        width: 100%;
-        overflow: auto;
-    }
-
-    .modal-content {
-        position: relative;
-        top: 40%;
-        transform: translateY(-50%);
-        background-color: white;
-        border-radius: 10px;
-        text-align: center;
-        margin: 20% auto;
-        padding-top: 30px;
-        padding-bottom: 20px;
-        padding-left: 20px;
-        padding-right: 20px;
-        width: 80%;
-        height: 17%;
-        display: block;
-        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.101), 0 7px 20px rgba(0, 0, 0, 0.078);
-    }
-
-    .modal-content h5 {
-        margin-bottom: 1em;
-        font-size: 14px;
-    }
-
-    .btns {
-        display: flex;
-        justify-content: space-between;
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    #modal-return-delete-comment,
-    #modal-return-delete-post,
-    #modal-return-delete-image {
-        background-color: white;
-        border: 1px solid #909090;
-        color: #909090;
-        border-radius: 10px;
-        height: 35px;
-        width: 100px;
-        font-size: 14px;
-        font-weight: bold;
-    }
-
-    #inputPhoto {
-        font-size: 14px;
-        width: 100%;
-        margin-bottom: 1em;
-    }
-
-    #modal-succuess-delete-comment,
-    #modal-succuess-delete-post,
-    #modal-succuess-delete-image {
-        background-color: #9595c5;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        height: 35px;
-        width: 100px;
-        font-size: 14px;
-        font-weight: bold;
     }
 }
