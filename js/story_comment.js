@@ -1,5 +1,77 @@
 "use strict";
 
+var imageInfo;
+
+
+function deleteImage(postImageID) {
+    var modal = document.getElementById('simpleModal4');
+    var goBack = document.getElementById('modal-return-delete-image');
+    var deleteCmt = document.getElementById('modal-succuess-delete-image');
+    modal.style.display = 'block';
+    goBack.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+    window.addEventListener('click', function(e) {
+        if(e.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
+    deleteCmt.addEventListener('click', () => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (this.readyState == XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                } else {
+                    console.log(this.status);
+                }
+            } else {
+                console.log("ERROR", this.status);
+            }
+        }
+        xhr.open("POST", "/delete-image");
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send("imageID=" + postImageID);
+    });
+    
+}
+
+function displayImages() {
+    const xhr = new XMLHttpRequest();
+    var parent = document.getElementById("slide");
+    var postTemplate = document.getElementById("imageGalleryTemplate");
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let data = JSON.parse(this.responseText);
+                if (data.status == "success") {
+                    imageInfo = data.rows;
+                    for (let i = 0; i < data.rows.length; i++) {
+                        let row = data.rows[i];
+                        var newPostTemplate = postTemplate.content.cloneNode(true);
+                        newPostTemplate.getElementById("postImage").src = "/img/" + row.storyPic;
+                        newPostTemplate.getElementById("postImage").setAttribute("value", row.postImageID);
+                        newPostTemplate.getElementById("postImage").setAttribute("id", "image" + row.postImageID);
+                        newPostTemplate.getElementById("numbertext").innerHTML = i + 1 + " / " + data.rows.length;
+                        parent.appendChild(newPostTemplate);
+                    }
+                } else {
+                    console.log("Error!");
+                }
+            } else {
+                console.log(this.status);
+            }
+        } else {
+            console.log("Error", this.status);
+        }
+    }
+    xhr.open("GET", "/get-post-images");
+    xhr.send();
+}
+
+
+
+
 var coll = document.getElementsByClassName("collapsible");
 var i;
 
@@ -124,13 +196,13 @@ function deletePost(postID) {
                 console.log("ERROR", this.status);
             }
         }
-        console.log("clicked");
         xhr.open("POST", "/delete-post");
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send("postID=" + postID);
     });
 }
+
 
 
 function showDeleteCmtModal(commentID) {
@@ -170,6 +242,7 @@ function editPost(postID) {
     let postText = document.getElementById("postText");
     let parent = postText.parentNode;
     let textArea = document.createElement("textarea");
+    let imgUpload = document.getElementById("inputPhoto");
 
     textArea.value = postText.innerHTML;
     textArea.setAttribute("id", "postEditArea");
@@ -182,6 +255,16 @@ function editPost(postID) {
     let submit = document.createElement("button");
     submit.innerHTML = 'Save';
     submit.setAttribute("id", "submitPost");
+    imgUpload.style.display = 'block';
+
+    let images = document.getElementsByClassName("pstImage");
+    for (let i = 0; i < imageInfo.length; i++) {
+        let imgID = images[i].getAttribute('value');
+        images[i].addEventListener("click", () =>{
+            deleteImage(imgID);
+        });
+        
+    }
 
     parent.appendChild(cancel);
     parent.appendChild(submit);
@@ -190,8 +273,11 @@ function editPost(postID) {
         parent.replaceChild(postText, textArea);
         parent.removeChild(cancel);
         parent.removeChild(submit);
+        imgUpload.style.display = 'none';
+        imgUpload.value = '';
     });
 
+    // document.getElementById("postImage").setAttribute("onclick", `deleteImage(${})`);
     submit.addEventListener("click", () => {
         let v = textArea.value;
         let newText = document.createElement("p");
@@ -204,6 +290,9 @@ function editPost(postID) {
                 if (xhr.status === 200) {
                     parent.removeChild(cancel);
                     parent.removeChild(submit);
+                    window.location.reload();
+                    imgUpload.style.display = 'none';
+                    imgUpload.value = '';
                 } else {
                     console.log(this.status);
                 }
@@ -215,9 +304,28 @@ function editPost(postID) {
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send("story=" + v + "&postID=" + postID);
+        uploadImages(postID);
     });
 }
-
+function uploadImages (postID) {
+    const imageUpload = document.querySelector("#inputPhoto");
+    const formData = new FormData();
+    if (imageUpload.files.length > 0) {
+        
+        for (let i = 0; i < imageUpload.files.length; i++) {
+            formData.append("files", imageUpload.files[i]);
+        }
+    
+        const options = {
+            method: 'POST',
+            body: formData,
+            postNum: postID,
+        };
+        fetch("/upload-another-timeline-image", options
+        ).catch(function (err) { ("Error:", err) }
+        );
+    }
+}
 function editComment(commentID) {
     let commentText = document.getElementById("commentText" + commentID);
     let parent = commentText.parentNode;

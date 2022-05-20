@@ -35,12 +35,20 @@ CREATE TABLE IF NOT EXISTS BBY_01_timeline (
         title varchar(500),
         story varchar(2000),
         date datetime,
-        storyPic varchar(500),
         PRIMARY KEY (postID),
         FOREIGN KEY (userID) REFERENCES bby_01_user(ID)
         ON DELETE CASCADE
         ON UPDATE CASCADE);
        
+CREATE TABLE IF NOT EXISTS BBY_01_timeline_images (
+        postImageID int NOT NULL AUTO_INCREMENT,
+        postID int NOT NULL, 
+        storyPic varchar(500),
+        PRIMARY KEY (postImageID),
+        FOREIGN KEY (postID) REFERENCES bby_01_timeline(postID)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE);
+
 
 CREATE TABLE IF NOT EXISTS BBY_01_comment (
         commentID int NOT NULL AUTO_INCREMENT,

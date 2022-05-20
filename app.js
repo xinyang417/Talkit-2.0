@@ -81,6 +81,8 @@ if (is_heroku) {
     var database = mysql.createPool(dbConfigLocal);
 }
 
+var isTimeEdit = false;
+
 app.get('/', (req, res) => {
     if (!req.session.loggedin) {
         let doc = fs.readFileSync('./login.html', "utf-8");
@@ -442,6 +444,9 @@ app.get('/story-comment', (req, res) => {
                     let postDate = results[0].date.toISOString().slice(0, 19).replace('T', ' ');
                     profileDOM.window.document.getElementById("author").innerHTML = results[0].displayName;
                     profileDOM.window.document.getElementById("postTime").innerHTML = postDate;
+                    if (isTimeEdit) {
+                        profileDOM.window.document.getElementById("postTime").insertAdjacentHTML('beforeend', ' (edited)');
+                    }
                     profileDOM.window.document.getElementById("postTitle").innerHTML = results[0].title;
                     profileDOM.window.document.getElementById("postText").innerHTML = results[0].story;                    
                     profileDOM.window.document.getElementById("postPic").setAttribute("src", "/img/" + results[0].profilePic);
@@ -472,8 +477,25 @@ app.get('/get-posts', (req, res) => {
     if (req.session.loggedin) {
         let sql = `SELECT * FROM BBY_01_timeline
                     INNER JOIN bby_01_profile
-                    ON BBY_01_timeline.userID = bby_01_profile.userID`;
+                    ON BBY_01_timeline.userID = bby_01_profile.userID
+                    ORDER BY bby_01_timeline.date ASC`;
         database.query(sql, (error, results) => {
+            if (error) console.log(error);
+            res.send({
+                status: "success",
+                rows: results
+            });
+        });
+    } else {
+        // If the user is not logged in
+        res.redirect("/");
+    }
+});
+
+app.get('/get-post-images', (req, res) => {
+    if (req.session.loggedin) {
+        let sql = `SELECT * FROM BBY_01_timeline_images WHERE postID = ?`;
+        database.query(sql, [req.session.postID], (error, results) => {
             if (error) console.log(error);
             res.send({
                 status: "success",
@@ -508,8 +530,10 @@ app.post('/post-story', (req, res) => {
 
 app.post('/edit-post', (req, res) => {
     if (req.session.loggedin) {
-        let sql = `UPDATE BBY_01_timeline SET story = ? WHERE postID = ?`;
-        database.query(sql, [req.body.story, req.body.postID], (error, results) => {
+        isTimeEdit = true;
+        let updatedDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        let sql = `UPDATE BBY_01_timeline SET story = ?, date = ? WHERE postID = ?`;
+        database.query(sql, [req.body.story, updatedDate, req.body.postID], (error, results) => {
             if (error) throw error;
             res.send();
             res.end();
@@ -536,18 +560,62 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
         if (error) {
             console.log(error);
         } else {
-            sql = `UPDATE bby_01_timeline
-            SET storyPic = ?
-            WHERE postID = ?`;
-            database.query(sql, [req.files[0].filename, results[0].postID], (error, results) => {
-                if (error) console.log(error);
+            sql = `INSERT INTO bby_01_timeline_images (postID, storyPic)
+            VALUES (?, ?)`;
+            let l = 0;
+            for (let i = 0; i < req.files.length - 1; i++) {
+                l++;
+                database.query(sql, [results[0].postID, req.files[i].filename], (error, results) => {
+                    if (error) console.log(error);
+                    
+                });
+            }
+            database.query(sql,[results[0].postID, req.files[l].filename], (error, results) => {
+                if (error) throw error;
                 res.send({
                     status: "success",
                     rows: results
                 });
-            });
+            })
         }
     });
+});
+
+app.post('/upload-another-timeline-image', upload.array("files"), (req, res) =>{
+    
+    var sql = `INSERT INTO bby_01_timeline_images (postID, storyPic)
+                VALUES (?, ?)`;
+    let l = 0;
+    for (let i = 0; i < req.files.length - 1; i++) {
+        l++;
+        database.query(sql, [req.session.postID, req.files[i].filename], (error,results) =>{
+            if (error) console.log(error);
+        });
+    }
+    database.query(sql, [req.session.postID, req.files[l].filename], (error,results) =>{
+        if (error) console.log(error);
+        res.send({
+            status: "success",
+            rows: results
+        });
+    });
+    
+});
+
+app.post('/delete-image', (req, res) => {
+    if (req.session.loggedin) {
+        let sql = `DELETE FROM BBY_01_timeline_images WHERE postImageID = ?`;
+        database.query(sql, [req.body.imageID], (error, results) => {
+            if (error) throw error;
+            res.send({
+                status: "success",
+                msg: "Image deleted."
+            });
+            res.end();
+        });
+    } else {
+        res.redirect("/");
+    }
 });
 
 app.get('/get-comment', (req, res) => {

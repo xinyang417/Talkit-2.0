@@ -21,7 +21,7 @@
 
 </head>
 
-<body>
+<body onload="displayImages()">
     <div class="container">
 
         <!-- Top bar -->
@@ -47,8 +47,17 @@
             </div>
 
             <!-- Read story -->
-
             <div id="postSection">
+                <div class="slideshow-container">
+                    <div id="slide">
+                        <template id="imageGalleryTemplate">
+                            <div id="numbertext">1 / 1</div>
+                            <img id="postImage" class="pstImage" src="/img/logo-01.png" style="width:100%">
+                        </template>
+                    </div>
+                    <br>
+                </div>
+
                 <div class="info">
                     <img class="profilePic" id="postPic" alt="profilePic" src="/img/logo-01.png">
                     <a href="#"><span class="material-symbols-outlined">bookmark</span></a>
@@ -58,6 +67,9 @@
 
                 <p id="postText"></p>
                 <div class="edBtns">
+                    <form action="/">
+                        <input type="file" name="photo" id="inputPhoto" accept=".jpg, .jpeg, .png" multiple />
+                    </form>
                     <button id="editPost">Edit</button>
                     <button id="deletePost">Delete</button>
                 </div>
@@ -143,27 +155,38 @@
         </div>
     </div>
 
-<!-- Delete Comment Modal -->
-  <div id="simpleModal2" class="modal">
-    <div class="modal-content">
-        <h5>Are you sure you want to delete?</h5>
-        <div class="btns">
-            <form><button id="modal-return-delete-comment">Cancel</button></form>
-            <form><button id="modal-succuess-delete-comment">Delete Comment</button></form>
+    <!-- Delete Comment Modal -->
+    <div id="simpleModal2" class="modal">
+        <div class="modal-content">
+            <h5>Are you sure you want to delete?</h5>
+            <div class="btns">
+                <form><button id="modal-return-delete-comment">Cancel</button></form>
+                <form><button id="modal-succuess-delete-comment">Delete Comment</button></form>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Delete Post Modal -->
-<div id="simpleModal3" class="modal">
-    <div class="modal-content">
-        <h5>Are you sure you want to delete?</h5>
-        <div class="btns">
-            <form><button id="modal-return-delete-post">Cancel</button></form>
-            <form><button id="modal-succuess-delete-post">Delete Post</button></form>
+    <!-- Delete Post Modal -->
+    <div id="simpleModal3" class="modal">
+        <div class="modal-content">
+            <h5>Are you sure you want to delete?</h5>
+            <div class="btns">
+                <form><button id="modal-return-delete-post">Cancel</button></form>
+                <form><button id="modal-succuess-delete-post">Delete Post</button></form>
+            </div>
         </div>
     </div>
-</div>
+    <!-- Delete Image Modal -->
+    <div id="simpleModal4" class="modal">
+        <div class="modal-content">
+            <h5>Are you sure you want to delete?</h5>
+            <div class="btns">
+                <form><button id="modal-return-delete-image">Cancel</button></form>
+                <form><button id="modal-succuess-delete-image">Delete Image</button></form>
+            </div>
+        </div>
+    </div>
+
     <script src="/js/story_comment.js"></script>
 </body>
 

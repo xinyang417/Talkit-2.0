@@ -4,7 +4,6 @@ upLoadForm.addEventListener("submit", uploadImages);
 
 function uploadImages(e) {
     e.preventDefault();
-
     const imageUpload = document.querySelector('#image-upload');
     const formData = new FormData();
 
