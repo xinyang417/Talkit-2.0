@@ -55,32 +55,26 @@ function sendPostId(postID){
     xhr.send("postID=" + postID);
 }
 
-// Modal Functions
+// Logout Modal Functions
 var modal = document.getElementById('simpleModal');
-
 var modalBtn = document.getElementById('logout');
-
 var modalBtn2 = document.getElementById('logout2');
-
 var goBack = document.getElementById('modal-return');
-
 
 modalBtn.addEventListener('click', showModal);
 modalBtn2.addEventListener('click', showModal);
-goBack.addEventListener('click', closeModal);
-window.addEventListener('click', clickOutside);
+goBack.addEventListener('click', function(e) {
+    e.preventDefault();
+    modal.style.display = 'none';
+});
+window.addEventListener('click', function(e) {
+    if (e.target == modal) {
+        modal.style.display = 'none';
+    }
+});
 
 function showModal() {
     modal.style.display = 'block';
 }
 
-function closeModal() {
-    modal.style.display = 'none';
-}
-
-function clickOutside(e) {
-    if (e.target == modal) {
-        modal.style.display = 'none';
-    }
-}
 
