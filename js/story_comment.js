@@ -170,6 +170,7 @@ function editPost(postID) {
     let postText = document.getElementById("postText");
     let parent = postText.parentNode;
     let textArea = document.createElement("textarea");
+    let imgUpload = document.getElementById("inputPhoto");
 
     textArea.value = postText.innerHTML;
     textArea.setAttribute("id", "postEditArea");
@@ -182,6 +183,7 @@ function editPost(postID) {
     let submit = document.createElement("button");
     submit.innerHTML = 'Save';
     submit.setAttribute("id", "submitPost");
+    imgUpload.style.display = 'block';
 
     parent.appendChild(cancel);
     parent.appendChild(submit);
@@ -190,6 +192,8 @@ function editPost(postID) {
         parent.replaceChild(postText, textArea);
         parent.removeChild(cancel);
         parent.removeChild(submit);
+        imgUpload.style.display = 'none';
+        imgUpload.value = '';
     });
 
     submit.addEventListener("click", () => {
@@ -205,6 +209,8 @@ function editPost(postID) {
                     parent.removeChild(cancel);
                     parent.removeChild(submit);
                     window.location.reload();
+                    imgUpload.style.display = 'none';
+                    imgUpload.value = '';
                 } else {
                     console.log(this.status);
                 }
@@ -216,9 +222,28 @@ function editPost(postID) {
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send("story=" + v + "&postID=" + postID);
+        uploadImages(postID);
     });
 }
-
+function uploadImages (postID) {
+    const imageUpload = document.querySelector("#inputPhoto");
+    const formData = new FormData();
+    if (imageUpload.files.length > 0) {
+        
+        for (let i = 0; i < imageUpload.files.length; i++) {
+            formData.append("files", imageUpload.files[i]);
+        }
+    
+        const options = {
+            method: 'POST',
+            body: formData,
+            postNum: postID,
+        };
+        fetch("/upload-another-timeline-image", options
+        ).catch(function (err) { ("Error:", err) }
+        );
+    }
+}
 function editComment(commentID) {
     let commentText = document.getElementById("commentText" + commentID);
     let parent = commentText.parentNode;

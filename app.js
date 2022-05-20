@@ -544,10 +544,9 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
         if (error) {
             console.log(error);
         } else {
-            sql = `UPDATE bby_01_timeline
-            SET storyPic = ?
-            WHERE postID = ?`;
-            database.query(sql, [req.files[0].filename, results[0].postID], (error, results) => {
+            sql = `INSERT INTO bby_01_timeline_images (postID, storyPic)
+            VALUES (?, ?)`;
+            database.query(sql, [results[0].postID, req.files[0].filename], (error, results) => {
                 if (error) console.log(error);
                 res.send({
                     status: "success",
@@ -558,6 +557,18 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
     });
 });
 
+app.post('/upload-another-timeline-image', upload.array("files"), (req, res) =>{
+    
+   var sql = `INSERT INTO bby_01_timeline_images (postID, storyPic)
+              VALUES (?, ?)`;
+    database.query(sql, [req.session.postID, req.files[0].filename], (error,results) =>{
+        if (error) console.log(error);
+        res.send({
+            status: "success",
+            rows: results
+        });
+    });
+});
 app.get('/get-comment', (req, res) => {
     if (req.session.loggedin) {
         let sql = `SELECT * FROM bby_01_comment
