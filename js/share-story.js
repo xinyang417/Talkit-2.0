@@ -4,8 +4,9 @@ document.getElementById("post").addEventListener("click", function (e) {
     e.preventDefault();
 
     
-    
-    var dateTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    let tz = new Date();
+    let offset = tz.getTimezoneOffset() * 60000;
+    var dateTime = new Date(tz.getTime() - offset).toISOString().slice(0, 19).replace('T', ' ');
     let formData = {
         title: document.getElementById("title").value,
         story: document.getElementById("story").value,
