@@ -23,7 +23,11 @@ const {
 } = require('worker_threads');
 const { newObjectInRealm } = require('jsdom/lib/jsdom/living/generated/utils');
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
+app.use('/img', express.static('assets/imgs'));
+app.use('/js', express.static('assets/js'));
 
 app.use("/img", express.static("./images"));
 app.use("/css", express.static("./styles"));
@@ -821,6 +825,14 @@ app.get("/logout", (req, res) => {
     }
 });
 
+/** Code for Private Chat Function */
+
+
+
+
+
+
+
 
 /**
  * Code for Connection Error handling while hosting.
@@ -853,6 +865,12 @@ function handleDisconnect() {
 }
 
 handleDisconnect();
+
+
+
+
+
+
 
 // RUN SERVER REMOTELY
 if (is_heroku) {
