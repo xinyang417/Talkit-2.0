@@ -10,11 +10,11 @@ body {
 }
 
 /* Slideshow container */
-.slideshow-container {
+/* .slideshow-container {
     max-width: 1000px;
     position: relative;
     margin: auto;
-}
+  } */
 
 @media screen and (min-width: 701px) {
 
@@ -161,6 +161,24 @@ body {
         font-size: 16px;
         margin-bottom: 0;
         margin-left: 4.2em;
+    }
+
+    .slideshow-container {
+        padding-left: 4em;
+        margin-top: 1em;
+    }
+
+    #slide {
+        display: flex;
+        overflow-x: scroll;
+    }
+
+    #slide img {
+        margin-right: 1em;
+    }
+
+    #numbertext {
+        display: none;
     }
 
 
