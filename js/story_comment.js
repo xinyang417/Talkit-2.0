@@ -242,6 +242,11 @@ function editPost(postID) {
     let parent = postText.parentNode;
     let textArea = document.createElement("textarea");
     let imgUpload = document.getElementById("inputPhoto");
+    let msg = document.createElement("p");
+
+    msg.innerHTML = "Click the images you want to delete";
+    msg.setAttribute("id", "msgDelete");
+    document.getElementById("slideContainer").appendChild(msg);
 
     textArea.value = postText.innerHTML;
     textArea.setAttribute("id", "postEditArea");
@@ -257,14 +262,15 @@ function editPost(postID) {
     imgUpload.style.display = 'block';
 
     let images = document.getElementsByClassName("pstImage");
+    let imgIDs = [];
     for (let i = 0; i < imageInfo.length; i++) {
         let imgID = images[i].getAttribute('value');
         images[i].addEventListener("click", () => {
-            deleteImage(imgID);
+            imgIDs.push(imgID);
         });
 
     }
-
+    
     parent.appendChild(cancel);
     parent.appendChild(submit);
 
@@ -276,34 +282,40 @@ function editPost(postID) {
         imgUpload.value = '';
     });
 
-    // document.getElementById("postImage").setAttribute("onclick", `deleteImage(${})`);
     submit.addEventListener("click", () => {
-        let v = textArea.value;
-        let newText = document.createElement("p");
-        newText.innerHTML = textArea.value;
-        newText.setAttribute("id", "postText");
-        parent.replaceChild(newText, textArea);
-        const xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-            if (this.readyState == XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    parent.removeChild(cancel);
-                    parent.removeChild(submit);
-                    window.location.reload();
-                    imgUpload.style.display = 'none';
-                    imgUpload.value = '';
+        console.log(imgIDs.length);
+        if (imgIDs.length > 0) {
+            console.log(imgIDs.length);
+            deleteImage.apply(this, imgIDs);
+        } else {
+            let v = textArea.value;
+            let newText = document.createElement("p");
+            newText.innerHTML = textArea.value;
+            newText.setAttribute("id", "postText");
+            parent.replaceChild(newText, textArea);
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                if (this.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        
+                        parent.removeChild(cancel);
+                        parent.removeChild(submit);
+                        window.location.reload();
+                        imgUpload.style.display = 'none';
+                        imgUpload.value = '';
+                    } else {
+                        console.log(this.status);
+                    }
                 } else {
-                    console.log(this.status);
+                    console.log("ERROR", this.status);
                 }
-            } else {
-                console.log("ERROR", this.status);
             }
+            xhr.open("POST", "/edit-post");
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send("story=" + v + "&postID=" + postID);
+            uploadImages(postID);
         }
-        xhr.open("POST", "/edit-post");
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send("story=" + v + "&postID=" + postID);
-        uploadImages(postID);
     });
 }
 

@@ -604,8 +604,16 @@ app.post('/upload-another-timeline-image', upload.array("files"), (req, res) =>{
 
 app.post('/delete-image', (req, res) => {
     if (req.session.loggedin) {
-        let sql = `DELETE FROM BBY_01_timeline_images WHERE postImageID = ?`;
-        database.query(sql, [req.body.imageID], (error, results) => {
+        let sql = `DELETE FROM BBY_01_timeline_images WHERE postImageID = ?`
+        let l = 0;
+        let imgIDs = req.body.imageID.split(',').map(Number);
+        for (let i = 0; i < imgIDs.length - 1; i++) {
+            l++;
+            database.query(sql, [imgIDs[i]], (error, results)=> {
+                if (error) throw error;
+            })
+        }
+        database.query(sql, [imgIDs[l]], (error, results) => {
             if (error) throw error;
             res.send({
                 status: "success",
