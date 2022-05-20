@@ -50,7 +50,7 @@
         <div id="photo">
             <h3><b> Would you like to add a photo?</b></h3>
             <form action="/">
-                <input type="file" name="photo" id="inputPhoto" accept=".jpg, .jpeg, .png" />
+                <input type="file" name="photo" id="inputPhoto" accept=".jpg, .jpeg, .png" multiple />
                 <button id='delete' type="reset"><b> Delete Photo</b></button>
             </form>
         </div>
@@ -84,18 +84,18 @@
         </div>
     </div>
 
-     <!--Modal-->
-     <div id="simpleModal" class="modal">
+    <!--Modal-->
+    <div id="simpleModal" class="modal">
         <div class="modal-content">
-          <h5>Are you sure you want to log out?</h5>
-          <div class="buttons">
-            <form><button id="modal-return">Cancel</button></form>
-            <form action="/logout" method="get">
-              <button type="submit" value="Logout" id="modal-succuess">Log Out</button>
-            </form>
-          </div>
+            <h5>Are you sure you want to log out?</h5>
+            <div class="buttons">
+                <form><button id="modal-return">Cancel</button></form>
+                <form action="/logout" method="get">
+                    <button type="submit" value="Logout" id="modal-succuess">Log Out</button>
+                </form>
+            </div>
         </div>
-      </div>
+    </div>
 
     <script src="./js/share-story.js"></script>
 </body>

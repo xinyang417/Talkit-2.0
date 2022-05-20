@@ -562,13 +562,21 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
         } else {
             sql = `INSERT INTO bby_01_timeline_images (postID, storyPic)
             VALUES (?, ?)`;
-            database.query(sql, [results[0].postID, req.files[0].filename], (error, results) => {
-                if (error) console.log(error);
+            let l = 0;
+            for (let i = 0; i < req.files.length - 1; i++) {
+                l++;
+                database.query(sql, [results[0].postID, req.files[i].filename], (error, results) => {
+                    if (error) console.log(error);
+                    
+                });
+            }
+            database.query(sql,[results[0].postID, req.files[l].filename], (error, results) => {
+                if (error) throw error;
                 res.send({
                     status: "success",
                     rows: results
                 });
-            });
+            })
         }
     });
 });
