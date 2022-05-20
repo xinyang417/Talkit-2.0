@@ -204,6 +204,7 @@ function editPost(postID) {
                 if (xhr.status === 200) {
                     parent.removeChild(cancel);
                     parent.removeChild(submit);
+                    window.location.reload();
                 } else {
                     console.log(this.status);
                 }
