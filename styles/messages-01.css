@@ -61,7 +61,6 @@ body {
 
     img {
         width: 100%;
-        z-index: 0;
     }
 
     /* not shown in web version */
@@ -193,14 +192,12 @@ body {
         max-width: 60px;
         float: left;
         flex-grow: 1;
-        z-index: 1;
     }
 
     .myPic {
         max-width: 60px;
         float: right;
         flex-grow: 1;
-        z-index: 1;
     }
 
     .chat-list {
@@ -324,20 +321,6 @@ body {
         bottom: 4em;
     }
 
-    #easterEgg {
-        display: none;
-        max-width: 100%;
-        max-height: 100%;
-        bottom: 0;
-        left: 0;
-        margin: auto;
-        position: fixed;
-        right: 0;
-        top: 0;
-        -o-object-fit: contain;
-        object-fit: contain;
-        z-index: 2;
-    }
 }
 
 
@@ -526,10 +509,6 @@ body {
     }
 
     #bottomMenu {
-        display: none;
-    }
-
-    #easterEgg {
         display: none;
     }
 
