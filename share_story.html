@@ -31,11 +31,18 @@
                     </span></button>
             </nav>
         </div>
+
         <div id="logo">
             <figure class="logo">
-                <img class="img" alt="..." src="/img/logo-01.png" />
+                <img class="img" onclick="showEasterEgg()" alt="..." src="/img/logo-01.png" />
             </figure>
         </div>
+
+        <!--Easter Egg-->
+        <div id="easterEgg">
+            <img class="img" id="eEgg" alt="..." src="/img/team-01.png">
+        </div>
+
         <div id="pageName">
             <h2><b> Share Story</b></h2>
         </div>
@@ -84,7 +91,7 @@
         </div>
     </div>
 
-    <!--Modal-->
+    <!--Logout Modal-->
     <div id="simpleModal" class="modal">
         <div class="modal-content">
             <h5>Are you sure you want to log out?</h5>
@@ -97,7 +104,19 @@
         </div>
     </div>
 
+     <!--Discard Modal-->
+     <div id="simpleModal2" class="modal">
+        <div class="modal-content">
+            <h5>Are you sure you want to Discard?</h5>
+            <div class="buttons">
+                <button id="modal-return-cancel">Cancel</button>
+                <form action="/home"><button id="modal-return-discard">Discard</button></form>
+            </div>
+        </div>
+    </div>
+
     <script src="./js/share-story.js"></script>
+    <script src="./js/easter-egg.js"></script>
 </body>
 
 </html>

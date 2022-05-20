@@ -320,6 +320,20 @@ body {
         list-style-type: none;
         bottom: 4em;
     }
+
+    #easterEgg {
+        display: none;
+        max-width: 100%;
+        max-height: 100%;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        position: fixed;
+        right: 0;
+        top: 0;
+        -o-object-fit: contain;
+        object-fit: contain;
+    }
 }
 
 
@@ -401,7 +415,7 @@ body {
         font-size: 14px;
         margin: 0;
         font-weight: bold;
-        
+
     }
 
     .chat-message {
@@ -412,7 +426,7 @@ body {
         display: inline-block;
         text-overflow: ellipsis;
         white-space: nowrap;
-        
+
     }
 
     .chat-list .chat-date {
@@ -421,7 +435,7 @@ body {
         color: #909090;
         margin-top: auto;
         margin-bottom: 0;
-        
+
     }
 
     #logo {
