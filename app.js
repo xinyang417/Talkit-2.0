@@ -214,7 +214,7 @@ app.get('/home', (req, res) => {
 
     // If the user is logged in
     if (req.session.loggedin) {
-        console.log("Home");
+        
         const sql = ` INSERT INTO bby_01_profile(userID, displayName, about, profilePic)
                         SELECT * FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
                         WHERE NOT EXISTS (SELECT userID
@@ -431,20 +431,20 @@ app.get('/story-comment', (req, res) => {
         database.query(sql, [req.session.userid], (error, results) => {
             if (error) throw error;
             profileDOM.window.document.getElementById("reader").innerHTML = results[0].displayName;
-
             sql = `SELECT * FROM BBY_01_timeline
             INNER JOIN bbY_01_profile
             ON BBY_01_timeline.userID = bby_01_profile.userID
             WHERE bby_01_timeline.postID = ?`;
+            
             database.query(sql, [req.session.postID], (error, results) => {
                 if (error) throw error;
+                if (results.length > 0) {
                     let postDate = results[0].date.toISOString().slice(0, 19).replace('T', ' ');
                     profileDOM.window.document.getElementById("author").innerHTML = results[0].displayName;
                     profileDOM.window.document.getElementById("postTime").innerHTML = postDate;
                     profileDOM.window.document.getElementById("postTitle").innerHTML = results[0].title;
-                    profileDOM.window.document.getElementById("postText").innerHTML = results[0].story;
+                    profileDOM.window.document.getElementById("postText").innerHTML = results[0].story;                    
                     profileDOM.window.document.getElementById("postPic").setAttribute("src", "/img/" + results[0].profilePic);
-                    
                     profileDOM.window.document.getElementById("reader").setAttribute("value", req.session.userid);
                     profileDOM.window.document.getElementById("reader").setAttribute("class", req.session.isAdmin);
                     if (results[0].userID != req.session.userid && req.session.isAdmin == 0) {
@@ -453,9 +453,9 @@ app.get('/story-comment', (req, res) => {
                     } else {
                         profileDOM.window.document.getElementById("deletePost").setAttribute("onclick", `deletePost(${req.session.postID})`);
                         profileDOM.window.document.getElementById("editPost").setAttribute("onclick", `editPost(${req.session.postID})`);
-                        
+                            
+                    }
                 }
-                console.log("Selecting from storycomments");
                 res.send(profileDOM.serialize());
                 res.end();
             })               

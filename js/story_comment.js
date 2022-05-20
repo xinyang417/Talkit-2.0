@@ -124,6 +124,7 @@ function deletePost(postID) {
                 console.log("ERROR", this.status);
             }
         }
+        console.log("clicked");
         xhr.open("POST", "/delete-post");
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
