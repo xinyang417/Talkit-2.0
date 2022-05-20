@@ -583,16 +583,41 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
 
 app.post('/upload-another-timeline-image', upload.array("files"), (req, res) =>{
     
-   var sql = `INSERT INTO bby_01_timeline_images (postID, storyPic)
-              VALUES (?, ?)`;
-    database.query(sql, [req.session.postID, req.files[0].filename], (error,results) =>{
+    var sql = `INSERT INTO bby_01_timeline_images (postID, storyPic)
+                VALUES (?, ?)`;
+    let l = 0;
+    for (let i = 0; i < req.files.length - 1; i++) {
+        l++;
+        database.query(sql, [req.session.postID, req.files[i].filename], (error,results) =>{
+            if (error) console.log(error);
+        });
+    }
+    database.query(sql, [req.session.postID, req.files[l].filename], (error,results) =>{
         if (error) console.log(error);
         res.send({
             status: "success",
             rows: results
         });
     });
+    
 });
+
+app.post('/delete-image', (req, res) => {
+    if (req.session.loggedin) {
+        let sql = `DELETE FROM BBY_01_timeline_images WHERE postImageID = ?`;
+        database.query(sql, [req.body.imageID], (error, results) => {
+            if (error) throw error;
+            res.send({
+                status: "success",
+                msg: "Image deleted."
+            });
+            res.end();
+        });
+    } else {
+        res.redirect("/");
+    }
+});
+
 app.get('/get-comment', (req, res) => {
     if (req.session.loggedin) {
         let sql = `SELECT * FROM bby_01_comment

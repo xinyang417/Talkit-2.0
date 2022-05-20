@@ -1,5 +1,41 @@
 "use strict";
 
+var imageInfo;
+
+
+function deleteImage(postImageID) {
+    var modal = document.getElementById('simpleModal4');
+    var goBack = document.getElementById('modal-return-delete-image');
+    var deleteCmt = document.getElementById('modal-succuess-delete-image');
+    modal.style.display = 'block';
+    goBack.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+    window.addEventListener('click', function(e) {
+        if(e.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
+    deleteCmt.addEventListener('click', () => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (this.readyState == XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                } else {
+                    console.log(this.status);
+                }
+            } else {
+                console.log("ERROR", this.status);
+            }
+        }
+        xhr.open("POST", "/delete-image");
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send("imageID=" + postImageID);
+    });
+    
+}
+
 function displayImages() {
     const xhr = new XMLHttpRequest();
     var parent = document.getElementById("slide");
@@ -9,11 +45,14 @@ function displayImages() {
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
                 if (data.status == "success") {
+                    imageInfo = data.rows;
                     for (let i = 0; i < data.rows.length; i++) {
                         let row = data.rows[i];
                         var newPostTemplate = postTemplate.content.cloneNode(true);
                         newPostTemplate.getElementById("postImage").src = "/img/" + row.storyPic;
-                        newPostTemplate.getElementById("numbertext").innerHTML = i+1 + " / " + data.rows.length;
+                        newPostTemplate.getElementById("postImage").setAttribute("value", row.postImageID);
+                        newPostTemplate.getElementById("postImage").setAttribute("id", "image" + row.postImageID);
+                        newPostTemplate.getElementById("numbertext").innerHTML = i + 1 + " / " + data.rows.length;
                         parent.appendChild(newPostTemplate);
                     }
                 } else {
@@ -29,6 +68,8 @@ function displayImages() {
     xhr.open("GET", "/get-post-images");
     xhr.send();
 }
+
+
 
 
 var coll = document.getElementsByClassName("collapsible");
@@ -155,13 +196,13 @@ function deletePost(postID) {
                 console.log("ERROR", this.status);
             }
         }
-        console.log("clicked");
         xhr.open("POST", "/delete-post");
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send("postID=" + postID);
     });
 }
+
 
 
 function showDeleteCmtModal(commentID) {
@@ -216,6 +257,15 @@ function editPost(postID) {
     submit.setAttribute("id", "submitPost");
     imgUpload.style.display = 'block';
 
+    let images = document.getElementsByClassName("pstImage");
+    for (let i = 0; i < imageInfo.length; i++) {
+        let imgID = images[i].getAttribute('value');
+        images[i].addEventListener("click", () =>{
+            deleteImage(imgID);
+        });
+        
+    }
+
     parent.appendChild(cancel);
     parent.appendChild(submit);
 
@@ -227,6 +277,7 @@ function editPost(postID) {
         imgUpload.value = '';
     });
 
+    // document.getElementById("postImage").setAttribute("onclick", `deleteImage(${})`);
     submit.addEventListener("click", () => {
         let v = textArea.value;
         let newText = document.createElement("p");
