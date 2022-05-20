@@ -8,11 +8,11 @@ function deleteImage(postImageID) {
     var goBack = document.getElementById('modal-return-delete-image');
     var deleteCmt = document.getElementById('modal-succuess-delete-image');
     modal.style.display = 'block';
-    goBack.addEventListener('click', function() {
+    goBack.addEventListener('click', function () {
         modal.style.display = 'none';
     });
-    window.addEventListener('click', function(e) {
-        if(e.target == modal) {
+    window.addEventListener('click', function (e) {
+        if (e.target == modal) {
             modal.style.display = 'none';
         }
     });
@@ -20,8 +20,7 @@ function deleteImage(postImageID) {
         const xhr = new XMLHttpRequest();
         xhr.onload = function () {
             if (this.readyState == XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                } else {
+                if (xhr.status === 200) {} else {
                     console.log(this.status);
                 }
             } else {
@@ -33,7 +32,7 @@ function deleteImage(postImageID) {
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send("imageID=" + postImageID);
     });
-    
+
 }
 
 function displayImages() {
@@ -175,11 +174,11 @@ function deletePost(postID) {
     var goBack = document.getElementById('modal-return-delete-post');
     var deletePst = document.getElementById('modal-succuess-delete-post');
     modal.style.display = 'block';
-    goBack.addEventListener('click', function() {
+    goBack.addEventListener('click', function () {
         modal.style.display = 'none';
     });
-    window.addEventListener('click', function(e) {
-        if(e.target == modal) {
+    window.addEventListener('click', function (e) {
+        if (e.target == modal) {
             modal.style.display = 'none';
         }
     });
@@ -210,11 +209,11 @@ function showDeleteCmtModal(commentID) {
     var goBack = document.getElementById('modal-return-delete-comment');
     var deleteCmt = document.getElementById('modal-succuess-delete-comment');
     modal.style.display = 'block';
-    goBack.addEventListener('click', function() {
+    goBack.addEventListener('click', function () {
         modal.style.display = 'none';
     });
-    window.addEventListener('click', function(e) {
-        if(e.target == modal) {
+    window.addEventListener('click', function (e) {
+        if (e.target == modal) {
             modal.style.display = 'none';
         }
     });
@@ -260,10 +259,10 @@ function editPost(postID) {
     let images = document.getElementsByClassName("pstImage");
     for (let i = 0; i < imageInfo.length; i++) {
         let imgID = images[i].getAttribute('value');
-        images[i].addEventListener("click", () =>{
+        images[i].addEventListener("click", () => {
             deleteImage(imgID);
         });
-        
+
     }
 
     parent.appendChild(cancel);
@@ -307,25 +306,27 @@ function editPost(postID) {
         uploadImages(postID);
     });
 }
-function uploadImages (postID) {
+
+function uploadImages(postID) {
     const imageUpload = document.querySelector("#inputPhoto");
     const formData = new FormData();
     if (imageUpload.files.length > 0) {
-        
+
         for (let i = 0; i < imageUpload.files.length; i++) {
             formData.append("files", imageUpload.files[i]);
         }
-    
+
         const options = {
             method: 'POST',
             body: formData,
             postNum: postID,
         };
-        fetch("/upload-another-timeline-image", options
-        ).catch(function (err) { ("Error:", err) }
-        );
+        fetch("/upload-another-timeline-image", options).catch(function (err) {
+            ("Error:", err)
+        });
     }
 }
+
 function editComment(commentID) {
     let commentText = document.getElementById("commentText" + commentID);
     let parent = commentText.parentNode;
@@ -403,4 +404,3 @@ function clickOutside(e) {
         modal.style.display = 'none';
     }
 }
-
