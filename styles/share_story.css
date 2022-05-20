@@ -549,10 +549,10 @@ body {
         color: black;
     }
 
-<<<<<<< HEAD
     #easterEgg {
         display: none;
-=======
+    }
+
     #modal {
         display: none;
         position: fixed;
@@ -615,6 +615,5 @@ body {
         width: 100px;
         font-size: 14px;
         font-weight: bold;
->>>>>>> efa34fa795b150cededd8dab0e52b6cac8ab7684
     }
 }
