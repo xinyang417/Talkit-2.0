@@ -272,7 +272,7 @@ function editPost(postID) {
         });
 
     }
-    
+
     parent.appendChild(cancel);
     parent.appendChild(submit);
 
@@ -400,14 +400,14 @@ var modal = document.getElementById('simpleModal');
 var modalBtn = document.getElementById('logout');
 var goBack = document.getElementById('modal-return');
 
-modalBtn.addEventListener('click', function() {
+modalBtn.addEventListener('click', function () {
     modal.style.display = 'block';
 });
-goBack.addEventListener('click', function(e) {
+goBack.addEventListener('click', function (e) {
     e.preventDefault();
     modal.style.display = 'none';
 });
-window.addEventListener('click', function(e) {
+window.addEventListener('click', function (e) {
     if (e.target == modal) {
         modal.style.display = 'none';
     }
