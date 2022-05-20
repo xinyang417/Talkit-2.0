@@ -631,4 +631,9 @@ body {
     #bottomMenu {
         display: none;
     }
+
+    #easterEgg {
+        display: none;
+      }
+      
 }

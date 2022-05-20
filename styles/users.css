@@ -584,4 +584,8 @@ body {
   ul b {
     display: none;
   }
+
+  #easterEgg {
+    display: none;
+  }
 }

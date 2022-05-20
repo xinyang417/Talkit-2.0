@@ -536,4 +536,8 @@ body {
     .active .material-symbols-outlined {
         color: black;
     }
+
+    #easterEgg {
+        display: none;
+    }
 }
