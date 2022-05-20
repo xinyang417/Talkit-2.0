@@ -82,3 +82,24 @@ function clickOutside(e) {
         modal.style.display = 'none';
     }
 }
+
+var discardModal = document.getElementById('simpleModal2');
+
+var discardModalBtn = document.getElementById('discard');
+
+var goBack = document.getElementById('modal-return-cancel');
+
+discardModalBtn.addEventListener('click', function () {
+    discardModal.style.display = 'block';
+});
+
+goBack.addEventListener('click', function(e) {
+    e.preventDefault();
+        discardModal.style.display = 'none';
+});
+
+window.addEventListener('click', function(e) {
+    if (e.target == discardModal) {
+        discardModal.style.display = 'none';
+    }
+});

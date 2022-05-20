@@ -154,6 +154,20 @@ input[type=submit]:hover {
         font-size: 14px;
         color: red;
     }
+
+    #easterEgg {
+        display: none;
+        max-width: 100%;
+        max-height: 100%;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        position: fixed;
+        right: 0;
+        top: 0;
+        -o-object-fit: contain;
+        object-fit: contain;
+    }
 }
 
 @media screen and (max-width: 700px) {
@@ -288,5 +302,9 @@ input[type=submit]:hover {
         font-family: 'Inter', sans-serif;
         font-size: 14px;
         color: red;
+    }
+
+    #easterEgg {
+        display: none;
     }
 }
