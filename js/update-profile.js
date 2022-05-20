@@ -136,7 +136,6 @@ var modal = document.getElementById('simpleModal');
 var modalBtn = document.getElementById('logout');
 var goBack = document.getElementById('modal-return');
 
-
 modalBtn.addEventListener('click', function () {
     modal.style.display = 'block';
 });
