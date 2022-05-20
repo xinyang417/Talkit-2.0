@@ -36,10 +36,12 @@ input[type=submit]:hover {
         margin-right: auto;
         width: 90%;
         margin-bottom: 4em;
+        z-index: 0;
     }
 
     .logo {
         position: sticky;
+        z-index: 0;
     }
 
     .branding p {
@@ -62,11 +64,27 @@ input[type=submit]:hover {
         padding: 70px 0;
         padding: 2em;
         max-height: 100%;
+        z-index: 1;
     }
 
     #loginForm h3 {
         font-size: 30px;
         text-align: center;
+    }
+
+    #psw {
+        margin: 0;
+        width: 100%;
+    }
+
+    form i {
+        float: right;
+        right: 10px;
+        margin-left: -40px;
+        margin-top: -41px;
+        position: relative;
+        z-index: 2;
+        cursor: pointer;
     }
 
     input[type=text],
@@ -139,6 +157,21 @@ input[type=submit]:hover {
         font-size: 14px;
         color: red;
     }
+
+    #easterEgg {
+        display: none;
+        max-width: 100%;
+        max-height: 100%;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        position: fixed;
+        right: 0;
+        top: 0;
+        -o-object-fit: contain;
+        object-fit: contain;
+        z-index: 2;
+    }
 }
 
 @media screen and (max-width: 700px) {
@@ -185,6 +218,26 @@ input[type=submit]:hover {
     #loginForm {
         align-items: center;
         width: 100%;
+    }
+
+    #psw {
+        margin: 0;
+        width: 100%;
+    }
+
+    #psw i {
+        margin-left: -30px;
+        cursor: pointer;
+    }
+
+    form i {
+        float: right;
+        right: 10px;
+        margin-left: -40px;
+        margin-top: 15px;
+        position: relative;
+        z-index: 2;
+        cursor: pointer;
     }
 
     input[type=text],
@@ -253,5 +306,9 @@ input[type=submit]:hover {
         font-family: 'Inter', sans-serif;
         font-size: 14px;
         color: red;
+    }
+
+    #easterEgg {
+        display: none;
     }
 }

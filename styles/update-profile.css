@@ -8,6 +8,10 @@ body {
     overflow-x: hidden;
 }
 
+#uName {
+    display: none;
+}
+
 @media screen and (min-width: 701px) {
     .container {
         display: grid;
@@ -29,7 +33,6 @@ body {
         margin-left: 2em;
         margin-top: 2em;
     }
-
 
     #footer ul {
         margin-bottom: 1.5em;
@@ -58,7 +61,7 @@ body {
         cursor: pointer;
     }
 
-    .material-symbols-outlined {
+    ul .material-symbols-outlined {
         display: none !important;
     }
 
@@ -75,6 +78,7 @@ body {
 
     #logo img {
         width: 100%;
+        z-index: 0;
     }
 
     #pageName {
@@ -102,8 +106,8 @@ body {
         position: relative;
         margin-left: 4em;
         border-radius: 50%;
-        width: 120px;
-        height: 120px;
+        width: 100px;
+        height: 100px;
         overflow: hidden;
         display: flex;
         justify-content: center;
@@ -131,6 +135,11 @@ body {
         justify-content: center;
     }
 
+    #upload-images-form {
+        display: flex;
+        align-items: flex-end;
+    }
+
     #image-upload {
         opacity: 50%;
     }
@@ -146,30 +155,19 @@ body {
 
     #submit {
         width: 150px;
-        height: 30px;
-        border-radius: 10px;
-        border: 1px solid #9595c5;
         background-color: white;
         color: #9595c5;
+        text-decoration: underline;
         font-size: 14px;
-        margin-top: 1em;
-        margin-left: 4.5em;
-    }
-
-    .username {
-        float: right;
-        text-align: right;
-        font-family: 'Inter', sans-serif;
-        font-weight: bold;
-        font-size: 18px;
-        margin-top: 0.5em;
-        margin-right: 4em;
+        float: left;
+        border: none;
+        margin-right: 2em;
     }
 
     .profile-update {
         grid-row: 2 / span 3;
         grid-column: 2 / span 1;
-        margin: 12em 2em 2em 2em;
+        margin: 8em 2em 2em 2em;
         background-color: white;
         border-radius: 0 0 25px 25px;
     }
@@ -178,28 +176,37 @@ body {
         padding-top: 0;
         text-align: left;
         max-width: 100%;
-        margin: 0 4em 0 4em;
+        margin: 1em 4em 0 4em;
     }
 
     #email,
-    #password {
-        width: 47%;
-    }
-
+    #password,
+    #username,
     #displayName {
         width: 100%;
-        margin-top: 1em;
     }
 
-    input[type=text] {
+    input[type=text],
+    input[type=password] {
         height: 40px;
         padding-left: 10px;
+        margin-top: 3px;
         border: none;
         border-radius: 10px;
         color: black;
         background: #e4e4e4;
         font-family: 'Inter', sans-serif;
         font-size: 16px;
+    }
+
+    #textInput p {
+        margin-bottom: 1em;
+        width: 48%;
+    }
+
+    form i {
+        margin-left: -30px;
+        cursor: pointer;
     }
 
     #textInput {
@@ -210,8 +217,9 @@ body {
 
     textarea {
         width: 100%;
-        margin-top: 1em;
+        height: 100px;
         padding: 10px;
+        margin-top: 3px;
         display: inline-block;
         border: none;
         border-radius: 10px;
@@ -223,24 +231,25 @@ body {
     }
 
     .buttons {
-        margin-top: 4em;
         display: flex;
         justify-content: space-between;
-        float: right;
-        width: 50%;
+        bottom: 4em;
+        right: 6em;
+        position: absolute;
+        width: 30%;
     }
 
     .cancel {
-        background-color: #909090;
-        border: none;
-        color: white;
         height: 50px;
-        width: 45%;
+        width: 46%;
         text-align: center;
         border-radius: 10px;
         font-size: 18px;
         font-family: 'Inter', sans-serif;
         font-weight: bold;
+        color: #909090;
+        background-color: white;
+        border: 1px solid #909090
     }
 
     .save {
@@ -248,7 +257,7 @@ body {
         border: none;
         color: white;
         height: 50px;
-        width: 45%;
+        width: 46%;
         text-align: center;
         border-radius: 10px;
         font-size: 18px;
@@ -265,7 +274,6 @@ body {
         box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.108), 0 5px 10px 0 rgba(0, 0, 0, 0.076);
     }
 
-
     #bottomMenu {
         grid-row: 3 / span 1;
         grid-column: 1 / span 1;
@@ -281,6 +289,89 @@ body {
         bottom: 4em;
         list-style-type: none;
     }
+
+    #modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+    }
+
+    .modal-content {
+        background-color: white;
+        border-radius: 10px;
+        text-align: center;
+        margin: 20% auto;
+        padding-top: 40px;
+        padding-bottom: 30px;
+        padding-left: 40px;
+        padding-right: 40px;
+        width: 30%;
+        height: 22%;
+        display: block;
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px rgba(0, 0, 0, 0.17);
+    }
+
+    .modal-content h5 {
+        margin-bottom: 1.5em;
+        font-weight: bold;
+    }
+
+    .btns {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #modal-return {
+        background-color: white;
+        border: 1px solid #909090;
+        color: #909090;
+        border-radius: 10px;
+        height: 40px;
+        width: 110px;
+        font-size: 18px;
+        float: right;
+        font-weight: bold;
+    }
+
+    #modal-succuess {
+        background-color: #9595c5;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        height: 40px;
+        width: 110px;
+        font-size: 18px;
+        float: right;
+        font-weight: bold;
+    }
+
+    #modal-return:hover,
+    #modal-succuess:hover {
+        box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.108), 0 3px 5px 0 rgba(0, 0, 0, 0.076);
+    }
+
+    #easterEgg {
+        display: none;
+        max-width: 100%;
+        max-height: 100%;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        position: fixed;
+        right: 0;
+        top: 0;
+        -o-object-fit: contain;
+        object-fit: contain;
+        z-index: 1;
+    }
 }
 
 
@@ -294,10 +385,11 @@ body {
         display: grid;
         height: 100vh;
         max-width: 100vw;
-        grid-template-rows: 1fr 1fr 3fr 6fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 6fr 1fr;
         padding: 0;
         margin: 0;
         margin-right: 0;
+        overflow-y: scroll;
     }
 
     .logo {
@@ -348,6 +440,7 @@ body {
 
     #pageName h2 {
         margin-top: 30px;
+        margin-bottom: 20px;
         font-size: 25px;
     }
 
@@ -364,23 +457,22 @@ body {
         text-align: center;
         position: relative;
         border-radius: 50%;
-        width: 100px;
-        height: 100px;
+        width: 90px;
+        height: 90px;
         overflow: hidden;
         display: flex;
         justify-content: center;
-        margin-bottom: 5%;
     }
 
     #submit {
         width: 100px;
-        height: 30px;
-        border-radius: 10px;
-        border: 1px solid #9595c5;
         background-color: white;
         color: #9595c5;
+        text-decoration: underline;
         font-size: 14px;
         padding: 0;
+        border: none;
+        float: right;
     }
 
 
@@ -408,6 +500,12 @@ body {
         justify-content: center;
     }
 
+    #upload-images-form {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+
     #image-upload {
         height: 0px;
     }
@@ -423,7 +521,7 @@ body {
 
     .profile-update {
         grid-row: 4 / span 1;
-        margin: 0 1em 0 1em;
+        margin: 1.5em 1em 0 1em;
     }
 
     .username {
@@ -433,10 +531,15 @@ body {
         font-size: 14px;
     }
 
-    input[type=text] {
+    label {
+        font-size: 14px;
+    }
+
+    input[type=text],
+    input[type=password] {
         width: 100%;
         height: 40px;
-        margin: 5px 0 12px 0;
+        margin: 2px 0 20px 0;
         padding-left: 10px;
         display: inline-block;
         border: none;
@@ -447,10 +550,20 @@ body {
         font-size: 14px;
     }
 
+    #textInput p {
+        margin: 0;
+        width: 100%;
+    }
+
+    form i {
+        margin-left: -30px;
+        cursor: pointer;
+    }
+
     #about {
         width: 100%;
-        height: 110px !important;
-        margin: 5px 0 12px 0;
+        height: 90px;
+        margin: 2px 0 20px 0;
         padding-left: 10px;
         padding-top: 10px;
         display: inline-block;
@@ -465,7 +578,8 @@ body {
     .buttons {
         display: flex;
         justify-content: space-between;
-        margin-top: 45px;
+        margin-top: 15px;
+        width: 100%;
     }
 
     .cancel {
@@ -474,12 +588,13 @@ body {
         margin: 0;
         text-align: center;
         font-family: 'Inter', sans-serif;
-        color: white;
-        border: none;
-        background-color: #909090;
         border-radius: 10px;
         display: inline-block;
         font-size: 18px;
+        font-weight: bold;
+        color: #909090;
+        background-color: white;
+        border: 1px solid #909090
     }
 
     .save {
@@ -512,48 +627,15 @@ body {
     }
 
     #footer {
-        grid-row: 6 / span 1;
-        border-top: 0.5px solid #e4e4e4;
-    }
-
-    #footer ul {
-        margin-bottom: 1.5em;
-        padding: 0;
-        bottom: 0;
-        margin: 0em 1em 1.5em 1em;
-        max-width: 100%;
-        position: sticky;
-        display: flex;
-        justify-content: space-between;
-        list-style-type: none;
-    }
-
-    ul li {
-        display: inline;
-        padding-top: 5px;
-    }
-
-    ul a {
-        transition: all 0.3s ease;
-        color: #909090;
-        font-size: 25px;
-    }
-
-    ul b {
         display: none;
-    }
-
-    li a:active {
-        transition: all 0.3s ease;
-        color: black !important;
-    }
-
-    li .active {
-        transition: all 0.3s ease;
-        color: black !important;
     }
 
     #bottomMenu {
         display: none;
     }
+
+    #easterEgg {
+        display: none;
+    }
+
 }

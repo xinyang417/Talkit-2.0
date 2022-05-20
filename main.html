@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Home</title>
+  <title>Talkit</title>
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,17 +18,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
+  <link href="/img/favicon.ico" rel="icon" type="image/x-icon" />
 
 </head>
 
-<body>
+<body onload="displayPosts()">
 
   <div class="container">
     <div id="nav">
       <ul>
         <!--Back Button-->
         <li id="back-button">
-          <button onclick="history.back()" id="back"><span class="material-symbols-outlined">
+          <button id="back"><span class="material-symbols-outlined">
               arrow_back
             </span></button>
         </li>
@@ -58,13 +59,23 @@
 
         <!--Log Out Button-->
         <li id="logout-icon">
-          <form action="/logout" method="get">
-            <button type="submit" value="Logout" id="logout"><span
-                class="material-symbols-outlined">logout</span></button>
-          </form>
+          <button type="submit" value="Logout" id="logout"><span
+              class="material-symbols-outlined">logout</span></button>
         </li>
-
       </ul>
+    </div>
+
+    <!--Modal-->
+    <div id="simpleModal" class="modal">
+      <div class="modal-content">
+        <h5>Are you sure you want to log out?</h5>
+        <div class="buttons">
+          <form><button id="modal-return">Cancel</button></form>
+          <form action="/logout" method="get">
+            <button type="submit" value="Logout" id="modal-succuess">Log Out</button>
+          </form>
+        </div>
+      </div>
     </div>
 
     <!--Story List-->
@@ -73,24 +84,33 @@
       <!--Search Bar (Web Version Only)-->
       <input type="text" id="search-bar" placeholder="Search">
     </div>
-    <div class="story-list">
-      <!-- Dummy data for styling testing -->
-      <div class="post">
-        <img class="profilePic" alt="profilePic" src="/img/logo-04.png">
-        <p class="author">Doctor Who</p>
-        <p class="break1">·</p>
-        <p class="postTime">May 12, 2022</p>
-        <p class="break2">·</p>
-        <a href="#"><span class="material-symbols-outlined">bookmark</span></a>
-        <p class="postTitle">I want to share my story as a doctor</p>
-      </div>
+    <div class="story-list" id="postList">
+      <!-- Template -->
+      <template id="postTemplate">
+        <div class="post">
+          <img class="profilePic" alt="profilePic" id="posterPic">
+          <p id="author"></p>
+          <p class="break1">·</p>
+          <p id="postTime"></p>
+          <p class="break2">·</p>
+          <a href="#"><span class="material-symbols-outlined">bookmark</span></a>
+          <a href="">
+            <div id="postTitle">Post Title</div>
+          </a>
+        </div>
+      </template>
     </div>
 
     <!--TalkIt Logo-->
     <div id="logo">
       <figure class="logo">
-        <img class="img" alt="..." src="/img/logo-01.png">
+        <img class="img" onclick="showEasterEgg()" alt="..." src="/img/logo-01.png">
       </figure>
+    </div>
+
+    <!--Easter Egg-->
+    <div id="easterEgg">
+      <img class="img" id="eEgg" alt="..." src="/img/team-01.png">
     </div>
 
     <!--Bottom Menu-->
@@ -98,7 +118,7 @@
       <ul>
         <li id="dBoard"><a href="/admin"><b>Dashboard</b></a></li>
         <li><a href="/profile"> <b>Profile</b></a></li>
-        <li><a href="/logout"> <b>Log Out</b> </a></li>
+        <li><a href="#" id="logout2"> <b>Log Out</b> </a></li>
       </ul>
     </div>
 
@@ -107,7 +127,7 @@
       <ul>
         <li><a href="/home" class="active"><span class="material-symbols-outlined">home</span><b>Home</b></a> </li>
         <li><a href="#"><span class="material-symbols-outlined">bookmark</span><b>Bookmark</b></a> </li>
-        <li><a href="#"><span class="material-symbols-outlined">add_box</span><b>Share
+        <li><a href="/share-story"><span class="material-symbols-outlined">add_box</span><b>Share
               Story</b></a></li>
         <li><a href="#"><span class="material-symbols-outlined">mail</span><b>Messages</b></a> </li>
         <li><a href="#"><span class="material-symbols-outlined">notifications</span><b>Notifications</b></a>
@@ -116,7 +136,8 @@
     </div>
 
   </div>
-
+  <script src="./js/main.js"></script>
+  <script src="./js/easter-egg.js"></script>
 </body>
 
 </html>

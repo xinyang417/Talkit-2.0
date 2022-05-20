@@ -1,3 +1,5 @@
+"use strict";
+
 function getUsers() {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -7,7 +9,7 @@ function getUsers() {
                 if (data.status == "success") {
                     let str = `<tr>
                                     <th class ="userid_header"><span>ID</span></th>
-                                    <th class ="username_header"><span>Name</span></th>
+                                    <th class ="username_header"><span>User Name</span></th>
                                     <th class ="email_header"><span>Email</span></th>
                                     <th class ="password_header"><span>Password</span></th>
                                     <th class ="admin_header"><span>isAdmin</span></th>
@@ -24,7 +26,7 @@ function getUsers() {
                     document.getElementById("users").innerHTML = str;
 
                     let records = document.querySelectorAll(
-                        "td.email span, td.usernames span, td.password span, td.admin span");
+                        "td.email span, td.displayName span, td.usernames span, td.password span, td.admin span");
                     for (let j = 0; j < records.length; j++) {
                         records[j].addEventListener("click", edit);
                     }
@@ -44,8 +46,29 @@ function getUsers() {
 
 getUsers();
 
+function setDefaultDisplayName(email){
+
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {        
+            } else {
+                console.log(this.status);
+            }
+        } else {
+            console.log("ERROR", this.status);
+        }
+    }
+    xhr.open("POST", "/set-default-displayName");
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send("email=" + email);
+}
+
 function edit(e) {
+    console.log("e: ", e);
     let spanText = e.target.innerHTML;
+    console.log("spanText:", spanText);
     let parent = e.target.parentNode;
     let password = parent.parentNode.querySelector(".password");
     let email = parent.parentNode.querySelector(".email");
@@ -115,8 +138,11 @@ function edit(e) {
             xhr.open("POST", "/update-user");
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send("id=" + dataToSend.id + "&username=" + dataToSend.username + "&email=" + dataToSend.email +
-                "&password=" + dataToSend.password + "&isAdmin=" + dataToSend.isAdmin);
+            xhr.send("id=" + dataToSend.id 
+                + "&username=" + dataToSend.username 
+                +"&email=" + dataToSend.email 
+                + "&password=" + dataToSend.password 
+                + "&isAdmin=" + dataToSend.isAdmin);
         }
     });
     parent.innerHTML = "";
@@ -185,3 +211,22 @@ document.getElementById("delete").addEventListener("click", (e) => {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send("id=" + formData.id);
 })
+
+// Logout Modal Functions
+var modal = document.getElementById('simpleModal');
+var modalBtn = document.getElementById('logout');
+var goBack = document.getElementById('modal-return');
+
+modalBtn.addEventListener('click', function () {
+    modal.style.display = 'block';
+});
+
+goBack.addEventListener('click', function (e) {
+    e.preventDefault();
+    modal.style.display = 'none';
+});
+window.addEventListener('click', function (e) {
+    if (e.target == modal) {
+        modal.style.display = 'none';
+    }
+});

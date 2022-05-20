@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Sign Up</title>
+    <title>Talkit</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -11,9 +11,11 @@
 
     <!-- Required Link Tags -->
     <link href="/css/signup.css" rel="stylesheet" type="text/css">
+    <link href="/img/favicon.ico" rel="icon" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
 
 </head>
 
@@ -21,7 +23,7 @@
     <div class="container">
         <div class="box1">
             <figure class="logo">
-                <img class="img" alt="..." src="/img/logo-01.png" />
+                <img class="img" onclick="showEasterEgg()" alt="..." src="/img/logo-01.png" />
             </figure>
             <p>An Online Community for Peer Support</p>
             <p>Talkit, we get it.</p>
@@ -31,7 +33,10 @@
                 <h3>Join us today.</h3>
                 <input id='username' type='text' required="required" placeholder="Username">
                 <input id='email' type='email' required="required" placeholder="Email">
-                <input id='password' type='password' required="required" placeholder="Password">
+                <p id="psw">
+                    <input id='password' type='password' required="required" placeholder="Password">
+                    <i class="bi bi-eye-slash" id="togglePassword"></i>
+                </p>
                 <button id='submit' type="submit"><b>Sign Up</b></button>
                 <p id="errorMsg"></p>
                 <p>
@@ -39,8 +44,14 @@
                 </p>
             </form>
         </div>
+
+        <!--Easter Egg-->
+        <div id="easterEgg">
+            <img class="img" id="eEgg" alt="..." src="/img/team-01.png">
+        </div>
     </div>
     <script src="./js/signup.js"></script>
+    <script src="./js/easter-egg.js"></script>
 </body>
 
 </html>

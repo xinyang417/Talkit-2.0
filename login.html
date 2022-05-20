@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Login</title>
+	<title>Talkit</title>
 
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
@@ -10,9 +10,11 @@
 
 	<!-- Required Link Tags -->
 	<link href="/css/login.css" rel="stylesheet" type="text/css">
+	<link href="/img/favicon.ico" rel="icon" type="image/x-icon" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
 </head>
 
 <body>
@@ -20,7 +22,7 @@
 
 		<div class="branding">
 			<figure class="logo">
-				<img class="img" alt="..." src="/img/logo-01.png" />
+				<img class="img" onclick="showEasterEgg()" alt="..." src="/img/logo-01.png" />
 			</figure>
 			<p>An Online Community for Peer Support</p>
 			<p>Talkit, we get it.</p>
@@ -30,8 +32,11 @@
 			<form action="/auth" method="post" id="loginForm">
 				<h3>Welcome back!</h3>
 				<input type="text" name="username" placeholder="Username" id="username" required>
-				<input type="password" name="password" placeholder="Password" id="password" required>
-				<span class="psw"><a href="#"><b>Forgot password?</b></a></span>
+				<p id="psw">
+					<input type="password" name="password" placeholder="Password" id="password" required>
+					<i class="bi bi-eye-slash" id="togglePassword"></i>
+					<span class="psw"><a href="#"><b>Forgot password?</b></a></span>
+				</p>
 				<input type="submit" value="Login" id="loginbutton">
 				<p id="errorMsg"></p>
 				<p>
@@ -39,9 +44,15 @@
 				</p>
 			</form>
 		</div>
+
+		<!--Easter Egg-->
+		<div id="easterEgg">
+			<img class="img" id="eEgg" alt="..." src="/img/team-01.png">
+		</div>
 	</div>
 
 	<script src="./js/login.js"></script>
+	<script src="./js/easter-egg.js"></script>
 </body>
 
 </html>
