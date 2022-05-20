@@ -289,7 +289,7 @@ function editPost(postID) {
         console.log(imgIDs.length);
         if (imgIDs.length > 0) {
             console.log(imgIDs.length);
-            deleteImage.apply(this, imgIDs);
+            deleteImage(imgIDs);
         } else {
             let v = textArea.value;
             let newText = document.createElement("p");
