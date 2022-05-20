@@ -131,28 +131,22 @@ function displayName() {
 displayName();
 
 
-// Modal Functions
+// Logout Modal Functions
 var modal = document.getElementById('simpleModal');
-
 var modalBtn = document.getElementById('logout');
-
 var goBack = document.getElementById('modal-return');
 
 
-modalBtn.addEventListener('click', showModal);
-goBack.addEventListener('click', closeModal);
-window.addEventListener('click', clickOutside);
-
-function showModal() {
+modalBtn.addEventListener('click', function () {
     modal.style.display = 'block';
-}
-
-function closeModal() {
+});
+goBack.addEventListener('click', function(e) {
+    e.preventDefault();
     modal.style.display = 'none';
-}
-
-function clickOutside(e) {
+});
+window.addEventListener('click', function (e) {
     if (e.target == modal) {
         modal.style.display = 'none';
     }
-}
+});
+
