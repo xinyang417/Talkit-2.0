@@ -10,6 +10,7 @@ function showEasterEgg() {
         imgEE.style.display = 'block';
     }
     setTimeout(function () {
-        document.getElementById('eEgg').style.display = 'none'
+        document.getElementById('eEgg').style.display = 'none';
+        location.reload();
     }, 12000);
 }
