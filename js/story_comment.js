@@ -267,6 +267,7 @@ function editPost(postID) {
         let imgID = images[i].getAttribute('value');
         images[i].addEventListener("click", () => {
             imgIDs.push(imgID);
+            images[i].style.border = "thick solid";
         });
 
     }
@@ -297,7 +298,7 @@ function editPost(postID) {
             xhr.onload = function () {
                 if (this.readyState == XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        
+                        document.getElementById("slideContainer").removeChild(msg);
                         parent.removeChild(cancel);
                         parent.removeChild(submit);
                         window.location.reload();
