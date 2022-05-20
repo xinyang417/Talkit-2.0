@@ -524,7 +524,6 @@ app.post('/delete-post', (req, res) => {
     let sql = `DELETE FROM BBY_01_timeline WHERE postID = ?`;
     database.query(sql, [req.body.postID], (error, results) => {
         if(error) throw error;
-        console.log("data deleted");
         res.send();
         res.end();
     })
