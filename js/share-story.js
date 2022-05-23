@@ -3,7 +3,7 @@
 document.getElementById("post").addEventListener("click", function (e) {
     e.preventDefault();
 
-    
+
     let tz = new Date();
     let offset = tz.getTimezoneOffset() * 60000;
     var dateTime = new Date(tz.getTime() - offset).toISOString().slice(0, 19).replace('T', ' ');
@@ -21,7 +21,7 @@ document.getElementById("post").addEventListener("click", function (e) {
             // 200 means everthing worked
             if (xhr.status === 200) {
                 window.location.assign("/home");
-                
+
             } else {
                 // not a 200
                 console.log(this.status);
@@ -43,19 +43,19 @@ function uploadImages() {
     const imageUpload = document.querySelector('#inputPhoto');
     const formData = new FormData();
     if (imageUpload.files.length > 0) {
-        
-    for (let i = 0; i < imageUpload.files.length; i++) {
-        formData.append("files", imageUpload.files[i]);
-    }
 
-    const options = {
-        method: 'POST',
-        body: formData,
-    };
-    fetch("/upload-timeline-image", options
-    ).catch(function (err) { ("Error:", err) }
-    );
-}
+        for (let i = 0; i < imageUpload.files.length; i++) {
+            formData.append("files", imageUpload.files[i]);
+        }
+
+        const options = {
+            method: 'POST',
+            body: formData,
+        };
+        fetch("/upload-timeline-image", options).catch(function (err) {
+            ("Error:", err)
+        });
+    }
 }
 
 // Logout Modal Functions
@@ -67,11 +67,11 @@ modalBtn.addEventListener('click', function () {
     modal.style.display = 'block';
 });
 
-goBack.addEventListener('click', function(e) {
+goBack.addEventListener('click', function (e) {
     e.preventDefault();
     modal.style.display = 'none';
 });
-window.addEventListener('click', function(e) {
+window.addEventListener('click', function (e) {
     if (e.target == modal) {
         modal.style.display = 'none';
     }
@@ -86,12 +86,12 @@ discardModalBtn.addEventListener('click', function () {
     discardModal.style.display = 'block';
 });
 
-goBack.addEventListener('click', function(e) {
+goBack.addEventListener('click', function (e) {
     e.preventDefault();
-        discardModal.style.display = 'none';
+    discardModal.style.display = 'none';
 });
 
-window.addEventListener('click', function(e) {
+window.addEventListener('click', function (e) {
     if (e.target == discardModal) {
         discardModal.style.display = 'none';
     }

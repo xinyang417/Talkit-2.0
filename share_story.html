@@ -25,16 +25,17 @@
 <body>
     <div class="container">
         <div id="nav">
-            <nav>
-                <button onclick="history.back()"><span class="material-symbols-outlined">
-                        arrow_back
-                    </span></button>
+            <nav id="btns">
+                <button id="discard"><span class="material-symbols-outlined">
+                        close
+                    </span><b>Discard</b></button>
+                <button id="post" type="submit"><b>Post</b></button>
             </nav>
         </div>
 
         <div id="logo">
             <figure class="logo">
-                <img class="img" alt="..." src="/img/logo-01.png" />
+                <img class="img" alt="..." src="/img/logo-03.png" />
             </figure>
         </div>
 
@@ -56,16 +57,16 @@
             <h3><b> Would you like to add a photo?</b></h3>
             <form action="/">
                 <input type="file" name="photo" id="inputPhoto" accept=".jpg, .jpeg, .png" multiple />
-                <button id='delete' type="reset"><b> Delete Photo</b></button>
+                <button id='delete' type="reset"><b>Delete Photo</b> </button>
             </form>
         </div>
 
-        <div id="buttons">
+        <!-- <div id="buttons">
             <div id="btn">
-                <button id="discard" type="submit"><b>Discard</b></button>
-                <button id="post" type="submit"><b>Post</b></button>
+                <button class="discard" type="submit"><b>Discard</b></button>
+                <button class="post" type="submit"><b>Post</b></button>
             </div>
-        </div>
+        </div> -->
 
 
         <div id="footer">
@@ -91,6 +92,7 @@
             </ul>
         </div>
     </div>
+    <p class="copyRight">Privacy · Terms · BBY01 © 2022</p>
 
     <!--Logout Modal-->
     <div id="simpleModal" class="modal">
