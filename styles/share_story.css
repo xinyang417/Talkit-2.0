@@ -12,8 +12,8 @@ body {
         display: grid;
         height: 100vh;
         max-width: 100vw;
-        overflow-y: scroll;
-        grid-template-rows: 1fr 4fr 3fr 1fr;
+        overflow-y: hidden;
+        grid-template-rows: 0.5fr 4fr 3fr 1fr;
         grid-template-columns: 1fr 3fr;
         padding: 0;
         margin: 0;
@@ -90,8 +90,24 @@ body {
     }
 
     #pageName h2 {
-        margin: 2em;
-        font-size: 35px;
+        margin-left: 1em;
+        margin-top: 1em;
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    #nameMsg {
+        color: black;
+        font-size: 16px;
+        margin-left: 2em;
+        margin-top: 1em;
+        margin-bottom: 0;
+    }
+
+    #nameMsg a {
+        color: #9595c5;
+        font-weight: bold;
+        text-decoration: underline;
     }
 
     #text {
@@ -105,7 +121,6 @@ body {
         padding-top: 0;
         text-align: left;
         max-width: 100%;
-        margin: 0 2em 0 2em;
         padding-right: 4em;
     }
 
@@ -120,11 +135,11 @@ body {
         color: black;
         background: #e4e4e4;
         font-family: 'Inter', sans-serif;
-        font-size: 18px;
+        font-size: 16px;
     }
 
     #story {
-        height: 10em !important;
+        height: 18em !important;
         width: 100%;
         margin: 1em 2em 0 2em;
         padding-left: 10px;
@@ -134,7 +149,7 @@ body {
         border-radius: 10px;
         background: #e4e4e4;
         color: black;
-        font-size: 18px;
+        font-size: 16px;
         font-family: 'Inter', sans-serif;
     }
 
@@ -145,11 +160,11 @@ body {
         margin: 0 2em 0 2em;
         background-color: white;
         max-width: 100%;
-        padding: 0 4em 0 4em;
+        padding: 0 2em 0 2em;
     }
 
     #photo h3 b {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     #inputPhoto {
@@ -159,7 +174,7 @@ body {
         border-radius: 10px;
         margin-bottom: 5px;
         font-family: 'Inter', sans-serif;
-        font-size: 18px;
+        font-size: 16px;
     }
 
     #delete {
@@ -188,13 +203,13 @@ body {
         margin: 0 2em 2em 2em;
         border-radius: 0 0 25px 25px;
         background-color: white;
-        padding: 0 4em 4em 0;
+        padding: 0 2em 2em 0;
     }
 
     #btn {
         display: flex;
         justify-content: space-between;
-        width: 40%;
+        width: 35%;
         float: right;
     }
 
@@ -202,11 +217,11 @@ body {
         background-color: white;
         border: 1px solid #909090;
         color: #909090;
-        height: 50px;
+        height: 40px;
         width: 48%;
         text-align: center;
         border-radius: 10px;
-        font-size: 20px;
+        font-size: 18px;
         font-family: 'Inter', sans-serif;
         float: right;
     }
@@ -215,11 +230,11 @@ body {
         background-color: #9595c5;
         border: none;
         color: white;
-        height: 50px;
+        height: 40px;
         width: 48%;
         text-align: center;
         border-radius: 10px;
-        font-size: 20px;
+        font-size: 18px;
         font-family: 'Inter', sans-serif;
         float: right;
     }
@@ -378,6 +393,19 @@ body {
         font-size: 25px;
     }
 
+    #nameMsg {
+        color: black;
+        font-size: 14px;
+        margin-top: 1em;
+        margin-bottom: 0;
+    }
+
+    #nameMsg a {
+        color: #9595c5;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
     #text {
         grid-row: 3 / span 1;
         margin: 1.5em 1em 0em 1em;
@@ -404,9 +432,8 @@ body {
     }
 
     #story {
-        height: 15em !important;
+        height: 20em !important;
         width: 100%;
-        height: 60px;
         margin: 5px 0 12px 0;
         padding-left: 10px;
         padding-top: 10px;
@@ -455,7 +482,7 @@ body {
 
     #buttons {
         grid-row: 5 / span 1;
-        margin: 0em 1em 0em 1em;
+        margin: 1em 1em 0em 1em;
     }
 
     #btn {
@@ -468,12 +495,12 @@ body {
         background-color: white;
         border: 1px solid #909090;
         color: #909090;
-        height: 40px;
+        height: 35px;
         width: 48%;
         margin-top: 22px;
         text-align: center;
         border-radius: 10px;
-        font-size: 18px;
+        font-size: 16px;
         font-family: 'Inter', sans-serif;
     }
 
@@ -481,12 +508,12 @@ body {
         background-color: #9595c5;
         border: none;
         color: white;
-        height: 40px;
+        height: 35px;
         width: 48%;
         margin-top: 22px;
         text-align: center;
         border-radius: 10px;
-        font-size: 18px;
+        font-size: 16px;
         font-family: 'Inter', sans-serif;
     }
 
