@@ -61,11 +61,15 @@ body {
         margin: 1em 0 0 2em;
     }
 
-    img {
+    #logo img {
         width: 70%;
         margin-left: 0;
         margin-right: auto;
         display: block;
+    }
+
+    img {
+        width: 100%;
     }
 
     #pageName {
