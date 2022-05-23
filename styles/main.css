@@ -93,15 +93,15 @@ body {
 
     #pageName {
         grid-row: 1 / span 1;
-        margin: 2em 2em 0 2em;
+        margin: 1em 2em 0 2em;
         background-color: white;
         border-radius: 25px 25px 0 0;
         padding: 4em 4em 0 4em;
     }
 
     #pageName h2 {
-        margin: 0 0 1.5em 0;
-        font-size: 35px;
+        margin: 0 0 1em 0;
+        font-size: 30px;
     }
 
     .story-list {
@@ -111,7 +111,7 @@ body {
         border-radius: 0 0 25px 25px;
         padding: 2em 4em 2em 4em;
         overflow-y: scroll;
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .post {
@@ -158,12 +158,16 @@ body {
         background-color: #e4e4e4;
         color: #909090;
         font-family: 'Inter', sans-serif;
-        font-size: 18px;
+        font-size: 16px;
         height: 40px;
         border-radius: 20px;
         border: none;
         padding-left: 20px;
         margin-bottom: 1em;
+    }
+
+    #search-icon .material-symbols-outlined {
+        display: block;
     }
 
     #bottomMenu {

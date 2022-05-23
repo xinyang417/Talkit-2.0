@@ -248,7 +248,7 @@ function editPost(postID) {
     let imgUpload = document.getElementById("inputPhoto");
     let msg = document.createElement("p");
 
-    msg.innerHTML = "Click the images you want to delete";
+    msg.innerHTML = "Select the images you want to delete and click Save.";
     msg.setAttribute("id", "msgDelete");
     document.getElementById("slideContainer").appendChild(msg);
 
