@@ -110,6 +110,7 @@ body {
         grid-row: 2 / span 1;
         grid-column: 2 / span 1;
         margin: 0 2em 0 2em;
+        padding-top: 2em;
         background-color: white;
     }
 
@@ -135,7 +136,7 @@ body {
     }
 
     #story {
-        height: 18em !important;
+        height: 17em !important;
         width: 100%;
         margin: 1em 2em 0 2em;
         padding-left: 10px;
