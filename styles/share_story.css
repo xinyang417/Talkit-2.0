@@ -33,39 +33,35 @@ body {
     #footer ul {
         margin-bottom: 1.5em;
         padding: 0;
-        bottom: 0;
+        top: 12em;
         margin: 0em 1em 0em 1em;
         max-width: 100%;
         position: absolute;
         list-style-type: none;
-        top: 15em;
     }
 
     ul li {
         padding: 0.5em 3em 0.5em 3em;
         font-size: 18px;
-        border-radius: 10px;
-        list-style-type: none;
     }
 
     ul li a {
-        text-decoration: none;
         color: black;
+        text-decoration: none;
+        margin: 0;
     }
 
-    ul li a:hover {
+    ul li a:hover,
+    li .active {
         color: #9595c5;
         text-decoration: none;
     }
 
-    .material-symbols-outlined {
-        display: none;
-    }
 
     #logo {
         grid-row: 1 / span 1;
         grid-column: 1 / span 1;
-        margin: 4em 0 0 2em;
+        margin: 2em 0 0 2em;
     }
 
     img {
@@ -247,17 +243,23 @@ body {
     #bottomMenu {
         grid-row: 3 / span 1;
         grid-column: 1 / span 1;
-        margin: 6em 2em 0em 2em;
+        margin: 0 2em 0em 2em;
     }
 
     #bottomMenu ul {
-        margin-bottom: 1.5em;
         padding: 0;
         margin: 0em 1em 0em 1em;
         max-width: 100%;
         position: absolute;
-        bottom: 4em;
         list-style-type: none;
+        bottom: 2em;
+    }
+
+    .material-symbols-outlined {
+        display: inline-flex;
+        vertical-align: top;
+        padding-right: 15px;
+        font-weight: bold !important;
     }
 
     #modal {
@@ -381,6 +383,14 @@ body {
         color: #909090;
     }
 
+    #bottomMenu .material-symbols-outlined {
+        display: none;
+    }
+
+    #bottomMenu {
+        height: 0;
+        width: 0;
+    }
 
     #pageName {
         grid-row: 2 / span 1;
@@ -524,7 +534,7 @@ body {
 
     #footer ul {
         margin-bottom: 1.5em;
-        padding: 0;
+        padding: 0 0 1.5em 0;
         bottom: 0;
         margin: 0em 1em 0em 1em;
         max-width: 100%;

@@ -38,38 +38,35 @@ body {
     #footer ul {
         margin-bottom: 1.5em;
         padding: 0;
-        bottom: 0;
+        top: 12em;
         margin: 0em 1em 0em 1em;
         max-width: 100%;
         position: absolute;
         list-style-type: none;
-        top: 15em;
     }
 
     ul li {
         padding: 0.5em 3em 0.5em 3em;
         font-size: 18px;
-        border-radius: 10px;
-        list-style-type: none;
     }
 
     ul li a {
-        text-decoration: none;
         color: black;
+        text-decoration: none;
+        margin: 0;
     }
 
-    ul li a:hover {
+    ul li a:hover,
+    li .active {
         color: #9595c5;
+        text-decoration: none;
     }
 
-    .material-symbols-outlined {
-        display: none !important;
-    }
 
     #logo {
         grid-row: 1 / span 1;
         grid-column: 1 / span 1;
-        margin: 4em 0 0 2em;
+        margin: 2em 0 0 2em;
     }
 
     img {
@@ -85,8 +82,8 @@ body {
     }
 
     #pageName h2 {
-        margin: 2em;
-        font-size: 35px;
+        margin: 1em;
+        font-size: 30px;
         font-weight: bold;
     }
 
@@ -102,10 +99,11 @@ body {
     .pic-holder {
         text-align: center;
         position: relative;
-        margin-left: 4em;
+        margin-left: auto;
+        margin-right: auto;
         border-radius: 50%;
-        width: 150px;
-        height: 150px;
+        width: 220px;
+        height: 220px;
         overflow: hidden;
         display: flex;
         justify-content: center;
@@ -120,31 +118,12 @@ body {
         object-position: center;
     }
 
-    .pic-holder .upload-file-block,
-    .pic-holder .upload-loader {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        background-color: rgba(90, 92, 105, 0.7);
-        color: white;
-        opacity: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    #profilePic {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    #image-upload {
-        opacity: 50%;
-    }
-
-    .pic-holder .upload-file-block {
-        cursor: pointer;
-        font-size: 50px !important;
-    }
-
-    .upload-file-block .material-symbols-outlined {
-        font-size: 60px !important;
-    }
 
     .edit {
         text-align: center;
@@ -155,7 +134,7 @@ body {
         padding: 0;
         bottom: 0;
         position: absolute;
-        right: 2em;
+        right: 1em;
         bottom: 4em;
     }
 
@@ -164,21 +143,14 @@ body {
     }
 
     .profile-update {
-        grid-row: 2 / span 3;
+        grid-row: 3 / span 1;
         grid-column: 2 / span 1;
-        margin: 2em;
+        margin: 0 2em 2em 2em;
         background-color: white;
-        padding-top: 10em;
+        padding-top: 2em;
         border-radius: 0 0 25px 25px;
     }
 
-    #profile-form {
-        padding-top: 0;
-        text-align: left;
-        max-width: 100%;
-        margin: 0 2em 0 2em;
-        padding-right: 4em;
-    }
 
     label {
         padding-top: 0;
@@ -192,7 +164,7 @@ body {
         padding-top: 0;
         text-align: left;
         max-width: 100%;
-        margin: 1em 4em 0.3em 4em;
+        margin: 1em 4em 0.3em 2em;
         font-weight: bold;
         font-size: 18px;
     }
@@ -201,7 +173,7 @@ body {
         padding-top: 0;
         text-align: left;
         max-width: 100%;
-        margin: 0em 4em 0em 4em;
+        margin: 0em 4em 0em 2em;
         font-size: 18px;
     }
 
@@ -209,7 +181,7 @@ body {
         padding-top: 0;
         text-align: left;
         max-width: 100%;
-        margin: 1em 4em 0.3em 4em;
+        margin: 1em 4em 0.3em 2em;
         font-weight: bold;
         font-size: 18px;
     }
@@ -218,24 +190,30 @@ body {
         padding-top: 0;
         text-align: left;
         max-width: 100%;
-        margin: 0em 4em 0em 4em;
+        margin: 0em 4em 0em 2em;
         font-size: 18px;
     }
 
     #bottomMenu {
         grid-row: 3 / span 1;
         grid-column: 1 / span 1;
-        margin: 6em 2em 0em 2em;
+        margin: 0 2em 0em 2em;
     }
 
     #bottomMenu ul {
-        margin-bottom: 1.5em;
         padding: 0;
         margin: 0em 1em 0em 1em;
         max-width: 100%;
         position: absolute;
-        bottom: 4em;
         list-style-type: none;
+        bottom: 2em;
+    }
+
+    .material-symbols-outlined {
+        display: inline-flex;
+        vertical-align: top;
+        padding-right: 15px;
+        font-weight: bold !important;
     }
 
     #modal {
@@ -381,7 +359,7 @@ body {
 
     .profile-pic-wrapper {
         grid-row: 3 / span 1;
-        margin: 0 1em 0 1em;
+        margin: 2.5em 1em 0 1em;
         position: relative;
         display: flex;
         flex-direction: column;
@@ -392,8 +370,8 @@ body {
         text-align: center;
         position: relative;
         border-radius: 50%;
-        width: 100px;
-        height: 100px;
+        width: 200px;
+        height: 200px;
         overflow: hidden;
         display: flex;
         justify-content: center;
@@ -404,8 +382,10 @@ body {
         text-align: center;
         position: relative;
         border-radius: 50%;
-        width: 100px;
-        height: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 200px;
+        height: 200px;
         overflow: hidden;
         display: flex;
         justify-content: center;
@@ -449,19 +429,6 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    #image-upload {
-        height: 0px;
-    }
-
-    .pic-holder .upload-file-block {
-        cursor: pointer;
-        font-size: 50px !important;
-    }
-
-    .upload-file-block .material-symbols-outlined {
-        font-size: 60px !important;
     }
 
     .profile-update {

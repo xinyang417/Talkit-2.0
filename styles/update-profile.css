@@ -37,43 +37,39 @@ body {
     #footer ul {
         margin-bottom: 1.5em;
         padding: 0;
+        top: 12em;
         margin: 0em 1em 0em 1em;
         max-width: 100%;
         position: absolute;
-        top: 15em;
         list-style-type: none;
     }
 
     ul li {
         padding: 0.5em 3em 0.5em 3em;
         font-size: 18px;
-        border-radius: 10px;
-        list-style-type: none;
     }
 
     ul li a {
-        text-decoration: none;
         color: black;
+        text-decoration: none;
+        margin: 0;
     }
 
-    ul li a:hover {
+    ul li a:hover,
+    li .active {
         color: #9595c5;
-        cursor: pointer;
+        text-decoration: none;
     }
 
-    ul .material-symbols-outlined {
-        display: none !important;
-    }
-
-    #back {
-        display: none;
-    }
 
     #logo {
         grid-row: 1 / span 1;
         grid-column: 1 / span 1;
-        margin: 4em 0 0 2em;
-        position: relative;
+        margin: 2em 0 0 2em;
+    }
+
+    #back {
+        display: none;
     }
 
     #logo img {
@@ -90,8 +86,8 @@ body {
     }
 
     #pageName h2 {
-        margin: 2em 0 1em 2em;
-        font-size: 35px;
+        margin: 1em 0 1em 1em;
+        font-size: 30px;
     }
 
     .profile-pic-wrapper {
@@ -104,10 +100,10 @@ body {
     .pic-holder {
         text-align: center;
         position: relative;
-        margin-left: 4em;
+        margin-left: 2em;
         border-radius: 50%;
-        width: 100px;
-        height: 100px;
+        width: 150px;
+        height: 150px;
         overflow: hidden;
         display: flex;
         justify-content: center;
@@ -167,7 +163,7 @@ body {
     .profile-update {
         grid-row: 2 / span 3;
         grid-column: 2 / span 1;
-        margin: 8em 2em 2em 2em;
+        margin: 11em 2em 2em 2em;
         background-color: white;
         border-radius: 0 0 25px 25px;
     }
@@ -176,7 +172,7 @@ body {
         padding-top: 0;
         text-align: left;
         max-width: 100%;
-        margin: 1em 4em 0 4em;
+        margin: 1em 2em 0 2em;
     }
 
     #email,
@@ -233,15 +229,15 @@ body {
     .buttons {
         display: flex;
         justify-content: space-between;
-        bottom: 4em;
-        right: 6em;
+        width: 24%;
         position: absolute;
-        width: 30%;
+        right: 4em;
+        bottom: 4em;
     }
 
     .cancel {
-        height: 50px;
-        width: 46%;
+        height: 40px;
+        width: 48%;
         text-align: center;
         border-radius: 10px;
         font-size: 18px;
@@ -256,8 +252,8 @@ body {
         background-color: #9595c5;
         border: none;
         color: white;
-        height: 50px;
-        width: 46%;
+        height: 40px;
+        width: 48%;
         text-align: center;
         border-radius: 10px;
         font-size: 18px;
@@ -277,17 +273,23 @@ body {
     #bottomMenu {
         grid-row: 3 / span 1;
         grid-column: 1 / span 1;
-        margin-left: 2em;
+        margin: 0 2em 0em 2em;
     }
 
     #bottomMenu ul {
-        margin-bottom: 1.5em;
         padding: 0;
         margin: 0em 1em 0em 1em;
         max-width: 100%;
         position: absolute;
-        bottom: 4em;
         list-style-type: none;
+        bottom: 2em;
+    }
+
+    ul .material-symbols-outlined {
+        display: inline-flex;
+        vertical-align: top;
+        padding-right: 15px;
+        font-weight: bold !important;
     }
 
     #modal {
