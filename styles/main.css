@@ -27,15 +27,13 @@ body {
     #footer {
         grid-row: 2 / span 1;
         grid-column: 1 / span 1;
-        border-top: 0.5px solid #e4e4e4;
         margin-left: 2em;
     }
 
 
     #footer ul {
-        margin-bottom: 1.5em;
         padding: 0;
-        top: 12em;
+        top: 10em;
         margin: 0em 1em 0em 1em;
         max-width: 100%;
         position: absolute;
@@ -43,7 +41,7 @@ body {
     }
 
     ul li {
-        padding: 0.5em 3em 0.5em 3em;
+        padding: 0.5em 0 0.5em 0;
         font-size: 18px;
     }
 
@@ -62,12 +60,19 @@ body {
     #logo {
         grid-row: 1 / span 1;
         grid-column: 1 / span 1;
-        margin: 2em 0 0 2em;
+        margin: 1em 0 0 2em;
     }
+
+    #logo img {
+        width: 70%;
+        margin-left: 0;
+        margin-right: auto;
+        display: block;
+    }
+
 
     img {
         width: 100%;
-        z-index: 0;
     }
 
     #nav {
@@ -85,7 +90,7 @@ body {
         display: none;
     }
 
-    .material-symbols-outlined {
+    .post .material-symbols-outlined {
         display: none;
     }
 
@@ -94,10 +99,10 @@ body {
 
     #pageName {
         grid-row: 1 / span 1;
-        margin: 1em 2em 0 2em;
+        margin: 2em 2em 0 2em;
         background-color: white;
         border-radius: 25px 25px 0 0;
-        padding: 4em 4em 0 4em;
+        padding: 2em 2em 0 2em;
     }
 
     #pageName h2 {
@@ -107,10 +112,10 @@ body {
 
     .story-list {
         grid-row: 2 / 5;
-        margin: 0em 32px 2em 32px;
+        margin: 0em 2em 2em 2em;
         background-color: white;
         border-radius: 0 0 25px 25px;
-        padding: 2em 4em 2em 4em;
+        padding: 2em 2em 2em 2em;
         overflow-y: scroll;
         font-size: 16px;
     }
@@ -179,18 +184,29 @@ body {
 
     #bottomMenu ul {
         padding: 0;
-        margin: 0em 1em 0em 1em;
+        margin: 1em;
         max-width: 100%;
         position: absolute;
         list-style-type: none;
-        bottom: 2em;
+        bottom: 1em;
     }
 
-    ul .material-symbols-outlined {
+    .material-symbols-outlined {
         display: inline-flex;
         vertical-align: top;
         padding-right: 15px;
-        font-weight: bold !important;
+        font-weight: bold;
+    }
+
+    .copyRight,
+    .copyRight a {
+        font-size: 12px;
+        color: #7e7d7d;
+        background-color: #DDDDF0;
+        text-decoration: none;
+        text-align: center;
+        margin: 0;
+        padding-bottom: 10px;
     }
 
     #modal {
