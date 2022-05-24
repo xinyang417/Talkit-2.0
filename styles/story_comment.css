@@ -810,10 +810,6 @@ body {
         display: none;
     }
 
-    #easterEgg {
-        display: none;
-    }
-
     #modal {
         display: none;
         position: fixed;
