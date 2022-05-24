@@ -130,7 +130,7 @@ function displayProfile() {
                     console.log("Error!");
                 }
             } else {
-                console.log(this.stauts);
+                console.log(this.status);
             }
         } else {
             console.log("ERROR", this.status);

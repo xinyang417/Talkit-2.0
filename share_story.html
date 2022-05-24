@@ -26,7 +26,7 @@
     <div class="container">
         <div id="nav">
             <nav id="btns">
-                <button id="discard"><span class="material-symbols-outlined">
+                <button id="discard" value="/home"><span class="material-symbols-outlined">
                         close
                     </span><b>Discard</b></button>
                 <button id="post" type="submit"><b>Post</b></button>
@@ -63,9 +63,9 @@
 
         <div id="footer">
             <ul>
-                <li class="discardModal"><a href="/home"><span class="material-symbols-outlined">home</span><b>Home</b></a> </li>
+                <li class="discardModal" value="/home"><a href="#"><span class="material-symbols-outlined">home</span><b>Home</b></a> </li>
                 <li class="discardModal"><a href="#"><span class="material-symbols-outlined">bookmark</span><b>Bookmark</b></a> </li>
-                <li class="discardModal"><a href="/share-story" class="active"><span class="material-symbols-outlined">add_box</span><b>Share
+                <li class="discardModal" value="/share-story"><a href="#" class="active"><span class="material-symbols-outlined">add_box</span><b>Share
                             Story</b></a>
                 </li>
                 <li class="discardModal"><a href="#"><span class="material-symbols-outlined">mail</span><b>Messages</b></a> </li>
@@ -75,7 +75,7 @@
         </div>
         <div id="bottomMenu">
             <ul>
-                <li id="dashboard"><a href="/admin"><span
+                <li id="dashboard" class="discardModal" value="/admin"><a href="#"><span
                             class="material-symbols-outlined">dashboard</span><b>Dashboard</b></a></li>
                 <li><a href="/profile"><span class="material-symbols-outlined">account_circle</span><b>Profile</b></a>
                 </li>
@@ -105,7 +105,7 @@
             <h5>Are you sure you want to discard this draft?</h5>
             <div class="buttons">
                 <button id="modal-return-cancel">Cancel</button>
-                <form action="/home"><button id="modal-return-discard">Discard</button></form>
+                <form id="discard-modal-form"><button id="modal-return-discard">Discard</button></form>
             </div>
         </div>
     </div>
