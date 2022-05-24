@@ -224,26 +224,6 @@ document.getElementById("add").addEventListener("click", (e) => {
         }
     }
 }, queryString);
-    // const xhr = new XMLHttpRequest();
-    // xhr.onload = function () {
-    //     if (this.readyState == XMLHttpRequest.DONE) {
-    //         if (xhr.status === 200) {
-    //             let data = xhr.responseText;
-    //             let jsonResponse = JSON.parse(data);
-    //             document.getElementById("status").innerHTML = jsonResponse["msg"];
-    //             getUsers();
-    //         } else {
-    //             console.log(this.status);
-    //         }
-    //     } else {
-    //         console.log("ERROR", this.status);
-    //     }
-    // }
-    // xhr.open("POST", "/add-user");
-    // xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    // xhr.send("username=" + formData.username + "&email=" + formData.email + "&password=" + formData.password +
-    //     "&isAdmin=" + formData.isAdmin);
 })
 
 document.getElementById("delete").addEventListener("click", (e) => {

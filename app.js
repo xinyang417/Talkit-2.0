@@ -747,7 +747,7 @@ app.get('/profile', (req, res) => {
     }
 });
 
-app.get('/get-displayname', (req, res) => {
+app.get('/get-profile', (req, res) => {
     // If the user is loggedin
     if (req.session.loggedin) {
 

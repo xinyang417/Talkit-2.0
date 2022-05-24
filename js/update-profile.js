@@ -113,7 +113,7 @@ function displayUsername() {
 }
 displayUsername();
 
-function displayName() {
+function displayProfile() {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE) {
@@ -125,6 +125,7 @@ function displayName() {
                     let about = row.about;
                     document.getElementById("displayName").setAttribute("value", name);
                     document.getElementById("about").innerHTML = about;
+                    document.getElementById("profilePic").src = "/img/" + row.profilePic;
                 } else {
                     console.log("Error!");
                 }
@@ -135,11 +136,11 @@ function displayName() {
             console.log("ERROR", this.status);
         }
     }
-    xhr.open("GET", "/get-displayname");
+    xhr.open("GET", "/get-profile");
     xhr.send();
 }
 
-displayName();
+displayProfile();
 
 
 // Logout Modal Functions
