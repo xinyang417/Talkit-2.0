@@ -224,7 +224,7 @@ document.getElementById("add").addEventListener("click", (e) => {
 }, queryString);
 })
 
-document.getElementById("delete").addEventListener("click", (e) => {
+document.getElementById("modal-succuess-delete-user").addEventListener("click", (e) => {
     e.preventDefault();
     let formData = {
         id: document.getElementById("deleteID").value,
@@ -239,6 +239,8 @@ document.getElementById("delete").addEventListener("click", (e) => {
                 let data = xhr.responseText;
                 let jsonResponse = JSON.parse(data);
                 document.getElementById("status").innerHTML = jsonResponse["msg"];
+                var deleteUserModal = document.getElementById('simpleModal2');
+                deleteUserModal.style.display = 'none';
             } else {
                 console.log(this.status);
             }
@@ -268,5 +270,25 @@ goBack.addEventListener('click', function (e) {
 window.addEventListener('click', function (e) {
     if (e.target == modal) {
         modal.style.display = 'none';
+    }
+});
+
+// Delete User Modal Functions
+var deleteUserModal = document.getElementById('simpleModal2');
+var deleteUserBtn = document.getElementById('delete');
+var goBack = document.getElementById('modal-return-delete-user');
+
+deleteUserBtn.addEventListener('click', function() {
+    deleteUserModal.style.display = 'block';
+});
+
+goBack.addEventListener('click', function(e) {
+    e.preventDefault();
+    deleteUserModal.style.display = 'none';
+});
+
+window.addEventListener('click', function (e) {
+    if (e.target == deleteUserModal) {
+        deleteUserModal.style.display = 'none';
     }
 });
