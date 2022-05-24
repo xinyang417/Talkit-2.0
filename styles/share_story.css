@@ -390,8 +390,12 @@ body {
         padding: 0;
     }
 
-    .material-symbols-outlined {
+    #nav .material-symbols-outlined {
         margin-top: 30px;
+        font-size: 30px !important;
+    }
+
+    .material-symbols-outlined {
         font-size: 30px !important;
         font-weight: bold;
         color: #909090;
