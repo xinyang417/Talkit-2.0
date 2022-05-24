@@ -1,6 +1,6 @@
 "use strict";
 const upLoadForm = document.getElementById("upload-images-form");
-upLoadForm.addEventListener("submit", uploadImages);
+// upLoadForm.addEventListener("image-upload", uploadImages);
 
 function uploadImages(e) {
     e.preventDefault();
@@ -19,6 +19,14 @@ function uploadImages(e) {
         ("Error:", err)
     });
 }
+
+document.getElementById("image-upload").onchange = (e) => {
+    document.getElementById("profilePic").src = URL.createObjectURL(e.target.files[0]);
+}
+
+document.getElementById("delete").addEventListener("click", () => {
+    document.getElementById("profilePic").src = "/img/logo-04.png";
+})
 
 const togglePassword = document.querySelector("#togglePassword");
 const password = document.querySelector("#password");
@@ -73,7 +81,7 @@ document.getElementById("updateSave").addEventListener("click", function (e) {
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(queryString);
-
+    uploadImages(e);
 });
 
 document.getElementById("updateCancel").addEventListener("click", (e) => {

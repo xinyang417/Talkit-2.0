@@ -803,13 +803,16 @@ app.post('/upload-images', upload.array("files"), (req, res) => {
     const sql = `UPDATE bby_01_profile
                 SET profilePic = ?
                 WHERE userID = ?`;
-    database.query(sql, [req.files[0].filename, req.session.userid], (error, results) => {
-        if (error) console.log(error);
-        res.send({
-            status: "success",
-            rows: results
+    if (req.files.length > 0) {
+        database.query(sql, [req.files[0].filename, req.session.userid], (error, results) => {
+            if (error) console.log(error);
+            
+            res.send({
+                status: "success",
+                rows: results
+            });
         });
-    });
+    }
 });
 
 

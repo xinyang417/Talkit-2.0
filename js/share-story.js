@@ -1,8 +1,31 @@
 "use strict";
 
+function getDisplayName() {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE){
+            if (xhr.status === 200) {
+                let data = JSON.parse(this.responseText);
+                if (data.status == "success") {
+                    let dName = data.rows[0].displayName
+                    document.getElementById("displayName").innerHTML = dName;
+                } else {
+                    console.log("Error!");
+                }
+            } else {
+                console.log(this.status);
+            }
+        } else {
+            console.log("Error", this.status);
+        }
+    }
+    xhr.open("GET", "/get-displayname");
+    xhr.send();
+}
+getDisplayName();
+
 document.getElementById("post").addEventListener("click", function (e) {
     e.preventDefault();
-
 
     let tz = new Date();
     let offset = tz.getTimezoneOffset() * 60000;
@@ -47,7 +70,7 @@ function uploadImages() {
         for (let i = 0; i < imageUpload.files.length; i++) {
             formData.append("files", imageUpload.files[i]);
         }
-
+        
         const options = {
             method: 'POST',
             body: formData,
