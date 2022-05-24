@@ -148,23 +148,24 @@ body {
         font-size: 60px !important;
     }
 
-    #submit {
-        width: 150px;
-        background-color: white;
-        color: #9595c5;
-        text-decoration: underline;
-        font-size: 14px;
-        float: left;
-        border: none;
-        margin-right: 2em;
-    }
-
     .profile-update {
         grid-row: 2 / span 3;
         grid-column: 2 / span 1;
         margin: 10em 2em 2em 2em;
         background-color: white;
         border-radius: 0 0 25px 25px;
+    }
+
+    #delete {
+        background-color: white;
+        color: #9595c5;
+        border-radius: 10px;
+        border: none;
+        font-size: 14px;
+    }
+
+    #delete:hover {
+        text-decoration: underline;
     }
 
     #profile-form {
@@ -377,21 +378,6 @@ body {
     #modal-succuess:hover {
         box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.108), 0 3px 5px 0 rgba(0, 0, 0, 0.076);
     }
-
-    #easterEgg {
-        display: none;
-        max-width: 100%;
-        max-height: 100%;
-        bottom: 0;
-        left: 0;
-        margin: auto;
-        position: fixed;
-        right: 0;
-        top: 0;
-        -o-object-fit: contain;
-        object-fit: contain;
-        z-index: 1;
-    }
 }
 
 
@@ -417,7 +403,7 @@ body {
         max-height: 0;
     }
 
-    img {
+    .img {
         display: none;
     }
 
@@ -499,18 +485,6 @@ body {
         justify-content: center;
     }
 
-    #submit {
-        width: 100px;
-        background-color: white;
-        color: #9595c5;
-        text-decoration: underline;
-        font-size: 14px;
-        padding: 0;
-        border: none;
-        float: right;
-    }
-
-
     .pic-holder .pic {
         height: 100%;
         width: 100%;
@@ -529,7 +503,7 @@ body {
         width: 100%;
         background-color: rgba(90, 92, 105, 0.7);
         color: white;
-        opacity: 100%;
+        opacity: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -553,6 +527,16 @@ body {
 
     .upload-file-block .material-symbols-outlined {
         font-size: 60px !important;
+        font-weight: normal !important;
+    }
+
+    #delete {
+        background-color: white;
+        color: #9595c5;
+        margin-left: 0;
+        margin-right: auto;
+        border: none;
+        font-size: 13px;
     }
 
     .profile-update {
@@ -628,10 +612,6 @@ body {
     }
 
     #bottomMenu {
-        display: none;
-    }
-
-    #easterEgg {
         display: none;
     }
 
