@@ -70,11 +70,6 @@ body {
         display: block;
     }
 
-
-    img {
-        width: 100%;
-    }
-
     #nav {
         max-width: 0;
         max-height: 0;
@@ -115,7 +110,7 @@ body {
         margin: 0em 2em 2em 2em;
         background-color: white;
         border-radius: 0 0 25px 25px;
-        padding: 2em 2em 2em 2em;
+        padding: 1em 2em 2em 2em;
         overflow-y: scroll;
         font-size: 16px;
     }
@@ -123,10 +118,11 @@ body {
     .post {
         display: flex;
         place-items: center;
+        height: 80px;
     }
 
     .post p {
-        margin-bottom: 1em;
+        margin-bottom: 0;
         margin-left: 1em;
     }
 
@@ -149,8 +145,9 @@ body {
     .profilePic {
         max-width: 55px;
         max-height: 55px;
+        height: 100%;
+        width: 100%;
         float: left;
-        margin: 0 0 1em 0;
         border-radius: 100%;
         z-index: 1;
     }
@@ -595,5 +592,7 @@ body {
 
     #easterEgg {
         display: none;
+        height: 0;
+        width: 0;
     }
 }
