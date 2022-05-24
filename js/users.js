@@ -1,5 +1,25 @@
 "use strict";
 
+function ajaxPOST(url, callback, data) {
+    let params = typeof data == 'string' ? data : Object.keys(data).map(
+        function (k) {
+            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+        }
+    ).join('&');
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+            callback(this.responseText);
+        } else {
+            console.log(this.status);
+        }
+    }
+    xhr.open("POST", url);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(params);
+}
+
 function getUsers() {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -159,27 +179,69 @@ document.getElementById("add").addEventListener("click", (e) => {
     document.getElementById("email").value = "";
     document.getElementById("password").value = "";
     document.getElementById("isAdmin").value = "";
+    let queryString = "username=" + formData.username + "&email=" + formData.email + "&password=" +
+    formData.password + "&isAdmin=" + formData.isAdmin;
+    ajaxPOST("/check-account", function (data) {
+    if (data) {
+        let dataParsed = JSON.parse(data);
 
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-        if (this.readyState == XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                getUsers();
-                let data = xhr.responseText;
-                let jsonResponse = JSON.parse(data);
-                document.getElementById("status").innerHTML = jsonResponse["msg"];
-            } else {
-                console.log(this.status);
-            }
+        if (dataParsed.status == "email existed") {
+            document.getElementById("status").innerHTML = dataParsed.msg;
+            document.getElementById("status").style.color = "red";
+        } else if (dataParsed.status == "invalid username") {
+            document.getElementById("status").innerHTML = dataParsed.msg;
+            document.getElementById("status").style.color = "red";
+        } else if (dataParsed.status == "empty") {
+            document.getElementById("status").style.color = "red";
+            document.getElementById("status").innerHTML = dataParsed.msg;
+            
         } else {
-            console.log("ERROR", this.status);
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                if (this.readyState == XMLHttpRequest.DONE) {
+                    // 200 means everthing worked
+                    if (xhr.status === 200) {
+                        // window.location.assign("/profile");
+                        let data = xhr.responseText;
+                        let jsonResponse = JSON.parse(data);
+                        document.getElementById("status").innerHTML = jsonResponse["msg"];
+                        getUsers();
+                    } else {
+                        // not a 200, could be anything (404, 500, etc.)
+                        console.log(this.status);
+                    }
+                } else {
+                    console.log("ERROR", this.status);
+                }
+            }
+            xhr.open("POST", "/add-user");
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send("username=" + formData.username + "&email=" + formData.email + "&password=" + formData
+                .password + "&isAdmin=" + formData.isAdmin);
         }
     }
-    xhr.open("POST", "/add-user");
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send("username=" + formData.username + "&email=" + formData.email + "&password=" + formData.password +
-        "&isAdmin=" + formData.isAdmin);
+}, queryString);
+    // const xhr = new XMLHttpRequest();
+    // xhr.onload = function () {
+    //     if (this.readyState == XMLHttpRequest.DONE) {
+    //         if (xhr.status === 200) {
+    //             let data = xhr.responseText;
+    //             let jsonResponse = JSON.parse(data);
+    //             document.getElementById("status").innerHTML = jsonResponse["msg"];
+    //             getUsers();
+    //         } else {
+    //             console.log(this.status);
+    //         }
+    //     } else {
+    //         console.log("ERROR", this.status);
+    //     }
+    // }
+    // xhr.open("POST", "/add-user");
+    // xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    // xhr.send("username=" + formData.username + "&email=" + formData.email + "&password=" + formData.password +
+    //     "&isAdmin=" + formData.isAdmin);
 })
 
 document.getElementById("delete").addEventListener("click", (e) => {

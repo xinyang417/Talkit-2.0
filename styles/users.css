@@ -231,7 +231,7 @@ body {
   }
 
   #status {
-    color: green !important;
+    color: green;
     margin-left: 4em;
   }
 
