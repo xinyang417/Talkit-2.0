@@ -66,9 +66,7 @@ function setDefaultDisplayName(email){
 }
 
 function edit(e) {
-    console.log("e: ", e);
     let spanText = e.target.innerHTML;
-    console.log("spanText:", spanText);
     let parent = e.target.parentNode;
     let password = parent.parentNode.querySelector(".password");
     let email = parent.parentNode.querySelector(".email");
