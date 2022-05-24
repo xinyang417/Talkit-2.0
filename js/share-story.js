@@ -105,8 +105,10 @@ var discardModal = document.getElementById('simpleModal2');
 var discardModalBtn = document.getElementById('discard');
 var goBack = document.getElementById('modal-return-cancel');
 
+
 discardModalBtn.addEventListener('click', function () {
     discardModal.style.display = 'block';
+
 });
 
 goBack.addEventListener('click', function (e) {
@@ -119,3 +121,16 @@ window.addEventListener('click', function (e) {
         discardModal.style.display = 'none';
     }
 });
+
+var discardModal2 = document.getElementsByClassName('discardModal');
+
+for (var i = 0; i < discardModal2.length; i++) {
+    discardModal2[i].setAttribute("onclick", `pageRedirect('${discardModal2[i].getAttribute("value")}')`)
+}
+
+function pageRedirect(v) {
+    document.getElementById("discard-modal-form").setAttribute("action", v);
+    discardModal.style.display = 'block';
+}
+
+
