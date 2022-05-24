@@ -166,10 +166,11 @@ app.post('/check-account', (req, res) => {
     let username = req.body.username;
     let email = req.body.email;
     let password = req.body.password;
+    let isAdmin = req.body.isAdmin;
     let checkUsername = false;
     let checkEmail = false;
 
-    if (username && password && email) {
+    if (username && password && email && isAdmin) {
         database.query('SELECT * from bby_01_user', (error, results) => {
             if (error) throw error
             for (let i = 0; i < results.length; i++) {
@@ -194,6 +195,12 @@ app.post('/check-account', (req, res) => {
                     status: "invalid username",
                     msg: "Username already in use."
                 });
+            } else if (req.body.isAdmin < 0 || req.body.isAdmin > 1){
+                console.log(req.body.isAdmin);
+                res.send({
+                    status: "invalid admin code",
+                    msg: "Admin code has to be 0 for regular or 1 for admin."
+                })
             } else {
                 res.send({
                     status: "success",

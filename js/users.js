@@ -184,18 +184,13 @@ document.getElementById("add").addEventListener("click", (e) => {
     ajaxPOST("/check-account", function (data) {
     if (data) {
         let dataParsed = JSON.parse(data);
-
-        if (dataParsed.status == "email existed") {
+        let dataStatus = ["email existed", 'invalid username', 'invalid admin code', 'empty'];
+        if (dataStatus.includes(dataParsed.status)) {
             document.getElementById("status").innerHTML = dataParsed.msg;
-            document.getElementById("status").style.color = "red";
-        } else if (dataParsed.status == "invalid username") {
-            document.getElementById("status").innerHTML = dataParsed.msg;
-            document.getElementById("status").style.color = "red";
-        } else if (dataParsed.status == "empty") {
-            document.getElementById("status").style.color = "red";
-            document.getElementById("status").innerHTML = dataParsed.msg;
-            
+            document.getElementById("status").style.color = "red";    
         } else {
+            console.log("hello?");
+            document.getElementById("status").style.color = "green";
             const xhr = new XMLHttpRequest();
             xhr.onload = function () {
                 if (this.readyState == XMLHttpRequest.DONE) {
