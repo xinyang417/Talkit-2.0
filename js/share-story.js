@@ -19,7 +19,7 @@ function getDisplayName() {
             console.log("Error", this.status);
         }
     }
-    xhr.open("GET", "/get-displayname");
+    xhr.open("GET", "/get-profile");
     xhr.send();
 }
 getDisplayName();
