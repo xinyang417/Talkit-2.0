@@ -305,29 +305,38 @@ app.post('/add-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     let sql = `INSERT INTO BBY_01_user (username, email, password, isAdmin) 
                 values(?, ?, ?, ?);`
-    database.query(sql,
-        [req.body.username, req.body.email, req.body.password, req.body.isAdmin],
-        (error, results, fields) => {
-            if (error) console.log(error);
-            sql = `SELECT * FROM bby_01_user
-                    ORDER BY ID DESC LIMIT 1;`;
-            database.query(sql, (error, results) => {
-                if (error) throw error;
-                sql = `INSERT INTO bby_01_profile(userID, displayName, about, profilePic)
-                        SELECT * 
-                        FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
-                        WHERE NOT EXISTS (SELECT userID
-                            FROM bby_01_profile
-                            WHERE userID = ?) LIMIT 1;`;
-                database.query(sql, [results[0].ID, results[0].username, results[0].ID], (error, results) => {
+    if (req.body.username && req.body.email && req.body.password && req.body.isAdmin){
+        database.query(sql,
+            [req.body.username, req.body.email, req.body.password, req.body.isAdmin],
+            (error, results, fields) => {
+                if (error) console.log(error);
+                sql = `SELECT * FROM bby_01_user
+                        ORDER BY ID DESC LIMIT 1;`;
+                database.query(sql, (error, results) => {
                     if (error) throw error;
-                    res.send({
-                        status: "success",
-                        msg: "Record added."
+                    sql = `INSERT INTO bby_01_profile(userID, displayName, about, profilePic)
+                            SELECT * 
+                            FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
+                            WHERE NOT EXISTS (SELECT userID
+                                FROM bby_01_profile
+                                WHERE userID = ?) LIMIT 1;`;
+                    database.query(sql, [results[0].ID, results[0].username, results[0].ID], (error, results) => {
+                        if (error) throw error;
+                        res.send({
+                            status: "success",
+                            msg: "Record added."
+                        });
+                        res.end();
                     });
                 });
             });
+    } else {
+        res.send({
+            status: "empty",
+            msg: "Please fill in all the fields."
         });
+        res.end();
+    }
 });
 
 app.post('/update-user', (req, res) => {
