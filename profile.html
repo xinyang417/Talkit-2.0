@@ -22,16 +22,19 @@
 <body>
     <div class="container">
         <div class="nav">
-            <!--Back Button-->
-            <button onclick="history.back()" id="back"><span class="material-symbols-outlined">
-                    arrow_back
-                </span></button>
+            <!--Buttons-->
+            <nav id="buttons">
+                <a href="/home" id="back"><span class="material-symbols-outlined">
+                        arrow_back
+                    </span></a>
+                <a href="/update-profile" class="edit">Edit</a>
+            </nav>
         </div>
 
         <!--TalkIt Logo (Web Version Only)-->
         <div id="logo">
             <figure class="logo">
-                <img class="img" alt="..." src="/img/logo-01.png">
+                <img class="img" alt="..." src="/img/logo-03.png">
             </figure>
         </div>
 
@@ -56,7 +59,6 @@
             <label class="about-me">About</label>
             <div id="about">
             </div>
-            <p class="edit"><a href="/update-profile">Edit Profile</a></p>
         </div>
 
         <!--Footer-->
@@ -87,6 +89,10 @@
             </ul>
         </div>
     </div>
+
+    <!-- Copyright -->
+    <p class="copyRight"><a href="">Privacy</a> · <a href="">Terms</a> · BBY01 © 2022</p>
+
 
     <!--Modal-->
     <div id="simpleModal" class="modal">

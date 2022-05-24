@@ -388,8 +388,13 @@ body {
         color: #7e7d7d;
         background-color: #DDDDF0;
         text-align: center;
+        text-decoration: none;
         margin: 0;
         padding-bottom: 10px;
+    }
+
+    .copyRight a:hover {
+        text-decoration: underline;
     }
 
     #modal {
@@ -798,6 +803,10 @@ body {
     }
 
     ul {
+        display: none;
+    }
+
+    .copyRight {
         display: none;
     }
 

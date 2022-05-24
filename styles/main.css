@@ -209,6 +209,10 @@ body {
         padding-bottom: 10px;
     }
 
+    .copyRight a:hover {
+        text-decoration: underline;
+    }
+
     #modal {
         display: none;
         position: fixed;

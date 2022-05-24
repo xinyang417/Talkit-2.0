@@ -27,7 +27,6 @@ body {
         margin-left: 2em;
     }
 
-
     #footer ul {
         padding: 0;
         top: 10em;
@@ -270,6 +269,11 @@ body {
         text-align: center;
         margin: 0;
         padding-bottom: 10px;
+        text-decoration: none;
+    }
+
+    .copyRight a:hover {
+        text-decoration: underline;
     }
 
     #modal {
@@ -381,13 +385,13 @@ body {
     }
 
     #nav button {
-        margin-top: 2em;
         background-color: white;
         border: none;
         padding: 0;
     }
 
     .material-symbols-outlined {
+        margin-top: 30px;
         font-size: 30px !important;
         font-weight: bold;
         color: #909090;
@@ -408,6 +412,7 @@ body {
         font-family: 'Inter', sans-serif;
         position: absolute;
         right: 1em;
+        margin-top: 33px;
     }
 
     #bottomMenu .material-symbols-outlined {

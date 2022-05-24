@@ -24,16 +24,19 @@
     <div class="container">
 
         <div class="nav">
-            <!--Back Button-->
-            <button onclick="history.back()" id="back"><span class="material-symbols-outlined">
-                    arrow_back
-                </span></button>
+            <!--Buttons-->
+            <div class="buttons">
+                <button onclick="history.back()" id="updateCancel"><span class="material-symbols-outlined">
+                        close
+                    </span><b>Cancel</b></button>
+                <input type="button" class="save" value="Save" id="updateSave" />
+            </div>
         </div>
 
         <!--TalkIt Logo (Web Version Only)-->
         <div id="logo">
             <figure class="logo">
-                <img class="img" alt="..." src="/img/logo-01.png">
+                <img class="img" alt="..." src="/img/logo-03.png">
             </figure>
         </div>
 
@@ -85,11 +88,6 @@
                     <label for="about">About</label>
                     <textarea id="about" rows="4" cols="50" placeholder="About (Optional)"></textarea>
                 </p>
-
-                <div class="buttons">
-                    <input type="button" class="cancel" value="Cancel" id="updateCancel" />
-                    <input type="button" class="save" value="Save" id="updateSave" />
-                </div>
             </form>
         </div>
 
@@ -121,6 +119,10 @@
             </ul>
         </div>
     </div>
+
+    <!-- Copyright -->
+    <p class="copyRight"><a href="">Privacy</a> · <a href="">Terms</a> · BBY01 © 2022</p>
+
     <!--Modal-->
     <div id="simpleModal" class="modal">
         <div class="modal-content">
