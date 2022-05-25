@@ -85,7 +85,7 @@ body {
         grid-column: 2 / span 2;
         margin: 2em 2em 0 2em;
         background-color: white;
-        border-radius: 25px 25px 0 0;
+        border-radius: 25px 25px 0px 0px;
         padding: 2em 2em 0 2em;
     }
 
