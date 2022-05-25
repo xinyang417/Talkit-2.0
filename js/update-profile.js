@@ -123,9 +123,6 @@ function displayProfile() {
                     document.getElementById("displayName").setAttribute("value", name);
                     document.getElementById("about").innerHTML = about;
                     document.getElementById("profilePic").src = "/img/" + row.profilePic;
-                    document.getElementById("discardPic").addEventListener("click", () => {
-                        document.getElementById("profilePic").src = "/img/" + row.profilePic;
-                    })
                 } else {
                     console.log("Error!");
                 }
@@ -151,7 +148,7 @@ var goBack = document.getElementById('modal-return');
 modalBtn.addEventListener('click', function () {
     modal.style.display = 'block';
 });
-goBack.addEventListener('click', function(e) {
+goBack.addEventListener('click', function (e) {
     e.preventDefault();
     modal.style.display = 'none';
 });
@@ -160,4 +157,3 @@ window.addEventListener('click', function (e) {
         modal.style.display = 'none';
     }
 });
-
