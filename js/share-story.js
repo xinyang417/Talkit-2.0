@@ -126,8 +126,7 @@ window.addEventListener('click', function (e) {
 var discardModal2 = document.getElementsByClassName('discardModal');
 
 for (var i = 0; i < discardModal2.length; i++) {
-    let value = 
-    discardModal2[i].setAttribute("onclick", `pageRedirect('${discardModal2[i].getAttribute("value")}')`)
+    discardModal2[i].setAttribute("onclick", `pageRedirect('/${discardModal2[i].getAttribute("id")}')`)
 }
 
 function pageRedirect(v) {

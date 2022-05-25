@@ -253,7 +253,7 @@ app.get('/share-story', (req, res) => {
         let doc = fs.readFileSync('./share_story.html', "utf-8");
         let profileDOM = new JSDOM(doc);
         if (req.session.isAdmin == 0) {
-            profileDOM.window.document.getElementById("dashboard").remove();
+            profileDOM.window.document.getElementById("admin").remove();
         }
         res.send(profileDOM.serialize());
         res.end();
@@ -265,6 +265,24 @@ app.get('/share-story', (req, res) => {
     }
 
 });
+
+app.get('/message-list', (req, res) => {
+    if (req.session.loggedin) {
+        // Render login template
+        let doc = fs.readFileSync('./messages-01.html', "utf-8");
+        let profileDOM = new JSDOM(doc);
+        if (req.session.isAdmin == 0) {
+            profileDOM.window.document.getElementById("dashboard").remove();
+        }
+        res.send(profileDOM.serialize());
+        res.end();
+
+    } else {
+        // If the user is not logged in
+        res.redirect("/");
+        res.end();
+    }
+})
 
 app.get('/admin', (req, res) => {
     // If the user is logged in
