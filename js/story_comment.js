@@ -153,7 +153,9 @@ function comment() {
         comment: document.getElementById("addCmtText").value,
     }
     document.getElementById("addCmtText").value = "";
-
+    if (formData.comment == '') {
+        return;
+    }
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE) {
