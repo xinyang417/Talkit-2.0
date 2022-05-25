@@ -1,6 +1,5 @@
 "use strict";
 const upLoadForm = document.getElementById("upload-images-form");
-// upLoadForm.addEventListener("image-upload", uploadImages);
 
 function uploadImages(e) {
     e.preventDefault();
@@ -24,9 +23,7 @@ document.getElementById("image-upload").onchange = (e) => {
     document.getElementById("profilePic").src = URL.createObjectURL(e.target.files[0]);
 }
 
-document.getElementById("delete").addEventListener("click", () => {
-    document.getElementById("profilePic").src = "/img/logo-04.png";
-})
+
 
 const togglePassword = document.querySelector("#togglePassword");
 const password = document.querySelector("#password");
@@ -126,11 +123,14 @@ function displayProfile() {
                     document.getElementById("displayName").setAttribute("value", name);
                     document.getElementById("about").innerHTML = about;
                     document.getElementById("profilePic").src = "/img/" + row.profilePic;
+                    document.getElementById("discardPic").addEventListener("click", () => {
+                        document.getElementById("profilePic").src = "/img/" + row.profilePic;
+                    })
                 } else {
                     console.log("Error!");
                 }
             } else {
-                console.log(this.stauts);
+                console.log(this.status);
             }
         } else {
             console.log("ERROR", this.status);
