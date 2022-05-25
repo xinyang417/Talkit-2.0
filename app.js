@@ -304,7 +304,7 @@ var clientSocketIds = [];
 var connectedUsers = [];
 
 
-const getSocketByUserId = (userId) => {
+function getSocketByUserId(userId) {
     let socket = '';
     for (let i = 0; i < clientSocketIds.length; i++) {
         if (clientSocketIds[i].userId == userId) {
@@ -317,15 +317,12 @@ const getSocketByUserId = (userId) => {
 
 //socket io function starts
 io.on('connection', function(socket) {
-    console.log('connected');
     socket.on('disconnect', () => {
-        console.log("disconnected");
         connectedUsers = connectedUsers.filter(item => item.socketId != socket.id);
         io.emit('updateUserList', connectedUsers);
     });
 
     socket.on('loggedin', (user) => {
-        console.log("loggedin");
         clientSocketIds.push({socket: socket, userId: user.ID});
         connectedUsers = connectedUsers.filter(item => item.ID != user.ID);
         connectedUsers.push({...user, socketId: socket.id})
@@ -333,24 +330,18 @@ io.on('connection', function(socket) {
     });
 
     socket.on('create', (data) => {
-        console.log("create room");
-        console.log(data);
         let withSocket = getSocketByUserId(data.withUserId);
-        socket.broadcast.to(withSocket.id).emit("invite", {room: data});
+        socket.broadcast.to(withSocket.id).emit("invite", data);
     });
 
     socket.on('joinRoom', function(data) {
-        console.log("join room");
-        console.log(data);
-        socket.join(data.room.room);
+        socket.join(data.room);
     });
 
-    socket.on('message', function(data) {
-        console.log("message!");
-        console.log(data);
-        socket.broadcast.to(data.room).emit('message', data);
+    socket.on('send-message', function(data) {
+        socket.to(data.room).emit("receive-message", data)
     });
-})
+});
 
 //socket function ends
 
