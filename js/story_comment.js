@@ -153,7 +153,7 @@ function comment() {
         comment: document.getElementById("addCmtText").value,
     }
     document.getElementById("addCmtText").value = "";
-    if (formData.comment == '') {
+    if (formData.comment.length <= 0 || formData.comment.trim().length <= 0) {
         return;
     }
     const xhr = new XMLHttpRequest();
