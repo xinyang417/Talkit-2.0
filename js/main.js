@@ -1,4 +1,5 @@
 "use strict";
+
 function displayPosts() {
     const xhr = new XMLHttpRequest();
     var parent = document.getElementById("postList");
@@ -18,9 +19,9 @@ function displayPosts() {
                         let time = new Date(tz.getTime() - offset).toISOString().slice(0, 19).replace('T', ' ');
                         newPostTemplate.getElementById("author").innerHTML = displayName;
                         newPostTemplate.getElementById("postTime").innerHTML = time;
-                        newPostTemplate.getElementById("postTitle").innerHTML = `<p onclick = "sendPostId(` 
-                                                                                + row.postID + `)">` 
-                                                                                + title + `</p>`;
+                        newPostTemplate.getElementById("postTitle").innerHTML = `<p onclick = "sendPostId(` +
+                            row.postID + `)">` +
+                            title + `</p>`;
                         newPostTemplate.getElementById("posterPic").src = "/img/" + row.profilePic;
                         parent.appendChild(newPostTemplate);
                     }
@@ -38,7 +39,33 @@ function displayPosts() {
     xhr.send();
 }
 
-function sendPostId(postID){
+function displayProfilePic() {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let data = JSON.parse(this.responseText);
+                if (data.status == "success" && data.rows.length > 0) {
+                    let row = data.rows[0];
+                    document.getElementById("myPic").src = "/img/" + row.profilePic;
+                } else {
+                    console.log("Error!");
+                }
+            } else {
+                console.log(this.stauts);
+            }
+        } else {
+            console.log("ERROR", this.status);
+        }
+    }
+    xhr.open("GET", "/get-profile");
+    xhr.send();
+    // console.log(row.profilePic);
+}
+displayProfilePic();
+
+
+function sendPostId(postID) {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE) {
@@ -65,11 +92,11 @@ var goBack = document.getElementById('modal-return');
 
 modalBtn.addEventListener('click', showModal);
 modalBtn2.addEventListener('click', showModal);
-goBack.addEventListener('click', function(e) {
+goBack.addEventListener('click', function (e) {
     e.preventDefault();
     modal.style.display = 'none';
 });
-window.addEventListener('click', function(e) {
+window.addEventListener('click', function (e) {
     if (e.target == modal) {
         modal.style.display = 'none';
     }
@@ -78,5 +105,3 @@ window.addEventListener('click', function(e) {
 function showModal() {
     modal.style.display = 'block';
 }
-
-

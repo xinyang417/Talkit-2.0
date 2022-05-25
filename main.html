@@ -27,18 +27,12 @@
   <div class="container">
     <div id="nav">
       <ul>
-        <!--Back Button-->
-        <li id="back-button">
-          <button id="back"><span class="material-symbols-outlined">
-              arrow_back
-            </span></button>
-        </li>
 
-        <!--Search Icon-->
-        <li id="search-icon">
-          <button value="Search" id="search"><span class="material-symbols-outlined">
-              search
-            </span></button>
+        <li id="profile-icon">
+          <form action="/profile" method="get">
+            <button type="submit" value="Profile" id="profile"><img class="profilePic" alt="profilePic" id="myPic"
+                src='/img/logo-04.png'></button>
+          </form>
         </li>
 
         <!--Dashboard-->
@@ -49,12 +43,8 @@
           </form>
         </li>
 
-        <!-- Profile Button -->
-        <li id="profile-icon">
-          <form action="/profile" method="get">
-            <button type="submit" value="Profile" id="profile"><span
-                class="material-symbols-outlined">account_circle</span></button>
-          </form>
+        <li class="searchContainer">
+          <input class="searchBox" type="search" name="search" placeholder="Search">
         </li>
 
         <!--Log Out Button-->
@@ -93,7 +83,7 @@
           <p class="break1">·</p>
           <p id="postTime"></p>
           <p class="break2">·</p>
-          <a href="#"><span class="material-symbols-outlined">bookmark</span></a>
+          <span class="material-symbols-outlined">bookmark</span>
           <a href="">
             <div id="postTitle">Post Title</div>
           </a>
