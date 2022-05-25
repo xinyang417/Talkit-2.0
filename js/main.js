@@ -39,6 +39,38 @@ function displayPosts() {
     xhr.send();
 }
 
+function getDisplayName() {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let data = JSON.parse(this.responseText);
+                if (data.status == "success" && data.rows.length > 0) {
+                    let row = data.rows[0];
+                    let str = sessionStorage.getItem("user");
+                    str = JSON.parse(str);
+                    str = {
+                        ...str,
+                        ...row
+                    };
+                    str = JSON.stringify(str);
+                    sessionStorage.setItem("user", str);
+                } else {
+                    console.log("Error!");
+                }
+            } else {
+                console.log(this.stauts);
+            }
+        } else {
+            console.log("ERROR", this.status);
+        }
+    }
+    xhr.open("GET", "/get-profile");
+    xhr.send();
+}
+
+getDisplayName();
+
 function displayProfilePic() {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -60,7 +92,6 @@ function displayProfilePic() {
     }
     xhr.open("GET", "/get-profile");
     xhr.send();
-    // console.log(row.profilePic);
 }
 displayProfilePic();
 

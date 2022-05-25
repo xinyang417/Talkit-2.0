@@ -53,6 +53,7 @@ ready(function () {
                 } else if (dataParsed.status == "empty") {
                     document.getElementById("errorMsg").innerHTML = dataParsed.msg;
                 } else {
+                    sessionStorage.setItem("user", JSON.stringify(dataParsed.userdata));
                     window.location.replace("/home");
                 }
             }
