@@ -122,11 +122,14 @@ window.addEventListener('click', function (e) {
     }
 });
 
-
 var discardModal2 = document.getElementsByClassName('discardModal');
 
 for (var i = 0; i < discardModal2.length; i++) {
+<<<<<<< HEAD
     discardModal2[i].setAttribute("onclick", `pageRedirect('/${discardModal2[i].getAttribute("id")}')`)
+=======
+    discardModal2[i].setAttribute("onclick", `pageRedirect('${discardModal2[i].getAttribute("value")}')`)
+>>>>>>> 4f2d177081fa38614d06d9501e067b3a490cb81c
 }
 
 function pageRedirect(v) {
