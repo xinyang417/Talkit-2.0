@@ -49,71 +49,6 @@
                 </div>
                 <p class="chat-date">2022-05-17</p>
             </a>
-
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
         </div>
 
         <!--Chat-box (Web Version Only)-->
@@ -123,50 +58,22 @@
         </div>
 
         <div id="chat-box">
-
-            <div class="userBubble">
-                <div class="userMsg">
-                    <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                    <p class="userText">Knock knock</p>
+            <template>
+                <div class="userBubble">
+                    <div class="userMsg">
+                        <img class="userPic" alt="profilePic" src="/img/logo-04.png">
+                        <p class="userText">Knock knock</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="myBubble">
-                <div class="myMsg">
-                    <p class="myText">Who's there?</p>
-                    <img class="myPic" alt="profilePic" src="/img/logo-04.png">
+                <div class="myBubble">
+                    <div class="myMsg">
+                        <p class="myText">Who's there?</p>
+                        <img class="myPic" alt="profilePic" src="/img/logo-04.png">
+                    </div>
                 </div>
-            </div>
+            </template>
 
-            <div class="userBubble">
-                <div class="userMsg">
-                    <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                    <p class="userText">Lorem</p>
-                </div>
-            </div>
-
-            <div class="myBubble">
-                <div class="myMsg">
-                    <p class="myText">Lorem who</p>
-                    <img class="myPic" alt="profilePic" src="/img/logo-04.png">
-                </div>
-            </div>
-
-            <div class="userBubble">
-                <div class="userMsg">
-                    <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                    <p class="userText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt facilis iure
-                        consequatur fugiat voluptatibus expedita. Nostrum perspiciatis expedita beatae 🤪</p>
-                </div>
-            </div>
-
-            <div class="myBubble">
-                <div class="myMsg">
-                    <p class="myText">Fuga commodi cupiditate culpa repellendus debitis sit
-                        atque ab magni dolorum. Nostrum perspiciatis expedita beatae? 😐</p>
-                    <img class="myPic" alt="profilePic" src="/img/logo-04.png">
-                </div>
-            </div>
 
         </div>
 
@@ -202,15 +109,16 @@
                 <li><a href="#"><span class="material-symbols-outlined">bookmark</span><b>Bookmark</b></a> </li>
                 <li><a href="/share-story"><span class="material-symbols-outlined">add_box</span><b>Share
                             Story</b></a></li>
-                <li><a href="/messages-01" class="active"><span
-                            class="material-symbols-outlined">mail</span><b>Messages</b></a> </li>
+                <li><a href="#" class="active"><span class="material-symbols-outlined">mail</span><b>Messages</b></a>
+                </li>
                 <li><a href="#"><span class="material-symbols-outlined">notifications</span><b>Notifications</b></a>
                 </li>
             </ul>
         </div>
 
     </div>
-
+    <script src="http://localhost:8000/socket.io/socket.io.js"></script>
+    <script src="/js/messages.js"></script>
 </body>
 
 </html>
