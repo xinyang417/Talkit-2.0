@@ -15,7 +15,7 @@
     <link rel="stylesheet"
         href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    <link rel="stylesheet" href="/css/messages-01.css">
+    <link rel="stylesheet" href="styles/messages-01.css">
     <title>Messages</title>
 </head>
 
@@ -39,10 +39,17 @@
             <input type="text" id="search-bar" placeholder="Search">
         </div>
 
+        <!--Tabs-->
+        <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'inbox-component')">Messages</button>
+            <button class="tablinks" onclick="openTab(event, 'chat-component')">Chat</button>
+        </div>
+
+
         <!--Messages-->
-        <div class="inbox-container" id="inbox-component">
+        <div class="inbox-container tabcontent" id="inbox-component">
             <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
+                <img class="userPic" alt="profilePic" src="/images/logo-04.png">
                 <div class="flexBox">
                     <p class="chat-name">TestUser</p>
                     <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
@@ -116,64 +123,68 @@
             </a>
         </div>
 
-        <!--Chat-box (Web Version Only)-->
+        <!--Chat-box-->
+        <div class="chat-container tabcontent" id="chat-component">
 
-        <div id="chatUser">
-            <h4>Chatting with <span id="friend-dName"><b> displayName</b></span></h4>
+            <div id="chatUser">
+                <h4>Chatting with <span id="friend-dName"><b> displayName</b></span></h4>
+            </div>
+
+            <div id="chat-box">
+
+                <div class="userBubble">
+                    <div class="userMsg">
+                        <img class="userPic" alt="profilePic" src="/img/logo-04.png">
+                        <p class="userText">Knock knock</p>
+                    </div>
+                </div>
+
+                <div class="myBubble">
+                    <div class="myMsg">
+                        <p class="myText">Who's there?</p>
+                        <img class="myPic" alt="profilePic" src="/img/logo-04.png">
+                    </div>
+                </div>
+
+                <div class="userBubble">
+                    <div class="userMsg">
+                        <img class="userPic" alt="profilePic" src="/img/logo-04.png">
+                        <p class="userText">Lorem</p>
+                    </div>
+                </div>
+
+                <div class="myBubble">
+                    <div class="myMsg">
+                        <p class="myText">Lorem who</p>
+                        <img class="myPic" alt="profilePic" src="/img/logo-04.png">
+                    </div>
+                </div>
+
+                <div class="userBubble">
+                    <div class="userMsg">
+                        <img class="userPic" alt="profilePic" src="/img/logo-04.png">
+                        <p class="userText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt facilis
+                            iure
+                            consequatur fugiat voluptatibus expedita. Nostrum perspiciatis expedita beatae 🤪</p>
+                    </div>
+                </div>
+
+                <div class="myBubble">
+                    <div class="myMsg">
+                        <p class="myText">Fuga commodi cupiditate culpa repellendus debitis sit
+                            atque ab magni dolorum. Nostrum perspiciatis expedita beatae? 😐</p>
+                        <img class="myPic" alt="profilePic" src="/img/logo-04.png">
+                    </div>
+                </div>
+
+            </div>
+
+            <form id="chat-form">
+                <textarea id="msg" placeholder="Message..." required="required"></textarea>
+                <input type="button" id="send" value="Send" />
+            </form>
+
         </div>
-
-        <div id="chat-box">
-
-            <div class="userBubble">
-                <div class="userMsg">
-                    <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                    <p class="userText">Knock knock</p>
-                </div>
-            </div>
-
-            <div class="myBubble">
-                <div class="myMsg">
-                    <p class="myText">Who's there?</p>
-                    <img class="myPic" alt="profilePic" src="/img/logo-04.png">
-                </div>
-            </div>
-
-            <div class="userBubble">
-                <div class="userMsg">
-                    <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                    <p class="userText">Lorem</p>
-                </div>
-            </div>
-
-            <div class="myBubble">
-                <div class="myMsg">
-                    <p class="myText">Lorem who</p>
-                    <img class="myPic" alt="profilePic" src="/img/logo-04.png">
-                </div>
-            </div>
-
-            <div class="userBubble">
-                <div class="userMsg">
-                    <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                    <p class="userText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt facilis iure
-                        consequatur fugiat voluptatibus expedita. Nostrum perspiciatis expedita beatae 🤪</p>
-                </div>
-            </div>
-
-            <div class="myBubble">
-                <div class="myMsg">
-                    <p class="myText">Fuga commodi cupiditate culpa repellendus debitis sit
-                        atque ab magni dolorum. Nostrum perspiciatis expedita beatae? 😐</p>
-                    <img class="myPic" alt="profilePic" src="/img/logo-04.png">
-                </div>
-            </div>
-
-        </div>
-
-        <form id="chat-form">
-            <textarea id="msg" placeholder="Message..." required="required"></textarea>
-            <input type="button" id="send" value="Send" />
-        </form>
 
 
         <!--TalkIt Logo-->
@@ -210,6 +221,29 @@
         </div>
 
     </div>
+
+    <script>
+        function openTab(evt, cityName) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
 
 </body>
 
