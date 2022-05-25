@@ -2,6 +2,11 @@
 const express = require('express');
 const mysql = require('mysql2');
 const session = require('express-session');
+const app = express();
+// for chat
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
 const fs = require("fs");
 const {
     JSDOM
@@ -22,7 +27,10 @@ const {
     resourceLimits
 } = require('worker_threads');
 const { newObjectInRealm } = require('jsdom/lib/jsdom/living/generated/utils');
-const app = express();
+const req = require('express/lib/request');
+const { Socket } = require('socket.io');
+
+
 
 
 app.use("/img", express.static("./images"));
@@ -121,11 +129,11 @@ app.post('/auth', (req, res) => {
                     req.session.userid = results[0].ID;
                     req.session.email = results[0].email;
                     req.session.password = results[0].password;
-
                     // Redirect to admin page
                     res.send({
                         status: "success",
-                        msg: "Logged in."
+                        msg: "Logged in.",
+                        userdata: results[0]
                     });
 
                 } else if (results.length > 0) {
@@ -141,7 +149,8 @@ app.post('/auth', (req, res) => {
                     // Redirect to home page
                     res.send({
                         status: "success",
-                        msg: "Logged in."
+                        msg: "Logged in.",
+                        userdata: results[0]
                     });
                 } else {
                     // Print Error Message
@@ -289,7 +298,52 @@ app.get('/message-list', (req, res) => {
         res.redirect("/");
         res.end();
     }
-})
+});
+
+var clientSocketIds = [];
+var connectedUsers = [];
+
+
+function getSocketByUserId(userId) {
+    let socket = '';
+    for (let i = 0; i < clientSocketIds.length; i++) {
+        if (clientSocketIds[i].userId == userId) {
+            socket = clientSocketIds[i].socket;
+            break;
+        }
+    }
+    return socket;
+}
+
+//socket io function starts
+io.on('connection', function(socket) {
+    socket.on('disconnect', () => {
+        connectedUsers = connectedUsers.filter(item => item.socketId != socket.id);
+        io.emit('updateUserList', connectedUsers);
+    });
+
+    socket.on('loggedin', (user) => {
+        clientSocketIds.push({socket: socket, userId: user.ID});
+        connectedUsers = connectedUsers.filter(item => item.ID != user.ID);
+        connectedUsers.push({...user, socketId: socket.id})
+        io.emit('updateUserList', connectedUsers);
+    });
+
+    socket.on('create', (data) => {
+        let withSocket = getSocketByUserId(data.withUserId);
+        socket.broadcast.to(withSocket.id).emit("invite", data);
+    });
+
+    socket.on('joinRoom', function(data) {
+        socket.join(data.room);
+    });
+
+    socket.on('send-message', function(data) {
+        socket.to(data.room).emit("receive-message", data)
+    });
+});
+
+//socket function ends
 
 app.get('/admin', (req, res) => {
     // If the user is logged in
@@ -977,13 +1031,14 @@ handleDisconnect();
 // RUN SERVER REMOTELY
 if (is_heroku) {
     const PORT = process.env.PORT || 8080;
-    app.listen(PORT, () => {
+    // change app to server
+    server.listen(PORT, () => {
         console.log('Server is running on port ' + PORT + ' .');
     });
 } else {
     // RUN SERVER LOCALLY
     let port = 8000;
-    app.listen(port, () => {
+    server.listen(port, () => {
         console.log("Listening on port " + port + "!");
     })
 }

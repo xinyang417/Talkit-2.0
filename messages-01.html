@@ -39,73 +39,15 @@
             <input type="text" id="search-bar" placeholder="Search">
         </div>
 
+        <!--Tabs-->
+        <div class="tab">
+            <button class="tablinks active" id="inbox-tab" onclick="openTab(event, 'inbox-component')">Inbox</button>
+            <button class="tablinks" id="chat-tab" onclick="openTab(event, 'chat-component')">Chat</button>
+        </div>
+
+
         <!--Messages-->
-        <div class="inbox-container" id="inbox-component">
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
-
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
-            <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                <div class="flexBox">
-                    <p class="chat-name">TestUser</p>
-                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
-                </div>
-                <p class="chat-date">2022-05-17</p>
-            </a>
+        <div class="inbox-container tabcontent" id="inbox-component">
             <a class="chat-list" href="/inbox">
                 <img class="userPic" alt="profilePic" src="/img/logo-04.png">
                 <div class="flexBox">
@@ -116,101 +58,82 @@
             </a>
         </div>
 
-        <!--Chat-box (Web Version Only)-->
+        <!--Chat-box-->
+        <div class="chat-container tabcontent" id="chat-component">
 
-        <div id="chatUser">
-            <h4>Chatting with <span id="friend-dName"><b> displayName</b></span></h4>
+            <div id="chatUser">
+                <h4>Chatting with <span id="friend-dName"><b> displayName</b></span></h4>
+            </div>
+
+            <div id="chat-box">
+                <template>
+                    <div class="userBubble">
+                        <div class="userMsg">
+                            <img class="userPic" alt="profilePic" src="/img/logo-04.png">
+                            <p class="userText">Knock knock</p>
+                        </div>
+                    </div>
+
+                    <div class="myBubble">
+                        <div class="myMsg">
+                            <p class="myText">Who's there?</p>
+                            <img class="myPic" alt="profilePic" src="/img/logo-04.png">
+                        </div>
+                    </div>
+                </template>
+
+
+                <form id="chat-form">
+                    <textarea id="msg" placeholder="Message..." required="required"></textarea>
+                    <input type="button" id="send" value="Send" />
+                </form>
+
+            </div>
+
+
+            <!--TalkIt Logo-->
+            <div id="logo">
+                <figure class="logo">
+                    <img class="img" alt="..." src="/img/logo-03.png">
+                </figure>
+            </div>
+
+            <!--Bottom Menu-->
+            <div id="bottomMenu">
+                <ul>
+                    <li id="dashboard"><a href="/admin"><span
+                                class="material-symbols-outlined">dashboard</span><b>Dashboard</b></a></li>
+                    <li><a href="/profile"><span
+                                class="material-symbols-outlined">account_circle</span><b>Profile</b></a>
+                    </li>
+                    <li><a href="/logout"><span class="material-symbols-outlined">logout</span><b>Log Out</b> </a></li>
+                </ul>
+            </div>
+
+            <!-- Footer -->
+            <div id="footer">
+                <ul>
+                    <li><a href="/home"><span class="material-symbols-outlined">home</span><b>Home</b></a>
+                    </li>
+                    <li><a href="#"><span class="material-symbols-outlined">bookmark</span><b>Bookmark</b></a> </li>
+                    <li><a href="/share-story"><span class="material-symbols-outlined">add_box</span><b>Share
+                                Story</b></a></li>
+                    <li><a href="#" class="active"><span
+                                class="material-symbols-outlined">mail</span><b>Messages</b></a>
+                    </li>
+                    <li><a href="#"><span class="material-symbols-outlined">notifications</span><b>Notifications</b></a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
 
-        <div id="chat-box">
+        <script>
 
-            <div class="userBubble">
-                <div class="userMsg">
-                    <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                    <p class="userText">Knock knock</p>
-                </div>
-            </div>
+        </script>
 
-            <div class="myBubble">
-                <div class="myMsg">
-                    <p class="myText">Who's there?</p>
-                    <img class="myPic" alt="profilePic" src="/img/logo-04.png">
-                </div>
-            </div>
-
-            <div class="userBubble">
-                <div class="userMsg">
-                    <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                    <p class="userText">Lorem</p>
-                </div>
-            </div>
-
-            <div class="myBubble">
-                <div class="myMsg">
-                    <p class="myText">Lorem who</p>
-                    <img class="myPic" alt="profilePic" src="/img/logo-04.png">
-                </div>
-            </div>
-
-            <div class="userBubble">
-                <div class="userMsg">
-                    <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                    <p class="userText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt facilis iure
-                        consequatur fugiat voluptatibus expedita. Nostrum perspiciatis expedita beatae 🤪</p>
-                </div>
-            </div>
-
-            <div class="myBubble">
-                <div class="myMsg">
-                    <p class="myText">Fuga commodi cupiditate culpa repellendus debitis sit
-                        atque ab magni dolorum. Nostrum perspiciatis expedita beatae? 😐</p>
-                    <img class="myPic" alt="profilePic" src="/img/logo-04.png">
-                </div>
-            </div>
-
-        </div>
-
-        <form id="chat-form">
-            <textarea id="msg" placeholder="Message..." required="required"></textarea>
-            <input type="button" id="send" value="Send" />
-        </form>
-
-
-        <!--TalkIt Logo-->
-        <div id="logo">
-            <figure class="logo">
-                <img class="img" alt="..." src="/img/logo-03.png">
-            </figure>
-        </div>
-
-        <!--Bottom Menu-->
-        <div id="bottomMenu">
-            <ul>
-                <li id="dashboard"><a href="/admin"><span
-                            class="material-symbols-outlined">dashboard</span><b>Dashboard</b></a></li>
-                <li><a href="/profile"><span class="material-symbols-outlined">account_circle</span><b>Profile</b></a>
-                </li>
-                <li><a href="/logout"><span class="material-symbols-outlined">logout</span><b>Log Out</b> </a></li>
-            </ul>
-        </div>
-
-        <!-- Footer -->
-        <div id="footer">
-            <ul>
-                <li><a href="/home"><span class="material-symbols-outlined">home</span><b>Home</b></a>
-                </li>
-                <li><a href="#"><span class="material-symbols-outlined">bookmark</span><b>Bookmark</b></a> </li>
-                <li><a href="/share-story"><span class="material-symbols-outlined">add_box</span><b>Share
-                            Story</b></a></li>
-                <li><a href="/messages-01" class="active"><span
-                            class="material-symbols-outlined">mail</span><b>Messages</b></a> </li>
-                <li><a href="#"><span class="material-symbols-outlined">notifications</span><b>Notifications</b></a>
-                </li>
-            </ul>
-        </div>
-
-    </div>
-
+        <script src="http://localhost:8000/socket.io/socket.io.js"></script>
+        <script src="/js/messages.js"></script>
 </body>
 
 </html>
