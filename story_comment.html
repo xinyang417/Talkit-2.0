@@ -72,8 +72,10 @@
                     <form action="/">
                         <input type="file" name="photo" id="inputPhoto" accept=".jpg, .jpeg, .png" multiple />
                     </form>
-                    <button id="editPost">Edit</button>
-                    <button id="deletePost">Delete</button>
+                    <div class="btnBox">
+                        <button id="editPost">Edit</button>
+                        <button id="deletePost">Delete</button>
+                    </div>
                 </div>
             </div>
 
@@ -88,7 +90,7 @@
                             <p class="cmtTime" id="commentTime">Time & Date</p>
                         </div>
                         <p class="cmtText" id="commentText"></p>
-                        <div class="edBtns">
+                        <div class="edBtns1">
                             <button id="cmtEdit">Edit</button>
                             <button id="cmtDelete">Delete</button>
                         </div>
@@ -104,15 +106,15 @@
             <input class="collapsible" placeholder="Any thoughts?">
             <div class="content">
                 <form id='input'>
-
+                    <div class="buttons">
+                        <button id="cancel"><span class="material-symbols-outlined">close</span><b>Cancel</b></button>
+                        <button id="reply" type="submit" onclick="comment()"><b>Post</b></button>
+                    </div>
                     <textarea id="addCmtText" rows="10" cols="50" placeholder="Any thoughts?"></textarea>
                     <p id="nameMsg"> Commenting as <b><span id="reader"></span></b>. You can change your display name <a
                             href="/update-profile">here</a> anytime.
                     </p>
-                    <div class="buttons">
-                        <button id="cancel"><b>Cancel</b></button>
-                        <button id="reply" type="submit" onclick="comment()"><b>Reply</b></button>
-                    </div>
+
                 </form>
             </div>
         </div>

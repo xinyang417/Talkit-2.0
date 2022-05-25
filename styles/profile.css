@@ -318,7 +318,7 @@ body {
         display: grid;
         height: 100vh;
         max-width: 100vw;
-        grid-template-rows: 1fr 1fr 3fr 6fr 1fr;
+        grid-template-rows: 0.5fr 1fr 3fr 6fr 1fr;
         padding: 0;
         margin: 0;
         margin-right: 0;
@@ -338,22 +338,31 @@ body {
         margin: 0em 1em 0em 1em;
         max-width: 100%;
         display: block;
+        height: 60px;
     }
 
-    #buttons {
-        height: 100%;
-        background-color: white;
-        border: none;
-        padding: 0;
-        display: flex;
-    }
-
-    #back span {
+    #back {
         background-color: transparent;
         color: #909090;
         border: none;
-        margin-top: 30px !important;
-        padding: 0;
+        height: 30px;
+        margin-top: auto;
+        margin-bottom: auto;
+        align-items: center;
+        margin-left: 0 !important;
+    }
+
+    nav {
+        height: 60px;
+        display: flex;
+        align-items: center;
+    }
+
+    nav .material-symbols-outlined {
+        font-size: 30px;
+        font-weight: bold;
+        color: #909090;
+        border: none;
     }
 
 
@@ -368,7 +377,6 @@ body {
         font-family: 'Inter', sans-serif;
         position: absolute;
         right: 1em;
-        margin-top: 33px;
         font-weight: bold;
         text-decoration: none;
     }
@@ -385,7 +393,8 @@ body {
     }
 
     #pageName h2 {
-        margin-top: 30px;
+        margin-top: 1em;
+        margin-bottom: 1em;
         font-size: 25px;
         position: absolute;
         padding: 0;
@@ -506,26 +515,35 @@ body {
     }
 
     #footer ul {
-        margin-bottom: 1.5em;
-        padding: 0;
         bottom: 0;
-        margin: 0em 1em 1.5em 1em;
+        margin: 0em 1em 0em 1em;
+        padding: 0;
         max-width: 100%;
         position: sticky;
         display: flex;
         justify-content: space-between;
         list-style-type: none;
+        height: 60px;
+        place-items: center;
     }
 
     ul li {
-        display: inline;
-        padding-top: 5px;
+        display: inline-block;
     }
 
     ul a {
         transition: all 0.3s ease;
         color: #909090;
         font-size: 25px;
+        margin: 0;
+    }
+
+    ul b {
+        display: none;
+    }
+
+    #footer li a {
+        padding-top: 15px;
     }
 
     ul b {
