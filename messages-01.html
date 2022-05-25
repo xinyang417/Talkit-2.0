@@ -15,11 +15,11 @@
     <link rel="stylesheet"
         href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    <link rel="stylesheet" href="/styles/messages-01.css">
+    <link rel="stylesheet" href="/css/messages-01.css">
     <title>Messages</title>
 </head>
 
-<body>
+<>
     <div class="container">
 
         <!--Nav Bar-->
@@ -41,7 +41,8 @@
 
         <!--Tabs-->
         <div class="tab">
-            <button class="tablinks active" id="inbox-tab" onclick="openTab(event, 'inbox-component')">Inbox</button>
+            <button class="tablinks active" id="inbox-tab" onclick="openTab(event, 'inbox-component')">User
+                List</button>
             <button class="tablinks" id="chat-tab" onclick="openTab(event, 'chat-component')">Chat</button>
         </div>
 
@@ -49,7 +50,7 @@
         <!--Messages-->
         <div class="inbox-container tabcontent" id="inbox-component">
             <a class="chat-list" href="/inbox">
-                <img class="userPic" alt="profilePic" src="/images/logo-04.png">
+                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
                 <div class="flexBox">
                     <p class="chat-name">TestUser</p>
                     <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
@@ -66,19 +67,21 @@
             </div>
 
             <div id="chat-box">
-                <div class="userBubble">
-                    <div class="userMsg">
-                        <img class="userPic" alt="profilePic" src="/images/logo-04.png">
-                        <p class="userText">Knock knock</p>
+                <template>
+                    <div class="userBubble">
+                        <div class="userMsg">
+                            <img class="userPic" alt="profilePic" src="/img/logo-04.png">
+                            <p class="userText">Knock knock</p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="myBubble">
-                    <div class="myMsg">
-                        <p class="myText">Who's there?</p>
-                        <img class="myPic" alt="profilePic" src="/images/logo-04.png">
+                    <div class="myBubble">
+                        <div class="myMsg">
+                            <p class="myText">Who's there?</p>
+                            <img class="myPic" alt="profilePic" src="/img/logo-04.png">
+                        </div>
                     </div>
-                </div>
+                </template>
             </div>
 
             <form id="chat-form">
@@ -92,7 +95,7 @@
         <!--TalkIt Logo-->
         <div id="logo">
             <figure class="logo">
-                <img class="img" alt="..." src="/images/logo-03.png">
+                <img class="img" alt="..." src="/img/logo-03.png">
             </figure>
         </div>
 
@@ -124,31 +127,8 @@
 
     </div>
 
-    <script>
-        if (jQuery(window).width() < 701) {
-            function openTab(evt, tabName) {
-                // Declare all variables
-                var i, tabcontent, tablinks;
-
-                // Get all elements with class="tabcontent" and hide them
-                tabcontent = document.getElementsByClassName("tabcontent");
-                for (i = 0; i < tabcontent.length; i++) {
-                    tabcontent[i].style.display = "none";
-                }
-
-                // Get all elements with class="tablinks" and remove the class "active"
-                tablinks = document.getElementsByClassName("tablinks");
-                for (i = 0; i < tablinks.length; i++) {
-                    tablinks[i].className = tablinks[i].className.replace(" active", "");
-                }
-
-                // Show the current tab, and add an "active" class to the button that opened the tab
-                document.getElementById(tabName).style.display = "block";
-                evt.currentTarget.className += " active";
-            }
-        }
-    </script>
-
-</body>
+    <script src="http://localhost:8000/socket.io/socket.io.js"></script>
+    <script src="/js/messages.js"></script>
+    </body>
 
 </html>
