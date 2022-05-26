@@ -70,7 +70,7 @@
 
                 <div class="edBtns">
                     <form action="/">
-                        <input type="file" name="photo" id="inputPhoto" accept=".jpg, .jpeg, .png" maxlength="500" multiple />
+                        <input type="file" name="photo" id="inputPhoto" accept=".jpg, .jpeg, .png" multiple />
                     </form>
                     <div class="btnBox">
                         <button id="editPost">Edit</button>
@@ -108,9 +108,10 @@
                 <form id='input'>
                     <div class="buttons">
                         <button id="cancel"><span class="material-symbols-outlined">close</span><b>Cancel</b></button>
-                        <button id="reply" type="submit" onclick="comment()" ><b>Post</b></button>
+                        <button id="reply" type="submit" onclick="comment()"><b>Post</b></button>
                     </div>
-                    <textarea id="addCmtText" rows="10" cols="50" maxlength="2000" placeholder="Any thoughts?"></textarea>
+                    <textarea id="addCmtText" rows="10" cols="50" maxlength="2000"
+                        placeholder="Any thoughts?"></textarea>
                     <p id="nameMsg"> Commenting as <b><span id="reader"></span></b>. You can change your display name <a
                             href="/update-profile">here</a> anytime.
                     </p>

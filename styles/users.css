@@ -4,6 +4,9 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 @media screen and (min-width: 701px) {
   .container {
     display: grid;
@@ -487,7 +490,8 @@ body {
 
   input[type=text],
   input[type=email],
-  input[type=password] {
+  input[type=password],
+  input[type=number] {
     margin: 0.5em 0em 0.5em 0em;
     height: 40px;
     padding-left: 10px;
