@@ -506,7 +506,7 @@ body {
     }
 
     #inbox-tab {
-        display: active;
+        display: block;
     }
 
     .inbox-container {
