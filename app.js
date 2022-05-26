@@ -156,7 +156,7 @@ app.post('/auth', (req, res) => {
                     // Print Error Message
                     res.send({
                         status: "fail",
-                        msg: "User account not found."
+                        msg: "Invalid Username or Password."
                     });
                 }
                 res.end();
@@ -456,20 +456,30 @@ app.post('/delete-user', (req, res) => {
     var accountType;
     database.query(checkAdmin, [req.body.id], (error, results) => {
         if (error) console.log(error);
-        accountType = results[0].isAdmin;
-    });
-    database.query(adminLeft, (error, results) => {
-        if (error) console.log(error);
-        numberOfAdmin = results.length;
-        if (numberOfAdmin == 1 && accountType == 1) {
+        if (results.length == 0) {
             res.send({
                 status: "fail",
-                msg: "The account is the last admin account."
+                msg: "The ID is not existed."
             });
+            res.end();
         } else {
-            deleteSQL(req, res);
+            accountType = results[0].isAdmin;
+            database.query(adminLeft, (error, results) => {
+                if (error) console.log(error);
+                numberOfAdmin = results.length;
+                if (numberOfAdmin == 1 && accountType == 1) {
+                    res.send({
+                        status: "fail",
+                        msg: "The account is the last admin account."
+                    });
+                } else {
+                    deleteSQL(req, res);
+                }
+            });
         }
+        
     });
+    
 });
 
 function deleteSQL(req, res) {

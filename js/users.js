@@ -235,6 +235,11 @@ document.getElementById("modal-succuess-delete-user").addEventListener("click", 
                 let jsonResponse = JSON.parse(data);
                 document.getElementById("status").innerHTML = jsonResponse["msg"];
                 var deleteUserModal = document.getElementById('simpleModal2');
+                if (jsonResponse.status == 'fail') {
+                    document.getElementById("status").style.color = "red";
+                } else {
+                    document.getElementById("status").style.color = "green";
+                }
                 deleteUserModal.style.display = 'none';
             } else {
                 console.log(this.status);
