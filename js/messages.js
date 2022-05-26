@@ -104,3 +104,23 @@ if (jQuery(window).width() < 701) {
     // document.getElementById("inbox-tab").setAttribute("onclick", `openTab(event, 'inbox-component)`);
     // document.getElementById("chat-tab").setAttribute("onclick",`openTab(event, 'chat-component')`);
 }
+
+// Logout Modal Functions
+var modal = document.getElementById('simpleModal');
+var modalBtn = document.getElementById('logout');
+var goBack = document.getElementById('modal-return');
+
+modalBtn.addEventListener('click', function() {
+    modal.style.display = 'block';
+});
+
+goBack.addEventListener('click', function(e) {
+    e.preventDefault();
+    modal.style.display = 'none';
+});
+
+window.addEventListener('click', function (e) {
+    if (e.target == modal) {
+        modal.style.display = 'none';
+    }
+});
