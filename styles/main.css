@@ -159,7 +159,7 @@ body {
 
     .profilePic {
         max-width: 55px;
-        max-height: 55px;
+        height: 55px;
         width: 100%;
         object-fit: cover;
         border-radius: 50%;
@@ -402,7 +402,7 @@ body {
 
     #profile-icon .profilePic {
         max-width: 30px;
-        max-height: 30px;
+        height: 30px;
         width: 100%;
         object-fit: cover;
         border-radius: 50%;
@@ -488,7 +488,7 @@ body {
 
     .profilePic {
         max-width: 45px;
-        max-height: 45px;
+        height: 45px;
         width: 100%;
         object-fit: cover;
         border-radius: 50%;
