@@ -33,8 +33,7 @@ const req = require('express/lib/request');
 const {
     Socket
 } = require('socket.io');
-
-
+var cloudinary = require('cloudinary')
 
 
 app.use("/img", express.static("./images"));
@@ -85,6 +84,12 @@ const dbConfigHeroku = {
     multipleStatements: false,
     database: "heroku_7ab302bab529edd"
 };
+
+cloudinary.config({ 
+    cloud_name: 'hddqzwg6p', 
+    api_key: '812472947639366', 
+    api_secret: 'bdO-D2wVZJQlEhP6aYeUV9D1fNs' 
+  });
 
 // Creates Connection to Database
 if (is_heroku) {
@@ -770,6 +775,7 @@ app.post('/delete-post', (req, res) => {
 });
 
 app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
+    var cloudinary = require('cloudinary');
     var sql = `SELECT * FROM bby_01_timeline
                 ORDER BY postID DESC LIMIT 1`;
     database.query(sql, (error, results) => {
@@ -785,6 +791,7 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
                     if (error) console.log(error);
 
                 });
+                cloudinary.uploader.upload(req.files[i].filename, function(result) { console.log(result) })
             }
             database.query(sql, [results[0].postID, req.files[l].filename], (error, results) => {
                 if (error) throw error;
