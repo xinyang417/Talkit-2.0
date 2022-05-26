@@ -957,7 +957,7 @@ app.post('/update-profile', (req, res) => {
     let sql;
     let message = "Profile updated.";
 
-    if (newAbout.trim().length >= 1) {
+    if (newAbout.trim().length >= 1 && newAbout != '') {
         sql = `UPDATE bby_01_profile
                 SET about = ?
                 WHERE userID = ?`;
@@ -967,7 +967,7 @@ app.post('/update-profile', (req, res) => {
                 message = "About updated."
             });
     }
-    if (newName.trim().length >= 1) {
+    if (newName.trim().length >= 1 && newName != '') {
         sql = `UPDATE bby_01_profile
                 SET displayName = ?
                 WHERE userID = ?`;
@@ -977,7 +977,7 @@ app.post('/update-profile', (req, res) => {
                 message = "Display name updated."
             });
     }
-    if (newEmail.trim().length >= 1) {
+    if (newEmail.trim().length >= 1 && newEmail != '') {
         sql = `UPDATE bby_01_user
                 SET email = ?
                 WHERE ID = ?`;
@@ -997,7 +997,7 @@ app.post('/update-profile', (req, res) => {
             message = "Password updated."
         })
     }
-    if (newUsername.trim().length >= 1) {
+    if (newUsername.trim().length >= 1 && newUsername != '') {
         sql = `UPDATE bby_01_user
                 SET username = ?
                 WHERE ID = ?`;
