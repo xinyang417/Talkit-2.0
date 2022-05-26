@@ -943,10 +943,11 @@ app.post('/update-profile', (req, res) => {
     let newAbout = req.body.about;
     let newEmail = req.body.email;
     let newPassword = req.body.password;
+    let newUsername = req.body.username;
     let sql;
     let message = "Profile updated.";
 
-    if (newAbout != '') {
+    if (newAbout.trim().length >= 1) {
         sql = `UPDATE bby_01_profile
                 SET about = ?
                 WHERE userID = ?`;
@@ -956,7 +957,7 @@ app.post('/update-profile', (req, res) => {
                 message = "About updated."
             });
     }
-    if (newName != '') {
+    if (newName.trim().length >= 1) {
         sql = `UPDATE bby_01_profile
                 SET displayName = ?
                 WHERE userID = ?`;
@@ -966,7 +967,7 @@ app.post('/update-profile', (req, res) => {
                 message = "Display name updated."
             });
     }
-    if (newEmail != '') {
+    if (newEmail.trim().length >= 1) {
         sql = `UPDATE bby_01_user
                 SET email = ?
                 WHERE ID = ?`;
@@ -984,6 +985,16 @@ app.post('/update-profile', (req, res) => {
         database.query(sql, [newPassword, req.session.userid], (error, results, fields) => {
             if (error) console.log(error);
             message = "Password updated."
+        })
+    }
+    if (newUsername.trim().length >= 1) {
+        sql = `UPDATE bby_01_user
+                SET username = ?
+                WHERE ID = ?`;
+        req.session.username = newUsername;
+        database.query(sql, [newUsername, req.session.userid], (error, results, fields) => {
+            if(error) console.log(error);
+            message = "Username updated."
         })
     }
     res.send({

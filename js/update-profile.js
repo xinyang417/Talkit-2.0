@@ -49,12 +49,14 @@ document.getElementById("updateSave").addEventListener("click", function (e) {
         email: document.getElementById("email").value,
         password: document.getElementById("password").value,
         displayName: document.getElementById("displayName").value,
-        about: document.getElementById("about").value
+        about: document.getElementById("about").value,
+        username: document.getElementById("username").value
     };
     document.getElementById("displayName").value = "";
     document.getElementById("about").value = "";
     document.getElementById("email").value = "";
     document.getElementById("password").value = "";
+    document.getElementById("username").value = "";
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE) {
@@ -73,7 +75,7 @@ document.getElementById("updateSave").addEventListener("click", function (e) {
             console.log("ERROR", this.status);
         }
     }
-    let queryString = "displayName=" + formData.displayName + "&about=" + formData.about + "&email=" + formData.email + "&password=" + formData.password;
+    let queryString = "displayName=" + formData.displayName + "&about=" + formData.about + "&email=" + formData.email + "&password=" + formData.password + "&username=" + formData.username;
     xhr.open("POST", "/update-profile");
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
