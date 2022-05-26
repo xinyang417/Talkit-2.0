@@ -332,6 +332,7 @@ io.on('connection', function(socket) {
     socket.on('create', (data) => {
         let withSocket = getSocketByUserId(data.withUserId);
         socket.broadcast.to(withSocket.id).emit("invite", data);
+        socket.join(data.room);
     });
 
     socket.on('joinRoom', function(data) {
