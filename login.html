@@ -31,9 +31,9 @@
 		<div class="login">
 			<form action="/auth" method="post" id="loginForm">
 				<h3>Welcome back!</h3>
-				<input type="text" name="username" placeholder="Username" id="username" required>
+				<input type="text" name="username" placeholder="Username" id="username" maxlength="30" required >
 				<p id="psw">
-					<input type="password" name="password" placeholder="Password" id="password" required>
+					<input type="password" name="password" placeholder="Password" id="password" maxlength="20" required>
 					<i class="bi bi-eye-slash" id="togglePassword"></i>
 					<span class="psw"><a href="#"><b>Forgot password?</b></a></span>
 				</p>

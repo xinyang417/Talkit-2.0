@@ -26,11 +26,7 @@
     <div class="container">
         <div id="nav">
             <nav id="btns">
-<<<<<<< HEAD
                 <button id="discard" data-id="home" class="discardModal"><span class="material-symbols-outlined">
-=======
-                <button class="discardModal" id="discard" data-id="home"><span class="material-symbols-outlined">
->>>>>>> parent of 1f16b02 (Rebased)
                         close
                     </span><b>Discard</b></button>
                 <button id="post" type="submit"><b>Post</b></button>
@@ -52,15 +48,15 @@
 
         <div id="text">
             <form id='input'>
-                <input type="text" id="title" placeholder="Add a title" />
-                <textarea id="story" rows="4" cols="50" placeholder="What's on your mind?"></textarea>
+                <input type="text" id="title" maxlength="500" placeholder="Add a title" />
+                <textarea id="story" rows="4" cols="50" placeholder="What's on your mind?" maxlength="2000"></textarea>
             </form>
         </div>
 
         <div id="photo">
             <h3><b> Would you like to add a photo?</b></h3>
             <form action="/">
-                <input type="file" name="photo" id="inputPhoto" accept=".jpg, .jpeg, .png" multiple />
+                <input type="file" name="photo" id="inputPhoto" maxlength="500" accept=".jpg, .jpeg, .png" multiple />
                 <button id='delete' type="reset"><b>Delete Photo</b> </button>
             </form>
         </div>
@@ -75,15 +71,7 @@
                             class="material-symbols-outlined">add_box</span><b>Share
                             Story</b></a>
                 </li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                <li class="discardModal" id="message-list" data-id="home"><a href="#"><span
-=======
                 <li class="discardModal" id="message-list" data-id="message-list"><a href="#"><span
->>>>>>> parent of 1f16b02 (Rebased)
-=======
-                <li class="discardModal" id="message-list" data-id="message-list"><a href="#"><span
->>>>>>> a07343388487c8bd9ceeefa36d9354927e0922c6
                             class="material-symbols-outlined">mail</span><b>Messages</b></a> </li>
                 <li class="discardModal" data-id="home"><a href="#"><span
                             class="material-symbols-outlined">notifications</span><b>Notifications</b></a>
