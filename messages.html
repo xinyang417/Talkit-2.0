@@ -16,6 +16,7 @@
         href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="/css/messages.css">
+    <link href="/img/favicon.ico" rel="icon" type="image/x-icon" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Messages</title>
 </head>
@@ -25,27 +26,27 @@
 
         <!--Nav Bar-->
         <div id="nav">
-            <div id="back-button">
-                <button onclick="history.back()" id="back"><span class="material-symbols-outlined">
-                        arrow_back
-                    </span></button>
-            </div>
+            <button onclick="history.back()" id="back"><span class="material-symbols-outlined">
+                    arrow_back
+                </span></button>
         </div>
 
         <!--Page Name-->
         <div id="pageName">
             <h2>Messages</h2>
+        </div>
 
-            <!--Search Bar-->
+        <!--Search Bar-->
+        <div id="search">
             <input type="text" id="search-bar" placeholder="Search">
         </div>
 
-
         <!--FOR MOBILE-->
+
+
         <!--Tabs-->
         <div class="tab">
-            <button class="tablinks active" id="inbox-tab" onclick="openTab(event, 'inbox-component')">User
-                List</button>
+            <button class="tablinks active" id="inbox-tab" onclick="openTab(event, 'inbox-component')">Contacts</button>
             <button class="tablinks" id="chat-tab" onclick="openTab(event, 'chat-component')">Chat</button>
         </div>
 
@@ -57,7 +58,7 @@
         <div class="chat-container tabcontent" id="chat-component">
 
             <div id="chatUser">
-                <h4>Chatting with <span id="friend-dName"><b> displayName</b></span></h4>
+                <h4>Chatting with <span id="friend-dName"><b> ...</b></span></h4>
             </div>
 
             <div id="chat-box">
@@ -78,12 +79,15 @@
                 </template>
             </div>
 
-            <form id="chat-form">
-                <textarea id="msg" placeholder="Message..." required="required"></textarea>
-                <input type="button" id="send" value="Send" />
-            </form>
+            <div id="form">
+                <form id="chat-form">
+                    <textarea id="msg" placeholder="Message..." required="required"></textarea>
+                    <input type="button" id="send" value="Send" />
+                </form>
+            </div>
 
         </div>
+
 
 
         <!--FOR DESKTOP-->
@@ -100,36 +104,32 @@
         </div>
 
         <!--Chat-box-->
-        <div class="chat-container-D" id="dchat-component">
-
-            <div id="chatUser">
-                <h4>Chatting with <span id="dfriend-dName"><b> displayName</b></span></h4>
-            </div>
-
-            <div id="dchat-box">
-                <template>
-                    <div class="userBubble">
-                        <div class="userMsg">
-                            <img class="userPic" alt="profilePic" src="/img/logo-04.png">
-                            <p class="userText">Knock knock</p>
-                        </div>
-                    </div>
-
-                    <div class="myBubble">
-                        <div class="myMsg">
-                            <p class="myText">Who's there?</p>
-                            <img class="myPic" alt="profilePic" src="/img/logo-04.png">
-                        </div>
-                    </div>
-                </template>
-            </div>
-
-            <form id="chat-form">
-                <textarea id="dmsg" placeholder="Message..." required="required"></textarea>
-                <input type="button" id="dsend" value="Send" />
-            </form>
-
+        <div id="dchatUser">
+            <h4>Chatting with <span id="dfriend-dName"><b> ...</b></span></h4>
         </div>
+
+        <div id="dchat-box">
+            <template>
+                <div class="userBubble">
+                    <div class="userMsg">
+                        <img class="userPic" alt="profilePic" src="/img/logo-04.png">
+                        <p class="userText">Knock knock</p>
+                    </div>
+                </div>
+
+                <div class="myBubble">
+                    <div class="myMsg">
+                        <p class="myText">Who's there?</p>
+                        <img class="myPic" alt="profilePic" src="/img/logo-04.png">
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <form id="dchat-form">
+            <textarea id="dmsg" placeholder="Message..." required="required"></textarea>
+            <input type="button" id="dsend" value="Send" />
+        </form>
 
 
         <!--TalkIt Logo-->
@@ -181,6 +181,8 @@
         </div>
 
     </div>
+    <!-- Copyright -->
+    <p class="copyRight"><a href="">Privacy</a> · <a href="">Terms</a> · BBY01 © 2022</p>
 
     <script src="http://localhost:8000/socket.io/socket.io.js"></script>
     <script src="/js/messages.js"></script>

@@ -12,7 +12,7 @@ body {
         height: 100vh;
         max-width: 100vw;
         overflow-y: scroll;
-        grid-template-rows: 1fr 3fr 1.2fr;
+        grid-template-rows: 1fr 0.5fr 3fr 1.2fr;
         grid-template-columns: 1fr 1.2fr 1.8fr;
         padding: 0;
         margin: 0;
@@ -20,30 +20,31 @@ body {
         background-color: #DDDDF0;
     }
 
-    #chat-tab {display: none; }
+    #chat-tab,
+    #chatUser,
+    #chat-form {
+        display: none;
+    }
 
-    .tabcontent {display: none;}
+    .tabcontent {
+        display: none;
+    }
 
-    #footer {
-        grid-row: 2 / span 1;
-        grid-column: 1 / span 1;
-        margin-left: 2em;
+    #nav {
+        display: none;
     }
 
 
     #footer {
         grid-row: 2 / span 1;
         grid-column: 1 / span 1;
-        border-top: 0.5px solid #e4e4e4;
         margin-left: 2em;
-        margin-top: 2em;
     }
 
 
     #footer ul {
-        margin-bottom: 1.5em;
         padding: 0;
-        top: 12em;
+        top: 10em;
         margin: 0em 1em 0em 1em;
         max-width: 100%;
         position: absolute;
@@ -51,7 +52,7 @@ body {
     }
 
     ul li {
-        padding: 0.5em 3em 0.5em 3em;
+        padding: 0.5em 0 0.5em 0;
         font-size: 18px;
     }
 
@@ -62,15 +63,23 @@ body {
     }
 
     ul li a:hover,
-    ul li .active {
+    li .active {
         color: #9595c5;
         text-decoration: none;
     }
 
+
     #logo {
         grid-row: 1 / span 1;
         grid-column: 1 / span 1;
-        margin: 2em 0 0 2em;
+        margin: 1em 0 0 2em;
+    }
+
+    #logo img {
+        width: 70%;
+        margin-left: 0;
+        margin-right: auto;
+        display: block;
     }
 
     img {
@@ -86,10 +95,10 @@ body {
 
     #pageName {
         grid-row: 1 / span 1;
-        grid-column: 2 / span 2;
-        margin: 2em 2em 0 2em;
+        grid-column: 2 / span 1;
+        margin: 2em 0 0 2em;
         background-color: white;
-        border-radius: 25px 25px 0px 0px;
+        border-radius: 25px 0 0px 0px;
         padding: 2em 2em 0 2em;
     }
 
@@ -99,8 +108,17 @@ body {
         font-weight: bold;
     }
 
+    #search {
+        grid-row: 2 / span 1;
+        grid-column: 2 / span 1;
+        background-color: white;
+        margin-left: 2em;
+        padding-left: 2em;
+        padding-right: 2em;
+    }
+
     #search-bar {
-        width: 36%;
+        width: 100%;
         background-color: #e4e4e4;
         color: #909090;
         font-family: 'Inter', sans-serif;
@@ -109,33 +127,49 @@ body {
         border-radius: 20px;
         border: none;
         padding-left: 20px;
-        margin-bottom: 1em;
     }
 
     .inbox-container-D {
-        grid-row: 2 / span 3;
+        grid-row: 3 / span 2;
         grid-column: 2 / span 1;
         margin: 0em 0 2em 2em;
         background-color: white;
         border-radius: 0px 0px 0px 25px;
-        padding: 0 1em 1em 1em;
+        padding: 0 2em 2em 2em;
         overflow-y: scroll;
         font-size: 16px;
     }
 
-    .inbox-container {
-        display: none;
+    .inbox-container-D ul {
+        padding: 0;
     }
 
-    .chat-container-D {
-        grid-row: 2 / span 3;
-        grid-column: 3 / span 1;
-        margin: 0 2em 2em 0em;
+    .inbox-container-D li {
+        list-style: none;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 10px;
         background-color: white;
-        border-radius: 0 0 25px 0;
-        padding: 0 1em 1em 1em;
-        overflow-y: scroll;
-        font-size: 16px;
+    }
+
+    .inbox-container-D li:hover {
+        border: 1px solid #9595c5;
+    }
+
+    #dchatUser {
+        grid-row: 1 / span 1;
+        grid-column: 3 / span 1;
+        border-radius: 0px 25px 0 0;
+        margin-top: 2em;
+        margin-right: 2em;
+        padding: 2em;
+        padding-bottom: 0;
+        background-color: white;
+        border-left: 1px solid #e4e4e4;
+    }
+
+    #inbox-component {
+        display: none !important;
     }
 
     .chat-container {
@@ -146,27 +180,34 @@ body {
         display: none;
     }
 
-    #chatUser {
-        grid-row: 1 / span 1;
-        grid-column: 3 / span 1;
-        border-radius: 0 25px 0 0;
+    #dchat-form {
+        grid-row: 4 / span 1;
+        grid-column: 3/ span 1;
         background-color: white;
-        margin-top: 2em;
+        margin-bottom: 2em;
         margin-right: 2em;
-        padding-top: 4em;
+        padding: 2em;
+        border-radius: 0 0 25px 0;
+        border-left: 1px solid #e4e4e4;
+    }
+
+    h4 {
+        margin-bottom: 0;
+        margin-top: auto;
+    }
+
+    #dchat-box {
+        grid-row: 2 / span 2;
+        grid-column: 3 / span 1;
+        background-color: white;
+        margin-right: 2em;
         padding-left: 2em;
-        border-left: 1.5px solid #e4e4e4;
-        position: relative;
+        padding-right: 2em;
+        border-left: 1px solid #e4e4e4;
     }
 
-    #chatUser h4 {
-        position: absolute;
-        margin-bottom: 1em;
-        bottom: 0;
-    }
-
-    #chat-box .userPic,
-    #chat-box .myPic {
+    #dchat-box .userPic,
+    #dchat-box .myPic {
         max-width: 40px;
     }
 
@@ -278,38 +319,11 @@ body {
         color: #909090;
     }
 
-    #chat-box {
-        grid-row: 2 / span 1;
-        grid-column: 3 / span 1;
-        margin: 0 2em 0 0;
-        background-color: white;
-        padding-top: 1em;
-        padding-left: 2em;
-        padding-right: 4em;
-        border-left: 1.5px solid #e4e4e4;
-        border-bottom: 1.5px solid #e4e4e4;
-        font-size: 16px;
-    }
-
-    #chat-form {
-        grid-row: 3 / span 1;
-        grid-column: 3 / span 1;
-        border-radius: 0 0 25px 0;
-        padding-left: 2em;
-        padding-right: 2em;
-        padding-top: 1.5em;
-        font-size: 16px;
-        background-color: white;
-        border-left: 1.5px solid #e4e4e4;
-        margin-right: 2em;
-        margin-bottom: 2em;
-    }
-
     textarea {
         width: 100%;
-        height: 5em;
+        height: 4em;
         padding: 10px;
-        margin-bottom: 1em;
+        margin-bottom: 0.5em;
         display: inline-block;
         border: none;
         border-radius: 10px;
@@ -320,8 +334,8 @@ body {
         text-align: left;
     }
 
-    #send {
-        width: 150px;
+    #dsend {
+        width: 100px;
         height: 40px;
         border-radius: 10px;
         background: #9595c5;
@@ -359,7 +373,20 @@ body {
         font-weight: bold !important;
     }
 
-    
+    .copyRight,
+    .copyRight a {
+        font-size: 12px;
+        color: #7e7d7d;
+        background-color: #DDDDF0;
+        text-align: center;
+        margin: 0;
+        padding-bottom: 10px;
+        text-decoration: none;
+    }
+
+    .copyRight a:hover {
+        text-decoration: underline;
+    }
 
     #modal {
         display: none;
@@ -438,7 +465,8 @@ body {
         display: grid;
         height: 100vh;
         max-width: 100vw;
-        grid-template-rows: 1fr 1fr 1fr 2fr 6fr 1fr;
+        grid-template-rows: 1fr 1fr 0.5fr 1fr 6fr 2fr 1fr;
+        grid-template-columns: 1fr 1fr;
         padding: 0;
         margin: 0;
         margin-right: 0;
@@ -446,44 +474,61 @@ body {
 
     #nav {
         grid-row: 1 / span 1;
-        border-bottom: 0.5px solid #e4e4e4;
+        grid-column: 1 / span 2;
+        display: flex;
+        height: 60px;
+        align-items: center;
+        padding-left: 1em;
     }
 
-    #back {
+    #nav button {
         background-color: transparent;
         color: #909090;
         border: none;
-        margin-top: 30px;
+        max-width: 30px;
+        max-height: 30px;
+        padding: 0;
     }
 
     #pageName {
         grid-row: 2 / span 1;
+        grid-column: 1 / span 2;
         margin: 0em 1em 0em 1em;
         margin-bottom: 0;
+    }
+
+    #search {
+        grid-row: 3 / span 1;
+        grid-column: 1 / span 2;
+        padding-left: 1em;
+        padding-right: 1em;
     }
 
     #search-bar {
         width: 100%;
         background-color: #e4e4e4;
-        color: #909090;
         font-family: 'Inter', sans-serif;
         font-size: 14px;
         height: 40px;
-        border-radius: 10px;
+        border-radius: 20px;
         border: none;
-        padding-left: 10px;
+        padding-left: 20px;
+    }
+
+    #search-bar::placeholder {
+        color: #909090;
     }
 
     #pageName h2 {
-        margin-top: 30px;
-        margin-bottom: 30px;
+        margin-top: 1em;
+        margin-bottom: 1em;
         font-size: 25px;
-        font-family: 'Inter', sans-serif;
         font-weight: bold;
     }
 
     .tab {
-        grid-row: 3 /span 1;
+        grid-row: 4 /span 1;
+        grid-column: 1 / span 2;
         margin: 1em 1em 0em 1em;
         display: flex;
     }
@@ -492,7 +537,8 @@ body {
         width: 100%;
         height: 40px;
         border: none;
-        border-radius: 10px;
+        border-radius: 10px 10px 0 0;
+        border-bottom: 1px solid #9595c5;
         cursor: pointer;
         transition: 0.3s;
         font-family: 'Inter', sans-serif;
@@ -514,7 +560,8 @@ body {
     }
 
     .inbox-container {
-        grid-row: 4 / span 3;
+        grid-row: 5 / span 2;
+        grid-column: 1 / span 2;
         border: none;
         margin: 1em 1em 0em 1em;
         overflow-y: scroll;
@@ -522,7 +569,8 @@ body {
     }
 
     .chat-container {
-        grid-row: 4 / span 3;
+        grid-row: 5 / span 2;
+        grid-column: 1 / span 2;
         border: none;
         margin: 1em 1em 0em 1em;
         overflow-y: scroll;
@@ -581,7 +629,7 @@ body {
     }
 
     #chat-box {
-        grid-row: 3 / span 2;
+        grid-row: 5 / span 2;
         border: none;
         margin: 1em 1em 0em 1em;
         overflow-y: scroll;
@@ -589,8 +637,8 @@ body {
         bottom: 0;
     }
 
-    #chatUser {
-        display: none;
+    #chatUser h4 {
+        font-size: 16px !important;
     }
 
     #chat-box .userPic,
@@ -658,15 +706,20 @@ body {
         padding: 10px;
     }
 
+
+    #form {
+        grid-row: 6 / span 1;
+        grid-column: 1 / span 2;
+    }
+
     #chat-form {
-        grid-row: 5 / span 1;
         border-radius: 0 0 25px 0;
         background-color: white;
         display: flex;
     }
 
     textarea {
-        width: 100%;
+        width: 80%;
         height: 40px;
         padding: 10px;
         display: inline-block;
@@ -677,11 +730,11 @@ body {
         font-family: 'Inter', sans-serif;
         font-size: 13px;
         text-align: left;
-        margin: 0em 0.5em 0em 1em;
+        margin-right: 1em;
     }
 
     #send {
-        width: 150px;
+        width: 20%;
         height: 40px;
         border-radius: 10px;
         background: #9595c5;
@@ -691,11 +744,6 @@ body {
         font-weight: bold;
         text-align: center;
         float: right;
-        margin: 0em 1em 0em 0.5em;
-    }
-
-    #send:hover {
-        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.108), 0 5px 10px 0 rgba(0, 0, 0, 0.076);
     }
 
     .material-symbols-outlined {
@@ -705,23 +753,27 @@ body {
 
     #footer {
         grid-row: 7 / span 1;
+        grid-column: 1 / span 2;
         border-top: 0.5px solid #e4e4e4;
+        height: 60px;
+        bottom: 0;
     }
 
     #footer ul {
-        padding: 0 0 1.5em 0;
         bottom: 0;
         margin: 0em 1em 0em 1em;
+        padding: 0;
         max-width: 100%;
         position: sticky;
         display: flex;
         justify-content: space-between;
         list-style-type: none;
+        height: 60px;
+        place-items: center;
     }
 
     ul li {
         display: inline-block;
-        padding-top: 5px;
     }
 
     ul a {
@@ -736,19 +788,15 @@ body {
     }
 
     #footer li a {
-        padding-top: 10px;
+        padding-top: 15px;
     }
 
     #footer li .active {
         border-top: 3px solid black;
+        color: black;
     }
 
     #footer li a:active {
-        transition: all 0.3s ease;
-        color: black !important;
-    }
-
-    #footer li .active {
         transition: all 0.3s ease;
         color: black !important;
     }
@@ -757,13 +805,22 @@ body {
         display: none;
     }
 
-    .inbox-container-D {
+    #dinbox-component,
+    #dchat-box,
+    #dchat-box,
+    #dchat-form,
+    #dchatUser,
+    #dchatUser h4,
+    #dinbox-component ul {
         display: none;
     }
 
-    .chat-container-D {
-        display: none;
+    .chat-component {
+        display: none !important;
+        height: 0;
     }
 
-
+    .copyRight {
+        display: none;
+    }
 }
