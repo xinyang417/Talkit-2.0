@@ -110,7 +110,7 @@ body {
         margin: 0em 2em 2em 2em;
         background-color: white;
         border-radius: 0 0 25px 25px;
-        padding: 1em 2em 2em 2em;
+        padding: 0 2em 2em 2em;
         overflow-y: scroll;
         font-size: 16px;
     }
@@ -161,7 +161,8 @@ body {
         max-width: 55px;
         max-height: 55px;
         width: 100%;
-        border-radius: 100%;
+        object-fit: cover;
+        border-radius: 50%;
         z-index: 1;
         flex-shrink: 0;
     }
@@ -391,15 +392,25 @@ body {
     #profile {
         border: none;
         background-color: white;
-        margin-right: 0.7em;
         margin-bottom: 0;
+        width: 30px;
+    }
+
+    #profile-icon {
+        margin-right: 0.7em;
     }
 
     #profile-icon .profilePic {
         max-width: 30px;
         max-height: 30px;
         width: 100%;
+        object-fit: cover;
+        border-radius: 50%;
         margin-bottom: 0;
+    }
+
+    #profile-icon form {
+        width: 30px;
     }
 
     #logout {
@@ -476,9 +487,11 @@ body {
     }
 
     .profilePic {
-        width: 45px;
-        height: 45px;
-        border-radius: 100%;
+        max-width: 45px;
+        max-height: 45px;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 50%;
         float: left;
         margin-right: 1em;
     }

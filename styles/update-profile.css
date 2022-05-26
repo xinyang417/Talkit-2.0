@@ -136,7 +136,8 @@ body {
     }
 
     #image-upload {
-        opacity: 50%;
+        width: 0;
+        height: 0;
     }
 
     .pic-holder .upload-file-block {
@@ -504,6 +505,7 @@ body {
 
     #image-upload {
         height: 0px;
+        width: 0;
     }
 
     .pic-holder {

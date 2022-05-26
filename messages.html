@@ -15,11 +15,11 @@
     <link rel="stylesheet"
         href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    <link rel="stylesheet" href="/css/messages-01.css">
+    <link rel="stylesheet" href="/css/messages.css">
     <title>Messages</title>
 </head>
 
-<>
+<body>
     <div class="container">
 
         <!--Nav Bar-->
@@ -39,13 +39,14 @@
             <input type="text" id="search-bar" placeholder="Search">
         </div>
 
+
+        <!--FOR MOBILE-->
         <!--Tabs-->
         <div class="tab">
             <button class="tablinks active" id="inbox-tab" onclick="openTab(event, 'inbox-component')">User
                 List</button>
             <button class="tablinks" id="chat-tab" onclick="openTab(event, 'chat-component')">Chat</button>
         </div>
-
 
         <!--Messages-->
         <div class="inbox-container tabcontent" id="inbox-component">
@@ -61,6 +62,52 @@
 
         <!--Chat-box-->
         <div class="chat-container tabcontent" id="chat-component">
+
+            <div id="chatUser">
+                <h4>Chatting with <span id="friend-dName"><b> displayName</b></span></h4>
+            </div>
+
+            <div id="chat-box">
+                <template>
+                    <div class="userBubble">
+                        <div class="userMsg">
+                            <img class="userPic" alt="profilePic" src="/img/logo-04.png">
+                            <p class="userText">Knock knock</p>
+                        </div>
+                    </div>
+
+                    <div class="myBubble">
+                        <div class="myMsg">
+                            <p class="myText">Who's there?</p>
+                            <img class="myPic" alt="profilePic" src="/img/logo-04.png">
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <form id="chat-form">
+                <textarea id="msg" placeholder="Message..." required="required"></textarea>
+                <input type="button" id="send" value="Send" />
+            </form>
+
+        </div>
+
+
+        <!--FOR DESKTOP-->
+        <!--Messages-->
+        <div class="inbox-container-D" id="inbox-component">
+            <a class="chat-list" href="/inbox">
+                <img class="userPic" alt="profilePic" src="/img/logo-04.png">
+                <div class="flexBox">
+                    <p class="chat-name">TestUser</p>
+                    <p class="chat-message">Hello, this is a message. And it is kinda long and it overflows.</p>
+                </div>
+                <p class="chat-date">2022-05-17</p>
+            </a>
+        </div>
+
+        <!--Chat-box-->
+        <div class="chat-container-D" id="chat-component">
 
             <div id="chatUser">
                 <h4>Chatting with <span id="friend-dName"><b> displayName</b></span></h4>
@@ -128,7 +175,7 @@
     </div>
 
     <script>
-        if (jQuery(window).width() < 701) {
+        if ($(window).width() < 701) {
             function openTab(evt, tabName) {
                 // Declare all variables
                 var i, tabcontent, tablinks;
@@ -154,6 +201,6 @@
 
     <script src="http://localhost:8000/socket.io/socket.io.js"></script>
     <script src="/js/messages.js"></script>
-    </body>
+</body>
 
 </html>
