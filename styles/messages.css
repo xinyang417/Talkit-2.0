@@ -209,6 +209,12 @@ body {
     #dchat-box .userPic,
     #dchat-box .myPic {
         max-width: 40px;
+        max-height: 40px;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        z-index: 1;
+        flex-shrink: 0;
     }
 
     .userBubble {
@@ -263,14 +269,26 @@ body {
 
     .userPic {
         max-width: 60px;
+        max-height: 60px;
         float: left;
         flex-grow: 1;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        z-index: 1;
+        flex-shrink: 0;
     }
 
     .myPic {
         max-width: 60px;
+        max-height: 60px;
         float: right;
         flex-grow: 1;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        z-index: 1;
+        flex-shrink: 0;
     }
 
     .chat-list {
