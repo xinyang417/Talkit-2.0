@@ -36,8 +36,8 @@ function sendMyMessage(chatWindowId, fromUser, message) {
     } else {
         html = `<div class="userBubble"> 
                     <div class="userMsg">
-                        <p class="userText">${message}</p>
                         <img class="userPic" src="/img/${fromUser.profilePic}" />
+                        <p class="userText">${message}</p>
                     </div>
                 </div>`;
     }
@@ -65,7 +65,9 @@ socket.on('updateUserList', (userList) => {
     let i = 0;
     userList.forEach(item => {
         if (loggedInUser.ID != item.ID){
+            console.log(item.displayName);
             document.getElementById('inbox-component').getElementsByTagName("ul")[i].innerHTML = `<li data-id ="${item.ID}" onclick = "createRoom('${item.ID}', '${item.displayName}')">${item.displayName}</li>`;
+            console.log(item.displayName);
             document.getElementById('dinbox-component').getElementsByTagName("ul")[i].innerHTML = `<li data-id ="${item.ID}" onclick = "createRoom('${item.ID}', '${item.displayName}')">${item.displayName}</li>`;
             i++;
         }
