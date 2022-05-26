@@ -50,7 +50,7 @@
             <form id="upload-images-form">
                 <div class="pic-holder">
                     <img id="profilePic" class="pic" alt="profile" src="/img/logo-04.png">
-                    <input id="image-upload" type="file" accept="image/*" />
+                    <input id="image-upload" type="file" accept="image/*" maxlength="500" />
                     <label for="image-upload" class="upload-file-block">
                         <span class="material-symbols-outlined">add_a_photo</span>
                     </label>
@@ -66,21 +66,21 @@
                 <div id="textInput">
                     <p>
                         <label for="email">Email</label>
-                        <input type="text" id="email" placeholder="Change Email" />
+                        <input type="text" id="email" placeholder="Change Email" maxlength="30" />
                     </p>
                     <p>
                         <label for="password">Password</label>
-                        <input type="password" id="password" placeholder="Change Passoword" />
+                        <input type="password" id="password" placeholder="Change Passoword" maxlength="20"/>
                         <i class="bi bi-eye-slash" id="togglePassword"></i>
                     </p>
 
                     <p>
                         <label for="username">Username</label>
-                        <input type="text" id="username" placeholder="Username" />
+                        <input type="text" id="username" placeholder="Username" maxlength="30" />
                     </p>
                     <p>
                         <label for="displayName">Display Name</label>
-                        <input type="text" id="displayName" placeholder="Display Name (Optional)" />
+                        <input type="text" id="displayName" placeholder="Display Name (Optional)" maxlength="30" />
                     </p>
                 </div>
 

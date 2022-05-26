@@ -41,10 +41,10 @@
                 <legend>Add User</legend>
                 <form>
                     <div class="textInput">
-                        <input type="text" placeholder="Username" id="username" />
-                        <input type="email" placeholder="Email" id="email" />
-                        <input type="password" placeholder="Password" id="password" />
-                        <input type="text" placeholder="Admin?" id="isAdmin" />
+                        <input type="text" placeholder="Username" id="username" maxlength="30" />
+                        <input type="email" placeholder="Email" id="email" maxlength="30" />
+                        <input type="password" placeholder="Password" id="password" maxlength="20" />
+                        <input type="text" placeholder="Admin?" id="isAdmin" maxlength="1" />
                     </div>
                     <div class="buttons">
                         <input type="reset" id="clear" name="clear" class="Clear" value="Clear">
@@ -58,7 +58,7 @@
         <div id="box2">
             <fieldset class="delete-a-user">
                 <legend>Delete User</legend>
-                <input type="text" placeholder="User ID" id="deleteID" />
+                <input type="text" placeholder="User ID" id="deleteID" maxlength="1" />
                 <input type="button" id="delete" value="Delete" />
             </fieldset>
         </div>

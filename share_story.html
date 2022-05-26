@@ -48,15 +48,15 @@
 
         <div id="text">
             <form id='input'>
-                <input type="text" id="title" placeholder="Add a title" />
-                <textarea id="story" rows="4" cols="50" placeholder="What's on your mind?"></textarea>
+                <input type="text" id="title" maxlength="500" placeholder="Add a title" />
+                <textarea id="story" rows="4" cols="50" placeholder="What's on your mind?" maxlength="2000"></textarea>
             </form>
         </div>
 
         <div id="photo">
             <h3><b> Would you like to add a photo?</b></h3>
             <form action="/">
-                <input type="file" name="photo" id="inputPhoto" accept=".jpg, .jpeg, .png" multiple />
+                <input type="file" name="photo" id="inputPhoto" maxlength="500" accept=".jpg, .jpeg, .png" multiple />
                 <button id='delete' type="reset"><b>Delete Photo</b> </button>
             </form>
         </div>
