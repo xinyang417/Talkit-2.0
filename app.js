@@ -33,7 +33,8 @@ const req = require('express/lib/request');
 const {
     Socket
 } = require('socket.io');
-var cloudinary = require('cloudinary')
+var cloudinary = require('cloudinary').v2;
+console.log(cloudinary.config().cloud_name);
 
 
 app.use("/img", express.static("./images"));
@@ -88,7 +89,8 @@ const dbConfigHeroku = {
 cloudinary.config({ 
     cloud_name: 'hddqzwg6p', 
     api_key: '812472947639366', 
-    api_secret: 'bdO-D2wVZJQlEhP6aYeUV9D1fNs' 
+    api_secret: 'bdO-D2wVZJQlEhP6aYeUV9D1fNs', 
+    secure: true
   });
 
 // Creates Connection to Database
