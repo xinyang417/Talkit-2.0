@@ -82,7 +82,7 @@ socket.on('receive-message', (data) => {
 if (jQuery(window).width() < 701) {
     console.log("width lower than 701");
     function openTab(evt, tabName) {
-        // Declare all variables
+        // Declare all variables 
         var i, tabcontent, tablinks;
     
         // Get all elements with class="tabcontent" and hide them
