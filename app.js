@@ -285,7 +285,7 @@ app.get('/share-story', (req, res) => {
 app.get('/message-list', (req, res) => {
     if (req.session.loggedin) {
         // Render login template
-        let doc = fs.readFileSync('./messages-01.html', "utf-8");
+        let doc = fs.readFileSync('./messages.html', "utf-8");
         let profileDOM = new JSDOM(doc);
         if (req.session.isAdmin == 0) {
             profileDOM.window.document.getElementById("dashboard").remove();
