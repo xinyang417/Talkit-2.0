@@ -753,6 +753,13 @@ body {
         display: none;
     }
 
-    
+    .inbox-container-D {
+        display: none;
+    }
+
+    .chat-container-D {
+        display: none;
+    }
+
 
 }
