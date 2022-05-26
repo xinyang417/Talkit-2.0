@@ -38,11 +38,7 @@ document.getElementById("post").addEventListener("click", function (e) {
     document.getElementById("title").value = "";
     document.getElementById("story").value = "";
     if (formData.title.length <= 0 || formData.title.trim().length <= 0 
-<<<<<<< HEAD
     || formData.story.length <= 0 || formData.story.trim().length <= 0) {
-=======
-        || formData.story.length <= 0 || formData.story.trim().length <= 0) {
->>>>>>> parent of 1f16b02 (Rebased)
         return;
     }
     const xhr = new XMLHttpRequest();
