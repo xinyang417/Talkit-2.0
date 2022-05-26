@@ -44,7 +44,7 @@
                         <input type="text" placeholder="Username" id="username" maxlength="30" />
                         <input type="email" placeholder="Email" id="email" maxlength="30" />
                         <input type="password" placeholder="Password" id="password" maxlength="20" />
-                        <input type="text" placeholder="Admin?" id="isAdmin" maxlength="1" />
+                        <input type="text" placeholder="Admin? (Yes: 1 / No: 0)" id="isAdmin" maxlength="1" />
                     </div>
                     <div class="buttons">
                         <input type="reset" id="clear" name="clear" class="Clear" value="Clear">
@@ -121,13 +121,13 @@
         </div>
     </div>
 
-     <!-- Delete User Modal-->
-     <div id="simpleModal2" class="modal">
+    <!-- Delete User Modal-->
+    <div id="simpleModal2" class="modal">
         <div class="modal-content">
             <h5>Are you sure you want to delete this user?</h5>
             <div class="btns">
                 <form><button id="modal-return-delete-user">Cancel</button></form>
-                <form><button type="submit" value="Logout" id="modal-succuess-delete-user">Delete</button></form> 
+                <form><button type="submit" value="Logout" id="modal-succuess-delete-user">Delete</button></form>
             </div>
         </div>
     </div>

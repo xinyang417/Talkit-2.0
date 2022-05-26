@@ -26,9 +26,13 @@ const {
 const {
     resourceLimits
 } = require('worker_threads');
-const { newObjectInRealm } = require('jsdom/lib/jsdom/living/generated/utils');
+const {
+    newObjectInRealm
+} = require('jsdom/lib/jsdom/living/generated/utils');
 const req = require('express/lib/request');
-const { Socket } = require('socket.io');
+const {
+    Socket
+} = require('socket.io');
 
 
 
@@ -197,18 +201,18 @@ app.post('/check-account', (req, res) => {
             if (checkEmail) {
                 res.send({
                     status: "email existed",
-                    msg: "You already signed up with this email."
+                    msg: "Email already in use."
                 });
             } else if (checkUsername) {
                 res.send({
                     status: "invalid username",
                     msg: "Username already in use."
                 });
-            } else if (req.body.isAdmin < 0 || req.body.isAdmin > 1){
+            } else if (req.body.isAdmin < 0 || req.body.isAdmin > 1) {
                 console.log(req.body.isAdmin);
                 res.send({
                     status: "invalid admin code",
-                    msg: "Admin code has to be 0 for regular or 1 for admin."
+                    msg: "Please enter 0 for regular account and 1 for admin account."
                 })
             } else {
                 res.send({
@@ -233,7 +237,7 @@ app.get('/home', (req, res) => {
 
     // If the user is logged in
     if (req.session.loggedin) {
-        
+
         const sql = ` INSERT INTO bby_01_profile(userID, displayName, about, profilePic)
                         SELECT * FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
                         WHERE NOT EXISTS (SELECT userID
@@ -316,16 +320,22 @@ function getSocketByUserId(userId) {
 }
 
 //socket io function starts
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
     socket.on('disconnect', () => {
         connectedUsers = connectedUsers.filter(item => item.socketId != socket.id);
         io.emit('updateUserList', connectedUsers);
     });
 
     socket.on('loggedin', (user) => {
-        clientSocketIds.push({socket: socket, userId: user.ID});
+        clientSocketIds.push({
+            socket: socket,
+            userId: user.ID
+        });
         connectedUsers = connectedUsers.filter(item => item.ID != user.ID);
-        connectedUsers.push({...user, socketId: socket.id})
+        connectedUsers.push({
+            ...user,
+            socketId: socket.id
+        })
         io.emit('updateUserList', connectedUsers);
     });
 
@@ -335,11 +345,11 @@ io.on('connection', function(socket) {
         socket.join(data.room);
     });
 
-    socket.on('joinRoom', function(data) {
+    socket.on('joinRoom', function (data) {
         socket.join(data.room);
     });
 
-    socket.on('send-message', function(data) {
+    socket.on('send-message', function (data) {
         socket.to(data.room).emit("receive-message", data)
     });
 });
@@ -385,7 +395,7 @@ app.post('/add-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     let sql = `INSERT INTO BBY_01_user (username, email, password, isAdmin) 
                 values(?, ?, ?, ?);`
-    if (req.body.username && req.body.email && req.body.password && req.body.isAdmin){
+    if (req.body.username && req.body.email && req.body.password && req.body.isAdmin) {
         database.query(sql,
             [req.body.username, req.body.email, req.body.password, req.body.isAdmin],
             (error, results, fields) => {
@@ -459,7 +469,7 @@ app.post('/delete-user', (req, res) => {
         if (results.length == 0) {
             res.send({
                 status: "fail",
-                msg: "The ID is not existed."
+                msg: "The ID does not exist."
             });
             res.end();
         } else {
@@ -470,16 +480,16 @@ app.post('/delete-user', (req, res) => {
                 if (numberOfAdmin == 1 && accountType == 1) {
                     res.send({
                         status: "fail",
-                        msg: "The account is the last admin account."
+                        msg: "You cannot delete the only admin account."
                     });
                 } else {
                     deleteSQL(req, res);
                 }
             });
         }
-        
+
     });
-    
+
 });
 
 function deleteSQL(req, res) {
@@ -493,7 +503,7 @@ function deleteSQL(req, res) {
 
             res.send({
                 status: "success",
-                msg: "Record deleted"
+                msg: "Record deleted."
             });
         });
 }
@@ -537,7 +547,7 @@ app.get('/story-comment', (req, res) => {
             INNER JOIN bbY_01_profile
             ON BBY_01_timeline.userID = bby_01_profile.userID
             WHERE bby_01_timeline.postID = ?`;
-            
+
             database.query(sql, [req.session.postID], (error, results) => {
                 if (error) throw error;
                 if (results.length > 0) {
@@ -550,7 +560,7 @@ app.get('/story-comment', (req, res) => {
                         profileDOM.window.document.getElementById("postTime").insertAdjacentHTML('beforeend', ' (edited)');
                     }
                     profileDOM.window.document.getElementById("postTitle").innerHTML = results[0].title;
-                    profileDOM.window.document.getElementById("postText").innerHTML = results[0].story;                    
+                    profileDOM.window.document.getElementById("postText").innerHTML = results[0].story;
                     profileDOM.window.document.getElementById("postPic").setAttribute("src", "/img/" + results[0].profilePic);
                     profileDOM.window.document.getElementById("reader").setAttribute("value", req.session.userid);
                     profileDOM.window.document.getElementById("reader").setAttribute("class", req.session.isAdmin);
@@ -560,12 +570,12 @@ app.get('/story-comment', (req, res) => {
                     } else {
                         profileDOM.window.document.getElementById("deletePost").setAttribute("onclick", `deletePost(${req.session.postID})`);
                         profileDOM.window.document.getElementById("editPost").setAttribute("onclick", `editPost(${req.session.postID})`);
-                            
+
                     }
                 }
                 res.send(profileDOM.serialize());
                 res.end();
-            })               
+            })
         })
 
     } else {
@@ -651,7 +661,7 @@ app.post('/delete-post', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     let sql = `DELETE FROM BBY_01_timeline WHERE postID = ?`;
     database.query(sql, [req.body.postID], (error, results) => {
-        if(error) throw error;
+        if (error) throw error;
         res.send();
         res.end();
     })
@@ -671,10 +681,10 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
                 l++;
                 database.query(sql, [results[0].postID, req.files[i].filename], (error, results) => {
                     if (error) console.log(error);
-                    
+
                 });
             }
-            database.query(sql,[results[0].postID, req.files[l].filename], (error, results) => {
+            database.query(sql, [results[0].postID, req.files[l].filename], (error, results) => {
                 if (error) throw error;
                 res.send({
                     status: "success",
@@ -685,25 +695,25 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
     });
 });
 
-app.post('/upload-another-timeline-image', upload.array("files"), (req, res) =>{
-    
+app.post('/upload-another-timeline-image', upload.array("files"), (req, res) => {
+
     var sql = `INSERT INTO bby_01_timeline_images (postID, storyPic)
                 VALUES (?, ?)`;
     let l = 0;
     for (let i = 0; i < req.files.length - 1; i++) {
         l++;
-        database.query(sql, [req.session.postID, req.files[i].filename], (error,results) =>{
+        database.query(sql, [req.session.postID, req.files[i].filename], (error, results) => {
             if (error) console.log(error);
         });
     }
-    database.query(sql, [req.session.postID, req.files[l].filename], (error,results) =>{
+    database.query(sql, [req.session.postID, req.files[l].filename], (error, results) => {
         if (error) console.log(error);
         res.send({
             status: "success",
             rows: results
         });
     });
-    
+
 });
 
 app.post('/delete-image', (req, res) => {
@@ -713,7 +723,7 @@ app.post('/delete-image', (req, res) => {
         let imgIDs = req.body.imageID.split(',').map(Number);
         for (let i = 0; i < imgIDs.length - 1; i++) {
             l++;
-            database.query(sql, [imgIDs[i]], (error, results)=> {
+            database.query(sql, [imgIDs[i]], (error, results) => {
                 if (error) throw error;
             })
         }
@@ -807,9 +817,9 @@ app.post('/delete-comment', (req, res) => {
     }
 });
 
-app.post('/edit-comment', (req,res) => {
+app.post('/edit-comment', (req, res) => {
     if (req.session.loggedin) {
-        
+
         let sql = `UPDATE BBY_01_comment SET comment = ? WHERE commentID = ?`;
         database.query(sql, [req.body.comment, req.body.commentID], (error, results) => {
             if (error) throw error;
@@ -905,7 +915,7 @@ app.post('/upload-images', upload.array("files"), (req, res) => {
     if (req.files.length > 0) {
         database.query(sql, [req.files[0].filename, req.session.userid], (error, results) => {
             if (error) console.log(error);
-            
+
             res.send({
                 status: "success",
                 rows: results

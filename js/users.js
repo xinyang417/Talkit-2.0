@@ -29,7 +29,7 @@ function getUsers() {
                 if (data.status == "success") {
                     let str = `<tr>
                                     <th class ="userid_header"><span>ID</span></th>
-                                    <th class ="username_header"><span>User Name</span></th>
+                                    <th class ="username_header"><span>Username</span></th>
                                     <th class ="email_header"><span>Email</span></th>
                                     <th class ="password_header"><span>Password</span></th>
                                     <th class ="admin_header"><span>isAdmin</span></th>
@@ -66,13 +66,12 @@ function getUsers() {
 
 getUsers();
 
-function setDefaultDisplayName(email){
+function setDefaultDisplayName(email) {
 
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {        
-            } else {
+            if (xhr.status === 200) {} else {
                 console.log(this.status);
             }
         } else {
@@ -156,11 +155,11 @@ function edit(e) {
             xhr.open("POST", "/update-user");
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send("id=" + dataToSend.id 
-                + "&username=" + dataToSend.username 
-                +"&email=" + dataToSend.email 
-                + "&password=" + dataToSend.password 
-                + "&isAdmin=" + dataToSend.isAdmin);
+            xhr.send("id=" + dataToSend.id +
+                "&username=" + dataToSend.username +
+                "&email=" + dataToSend.email +
+                "&password=" + dataToSend.password +
+                "&isAdmin=" + dataToSend.isAdmin);
         }
     });
     parent.innerHTML = "";
@@ -180,43 +179,42 @@ document.getElementById("add").addEventListener("click", (e) => {
     document.getElementById("password").value = "";
     document.getElementById("isAdmin").value = "";
     let queryString = "username=" + formData.username + "&email=" + formData.email + "&password=" +
-    formData.password + "&isAdmin=" + formData.isAdmin;
+        formData.password + "&isAdmin=" + formData.isAdmin;
     ajaxPOST("/check-account", function (data) {
-    if (data) {
-        let dataParsed = JSON.parse(data);
-        let dataStatus = ["email existed", 'invalid username', 'invalid admin code', 'empty'];
-        if (dataStatus.includes(dataParsed.status)) {
-            document.getElementById("status").innerHTML = dataParsed.msg;
-            document.getElementById("status").style.color = "red";    
-        } else {
-            console.log("hello?");
-            document.getElementById("status").style.color = "green";
-            const xhr = new XMLHttpRequest();
-            xhr.onload = function () {
-                if (this.readyState == XMLHttpRequest.DONE) {
-                    // 200 means everthing worked
-                    if (xhr.status === 200) {
-                        // window.location.assign("/profile");
-                        let data = xhr.responseText;
-                        let jsonResponse = JSON.parse(data);
-                        document.getElementById("status").innerHTML = jsonResponse["msg"];
-                        getUsers();
+        if (data) {
+            let dataParsed = JSON.parse(data);
+            let dataStatus = ["email existed", 'invalid username', 'invalid admin code', 'empty'];
+            if (dataStatus.includes(dataParsed.status)) {
+                document.getElementById("status").innerHTML = dataParsed.msg;
+                document.getElementById("status").style.color = "red";
+            } else {
+                document.getElementById("status").style.color = "green";
+                const xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    if (this.readyState == XMLHttpRequest.DONE) {
+                        // 200 means everthing worked
+                        if (xhr.status === 200) {
+                            // window.location.assign("/profile");
+                            let data = xhr.responseText;
+                            let jsonResponse = JSON.parse(data);
+                            document.getElementById("status").innerHTML = jsonResponse["msg"];
+                            getUsers();
+                        } else {
+                            // not a 200, could be anything (404, 500, etc.)
+                            console.log(this.status);
+                        }
                     } else {
-                        // not a 200, could be anything (404, 500, etc.)
-                        console.log(this.status);
+                        console.log("ERROR", this.status);
                     }
-                } else {
-                    console.log("ERROR", this.status);
                 }
+                xhr.open("POST", "/add-user");
+                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.send("username=" + formData.username + "&email=" + formData.email + "&password=" + formData
+                    .password + "&isAdmin=" + formData.isAdmin);
             }
-            xhr.open("POST", "/add-user");
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send("username=" + formData.username + "&email=" + formData.email + "&password=" + formData
-                .password + "&isAdmin=" + formData.isAdmin);
         }
-    }
-}, queryString);
+    }, queryString);
 })
 
 document.getElementById("modal-succuess-delete-user").addEventListener("click", (e) => {
@@ -278,11 +276,11 @@ var deleteUserModal = document.getElementById('simpleModal2');
 var deleteUserBtn = document.getElementById('delete');
 var goBack = document.getElementById('modal-return-delete-user');
 
-deleteUserBtn.addEventListener('click', function() {
+deleteUserBtn.addEventListener('click', function () {
     deleteUserModal.style.display = 'block';
 });
 
-goBack.addEventListener('click', function(e) {
+goBack.addEventListener('click', function (e) {
     e.preventDefault();
     deleteUserModal.style.display = 'none';
 });
