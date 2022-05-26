@@ -166,6 +166,7 @@ body {
     .slideshow-container {
         padding-left: 4em;
         margin-top: 1em;
+        height: fit-content;
     }
 
     #slide {
@@ -175,13 +176,25 @@ body {
 
     #slide img {
         margin-right: 1em;
-        width: 30%
+        max-width: 200px;
+        height: 200px;
+        width: 100%;
+        object-fit: cover;
+        flex-shrink: 0;
+    }
+
+    #slide img:hover {
+        height: auto;
+        width: 100%;
+        object-fit: cover;
+        flex-shrink: 0;
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
     }
 
     #numbertext {
         display: none;
     }
-
 
     #cmtSection {
         margin: 0 2em 0 2em;
