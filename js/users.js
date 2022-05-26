@@ -110,7 +110,8 @@ function edit(e) {
                     username: parent.parentNode.querySelector(".usernames span").innerHTML,
                     email: v,
                     password: parent.parentNode.querySelector(".password span").innerHTML,
-                    isAdmin: parent.parentNode.querySelector(".admin span").innerHTML
+                    isAdmin: parent.parentNode.querySelector(".admin span").innerHTML,
+                    change: "email"
                 };
             } else if (parent == name) {
                 dataToSend = {
@@ -118,7 +119,8 @@ function edit(e) {
                     username: v,
                     email: parent.parentNode.querySelector(".email span").innerHTML,
                     password: parent.parentNode.querySelector(".password span").innerHTML,
-                    isAdmin: parent.parentNode.querySelector(".admin span").innerHTML
+                    isAdmin: parent.parentNode.querySelector(".admin span").innerHTML,
+                    change: "username"
                 };
             } else if (parent == password) {
                 dataToSend = {
@@ -126,7 +128,8 @@ function edit(e) {
                     username: parent.parentNode.querySelector(".usernames span").innerHTML,
                     email: parent.parentNode.querySelector(".email span").innerHTML,
                     password: v,
-                    isAdmin: parent.parentNode.querySelector(".admin span").innerHTML
+                    isAdmin: parent.parentNode.querySelector(".admin span").innerHTML,
+                    change: "password"
                 };
             } else if (parent == isAdmin) {
                 dataToSend = {
@@ -134,8 +137,21 @@ function edit(e) {
                     username: parent.parentNode.querySelector(".usernames span").innerHTML,
                     email: parent.parentNode.querySelector(".email span").innerHTML,
                     password: parent.parentNode.querySelector(".password span").innerHTML,
-                    isAdmin: v
+                    isAdmin: v,
+                    change: "isAdmin"
                 };
+            }
+            if (!v || v.trim().length == 0) {
+                document.getElementById("status").innerHTML = "Please fill in the fields.";
+                document.getElementById('status').style.color = "red";
+                getUsers();
+                return;
+            }
+            if (dataToSend.isAdmin != 0 && dataToSend.isAdmin != 1) {
+                document.getElementById('status').innerHTML = "Please enter 0 for regular account and 1 for admin account.";
+                document.getElementById('status').style.color = "red";
+                getUsers();
+                return;
             }
             const xhr = new XMLHttpRequest();
             xhr.onload = function () {
@@ -144,6 +160,11 @@ function edit(e) {
                         let data = xhr.responseText;
                         let jsonResponse = JSON.parse(data);
                         document.getElementById("status").innerHTML = jsonResponse["msg"];
+                        if (jsonResponse.status == 'fail') {
+                            document.getElementById("status").style.color = "red";
+                        } else {
+                            document.getElementById("status").style.color = "green";
+                        }
                         getUsers();
                     } else {
                         console.log(this.status);
@@ -159,7 +180,8 @@ function edit(e) {
                 "&username=" + dataToSend.username +
                 "&email=" + dataToSend.email +
                 "&password=" + dataToSend.password +
-                "&isAdmin=" + dataToSend.isAdmin);
+                "&isAdmin=" + dataToSend.isAdmin +
+                "&change=" + dataToSend.change);
         }
     });
     parent.innerHTML = "";

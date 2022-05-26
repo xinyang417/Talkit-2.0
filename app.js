@@ -433,24 +433,126 @@ app.post('/update-user', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     let sql = `UPDATE BBY_01_user 
                 SET username = ?, email = ?, password = ?, isAdmin = ? WHERE ID = ?;`;
-    database.query(sql,
-        [req.body.username, req.body.email, req.body.password, req.body.isAdmin,
-            req.body.id
-        ],
-        (error, results) => {
+    if (req.body.change == "isAdmin") {
+        let adminCheck = `SELECT isAdmin
+                        FROM bby_01_user
+                        WHERE ID = ?`;
+        let adminNum = `SELECT COUNT(*) as count
+                        FROM bby_01_user
+                        WHERE isAdmin = 1;`;
+        database.query(adminCheck, [req.body.id], (error, results) => {
             if (error) console.log(error);
-            sql = `UPDATE bby_01_profile
-                    SET displayName = ?
-                    WHERE userID = ?`
-            database.query(sql, [req.body.displayname, req.body.id], (error, results) => {
-                if (error) throw error;
+            if (results[0].isAdmin == 1 && req.body.isAdmin == 0) {
+                database.query(adminNum, (error, results) => {
+                    if (error) console.log(error);
+                    if (results[0].count <= 1) {
+                        res.send({
+                            status: "fail",
+                            msg: "The account is the last admin account."
+                        });
+                        res.end();
+                    } 
+                });
+                database.query(sql, [req.body.username, req.body.email,
+                    req.body.password, req.body.isAdmin, req.body.id],
+                    (error, results) => {
+                        if (error) console.log(error);
+                        res.send({
+                            status: "success",
+                            msg: "Record updated."
+                        });
+                        res.end();
+                    });
+            } else {
+                database.query(sql, [req.body.username, req.body.email,
+                req.body.password, req.body.isAdmin, req.body.id],
+                (error, results) => {
+                    if (error) console.log(error);
+                    res.send({
+                        status: "success",
+                        msg: "Record updated."
+                    });
+                    res.end();
+                });
+            }
+        })
+    } else if (req.body.change == "username") {
+        let usernameInUse =false;
+        let check = `SELECT *
+                    FROM bby_01_user;`;
+        database.query(check, (error, results) => {
+            if (error) throw error;
+            for (let i = 0; i < results.length; i++) {
+                if (results[i].username == req.body.username) {
+                    usernameInUse = true;
+                    break;
+                }
+            }
+            if (usernameInUse) {
+                res.send({
+                    status: "fail",
+                    msg: "Username already in use."
+                });
+                res.end();
+            } else {
+                database.query(sql, [req.body.username, req.body.email,
+                    req.body.password, req.body.isAdmin, req.body.id],
+                    (error, results) => {
+                        if (error) console.log(error);
+                        res.send({
+                            status: "success",
+                            msg: "Record updated."
+                        });
+                        res.end();
+                    });
+            }
+            
+        });
+    } else if (req.body.change == "email") {
+        let emailInUse = false;
+        let check = `SELECT *
+                    FROM bby_01_user;`;
+        database.query(check, (error, results) => {
+            if (error) throw error;
+            
+            for (let i = 0; i < results.length; i++) {
+                if (results[i].email == req.body.email) {
+                    emailInUse = true;
+                    break;
+                }
+            }
+            if (emailInUse) {
+                res.send({
+                    status: "fail",
+                    msg: "Email already in use."
+                });
+                res.end();
+            } else {
+                database.query(sql, [req.body.username, req.body.email,
+                    req.body.password, req.body.isAdmin, req.body.id],
+                    (error, results) => {
+                        if (error) console.log(error);
+                        res.send({
+                            status: "success",
+                            msg: "Record updated."
+                        });
+                        res.end();
+                    });
+            }
+            
+        })
+    } else {
+        database.query(sql, [req.body.username, req.body.email,
+            req.body.password, req.body.isAdmin, req.body.id],
+            (error, results) => {
+                if (error) console.log(error);
                 res.send({
                     status: "success",
                     msg: "Record updated."
                 });
                 res.end();
             });
-        });
+    }
 });
 
 app.post('/delete-user', (req, res) => {
