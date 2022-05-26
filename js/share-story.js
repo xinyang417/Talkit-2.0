@@ -74,7 +74,7 @@ function uploadImages() {
         for (let i = 0; i < imageUpload.files.length; i++) {
             formData.append("files", imageUpload.files[i]);
         }
-        
+        console.log("upload");
         const options = {
             method: 'POST',
             body: formData,

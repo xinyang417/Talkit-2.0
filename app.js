@@ -775,7 +775,7 @@ app.post('/delete-post', (req, res) => {
 });
 
 app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
-    var cloudinary = require('cloudinary');
+    // var cloudinary = require('cloudinary');
     var sql = `SELECT * FROM bby_01_timeline
                 ORDER BY postID DESC LIMIT 1`;
     database.query(sql, (error, results) => {
@@ -785,13 +785,18 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
             sql = `INSERT INTO bby_01_timeline_images (postID, storyPic)
             VALUES (?, ?)`;
             let l = 0;
+            let path;
             for (let i = 0; i < req.files.length - 1; i++) {
                 l++;
                 database.query(sql, [results[0].postID, req.files[i].filename], (error, results) => {
                     if (error) console.log(error);
 
                 });
-                cloudinary.uploader.upload(req.files[i].filename, function(result) { console.log(result) })
+                console.log("files: ",req.files[i]);
+                path = "/images/" + req.files[i].filename;
+                console.log(path);
+                
+                cloudinary.uploader.upload(req.files[i].path, function(result) { console.log(result) })
             }
             database.query(sql, [results[0].postID, req.files[l].filename], (error, results) => {
                 if (error) throw error;
