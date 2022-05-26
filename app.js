@@ -34,7 +34,7 @@ const {
     Socket
 } = require('socket.io');
 
-
+const { uploadFile } = require('./s3'); //here
 
 
 app.use("/img", express.static("./images"));
@@ -769,9 +769,13 @@ app.post('/delete-post', (req, res) => {
     })
 });
 
-app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
+app.post('/upload-timeline-image', upload.array("files"), async (req, res) => {
+    const file = req.file; // Here
+    console.log(file);
     var sql = `SELECT * FROM bby_01_timeline
                 ORDER BY postID DESC LIMIT 1`;
+    const result = await uploadFile(file); // Here
+    console.log(result);
     database.query(sql, (error, results) => {
         if (error) {
             console.log(error);
