@@ -27,13 +27,9 @@ getDisplayName();
 document.getElementById("post").addEventListener("click", function (e) {
     e.preventDefault();
 
-    let tz = new Date();
-    let offset = tz.getTimezoneOffset() * 60000;
-    var dateTime = new Date(tz.getTime() - offset).toISOString().slice(0, 19).replace('T', ' ');
     let formData = {
         title: document.getElementById("title").value,
         story: document.getElementById("story").value,
-        date: dateTime
     };
     document.getElementById("title").value = "";
     document.getElementById("story").value = "";
@@ -58,7 +54,7 @@ document.getElementById("post").addEventListener("click", function (e) {
             console.log("ERROR", this.status);
         }
     }
-    let queryString = "&title=" + formData.title + "&story=" + formData.story + "&date=" + formData.date;
+    let queryString = "title=" + formData.title + "&story=" + formData.story;
     xhr.open("POST", "/post-story");
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
