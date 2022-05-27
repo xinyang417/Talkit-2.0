@@ -225,7 +225,6 @@ app.post('/check-account', (req, res) => {
                     msg: "Username already in use."
                 });
             } else if (req.body.isAdmin < 0 || req.body.isAdmin > 1) {
-                console.log(req.body.isAdmin);
                 res.send({
                     status: "invalid admin code",
                     msg: "Please enter 0 for regular account and 1 for admin account."
@@ -800,7 +799,6 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
             for (let i = 0; i < req.files.length - 1; i++) {
                 l++;
                 cloudinary.uploader.upload(req.files[i].path, function(result) { 
-                    // console.log(result);
 
                     database.query(sql, [results[0].postID, cloudinary.url(result.public_id)], (error, results) => {
                         if (error) console.log(error);
@@ -808,7 +806,6 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
                 })
             }
             cloudinary.uploader.upload(req.files[l].path, function(result) { 
-                // console.log(result);
                 database.query(sql, [results[0].postID, cloudinary.url(result.public_id)], (error, results) => {
                     if (error) throw error;
                     res.send({

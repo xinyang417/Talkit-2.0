@@ -51,7 +51,6 @@ ready(function () {
 
         let queryString = "username=" + formData.username + "&email=" + formData.email + "&password=" +
             formData.password + "&isAdmin=" + formData.isAdmin;
-        // let signup = false;
         ajaxPOST("/check-account", function (data) {
             if (data) {
                 let dataParsed = JSON.parse(data);

@@ -57,11 +57,8 @@ function displayPicture() {
         if (this.readyState == XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
-                console.log(data.status);
-                console.log(data.rows.length);
                 if (data.status == "success" && data.rows.length > 0) {
                     let row = data.rows[0];
-                    console.log(row.profilePic);
                     document.getElementById("profilePic").setAttribute("src", row.profilePic);
                 } else if (data.rows.length == 0) {
                     document.getElementById("profilePic").setAttribute("src", "/img/logo-04.png");

@@ -74,7 +74,6 @@ socket.on('updateUserList', (userList) => {
 });
 
 socket.on('invite', function(data) {
-    console.log("invite", data);
     document.getElementById("friend-dName").getElementsByTagName("b")[0].innerHTML = `${data.hostName}`;
     document.getElementById("dfriend-dName").getElementsByTagName("b")[0].innerHTML = `${data.hostName}`;
     socket.emit("joinRoom", data)

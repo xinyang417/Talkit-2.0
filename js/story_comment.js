@@ -1,5 +1,4 @@
 "use strict";
-// var cloudinary = require('cloudinary');
 var imageInfo;
 
 
