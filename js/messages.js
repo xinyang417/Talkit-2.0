@@ -64,9 +64,10 @@ socket.on('updateUserList', (userList) => {
     document.getElementById("dinbox-component").innerHTML = `<ul></ul>`;
     let i = 0;
     userList.forEach(item => {
+        let html = `<li data-id ="${item.ID}" onclick = "createRoom('${item.ID}', '${item.displayName}')">${item.displayName}</li>`;
         if (loggedInUser.ID != item.ID){
-            document.getElementById('inbox-component').getElementsByTagName("ul")[i].innerHTML = `<li data-id ="${item.ID}" onclick = "createRoom('${item.ID}', '${item.displayName}')">${item.displayName}</li>`;
-            document.getElementById('dinbox-component').getElementsByTagName("ul")[i].innerHTML = `<li data-id ="${item.ID}" onclick = "createRoom('${item.ID}', '${item.displayName}')">${item.displayName}</li>`;
+            document.getElementById('inbox-component').getElementsByTagName("ul")[0].insertAdjacentHTML("beforeend", html);
+            document.getElementById('dinbox-component').getElementsByTagName("ul")[0].insertAdjacentHTML("beforeend",html);
             i++;
         }
     });
