@@ -175,7 +175,11 @@
     </div>
     <!-- Copyright -->
     <p class="copyRight"><a href="">Privacy</a> · <a href="">Terms</a> · BBY01 © 2022</p>
+    <script type="module">
+        import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 
+        const socket = io();
+    </script>
     <script src="http://localhost:8000/socket.io/socket.io.js"></script>
     <script src="/js/messages.js"></script>
 </body>
