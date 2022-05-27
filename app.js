@@ -412,7 +412,7 @@ app.post('/add-user', (req, res) => {
                     if (error) throw error;
                     sql = `INSERT INTO bby_01_profile(userID, displayName, about, profilePic)
                             SELECT * 
-                            FROM (SELECT ? AS userID, ? AS displayName, '' AS about, 'logo-04.png' AS profilePic) AS tmp
+                            FROM (SELECT ? AS userID, ? AS displayName, '' AS about, '/img/logo-04.png' AS profilePic) AS tmp
                             WHERE NOT EXISTS (SELECT userID
                                 FROM bby_01_profile
                                 WHERE userID = ?) LIMIT 1;`;
