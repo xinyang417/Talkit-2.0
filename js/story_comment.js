@@ -45,7 +45,6 @@ function displayImages() {
                 let data = JSON.parse(this.responseText);
                 if (data.status == "success") {
                     imageInfo = data.rows;
-                    console.log('data: ', data);
                     for (let i = 0; i < data.rows.length; i++) {
                         let row = data.rows[i];
                         var newPostTemplate = postTemplate.content.cloneNode(true);

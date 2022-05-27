@@ -669,7 +669,7 @@ app.get('/story-comment', (req, res) => {
                     }
                     profileDOM.window.document.getElementById("postTitle").innerHTML = results[0].title;
                     profileDOM.window.document.getElementById("postText").innerHTML = results[0].story;
-                    profileDOM.window.document.getElementById("postPic").setAttribute("src", "/img/" + results[0].profilePic);
+                    profileDOM.window.document.getElementById("postPic").setAttribute("src", results[0].profilePic);
                     profileDOM.window.document.getElementById("reader").setAttribute("value", req.session.userid);
                     profileDOM.window.document.getElementById("reader").setAttribute("class", req.session.isAdmin);
                     if (results[0].userID != req.session.userid && req.session.isAdmin == 0) {
@@ -832,7 +832,6 @@ app.post('/upload-another-timeline-image', upload.array("files"), (req, res) => 
             });
         });
     })
-        console.log(cloudinaryID);
     
 
 });
