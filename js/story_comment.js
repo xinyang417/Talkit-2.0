@@ -1,5 +1,5 @@
 "use strict";
-
+// var cloudinary = require('cloudinary');
 var imageInfo;
 
 
@@ -45,10 +45,11 @@ function displayImages() {
                 let data = JSON.parse(this.responseText);
                 if (data.status == "success") {
                     imageInfo = data.rows;
+                    console.log('data: ', data);
                     for (let i = 0; i < data.rows.length; i++) {
                         let row = data.rows[i];
                         var newPostTemplate = postTemplate.content.cloneNode(true);
-                        newPostTemplate.getElementById("postImage").src = "/img/" + row.storyPic;
+                        newPostTemplate.getElementById("postImage").src = row.storyPic;
                         newPostTemplate.getElementById("postImage").setAttribute("value", row.postImageID);
                         newPostTemplate.getElementById("postImage").setAttribute("id", "image" + row.postImageID);
                         newPostTemplate.getElementById("numbertext").innerHTML = i + 1 + " / " + data.rows.length;

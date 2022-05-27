@@ -33,8 +33,7 @@ const req = require('express/lib/request');
 const {
     Socket
 } = require('socket.io');
-var cloudinary = require('cloudinary').v2;
-console.log(cloudinary.config().cloud_name);
+var cloudinary = require('cloudinary');
 
 
 app.use("/img", express.static("./images"));
@@ -777,7 +776,6 @@ app.post('/delete-post', (req, res) => {
 });
 
 app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
-    // var cloudinary = require('cloudinary');
     var sql = `SELECT * FROM bby_01_timeline
                 ORDER BY postID DESC LIMIT 1`;
     database.query(sql, (error, results) => {
@@ -787,26 +785,27 @@ app.post('/upload-timeline-image', upload.array("files"), (req, res) => {
             sql = `INSERT INTO bby_01_timeline_images (postID, storyPic)
             VALUES (?, ?)`;
             let l = 0;
-            let path;
             for (let i = 0; i < req.files.length - 1; i++) {
                 l++;
-                database.query(sql, [results[0].postID, req.files[i].filename], (error, results) => {
-                    if (error) console.log(error);
+                cloudinary.uploader.upload(req.files[i].path, function(result) { 
+                    // console.log(result);
 
-                });
-                console.log("files: ",req.files[i]);
-                path = "/images/" + req.files[i].filename;
-                console.log(path);
-                
-                cloudinary.uploader.upload(req.files[i].path, function(result) { console.log(result) })
+                    database.query(sql, [results[0].postID, cloudinary.url(result.public_id)], (error, results) => {
+                        if (error) console.log(error);
+                    });
+                })
             }
-            database.query(sql, [results[0].postID, req.files[l].filename], (error, results) => {
-                if (error) throw error;
-                res.send({
-                    status: "success",
-                    rows: results
-                });
+            cloudinary.uploader.upload(req.files[l].path, function(result) { 
+                // console.log(result);
+                database.query(sql, [results[0].postID, cloudinary.url(result.public_id)], (error, results) => {
+                    if (error) throw error;
+                    res.send({
+                        status: "success",
+                        rows: results
+                    });
+                })
             })
+            
         }
     });
 });
@@ -818,17 +817,23 @@ app.post('/upload-another-timeline-image', upload.array("files"), (req, res) => 
     let l = 0;
     for (let i = 0; i < req.files.length - 1; i++) {
         l++;
-        database.query(sql, [req.session.postID, req.files[i].filename], (error, results) => {
-            if (error) console.log(error);
-        });
+        cloudinary.uploader.upload(req.files[i].path, function(result) { 
+            database.query(sql, [req.session.postID, result.url], (error, results) => {
+                if (error) console.log(error);
+            });
+        })
     }
-    database.query(sql, [req.session.postID, req.files[l].filename], (error, results) => {
-        if (error) console.log(error);
-        res.send({
-            status: "success",
-            rows: results
+    cloudinary.uploader.upload(req.files[l].path, function(result) { 
+        database.query(sql, [req.session.postID, result.url], (error, results) => {
+            if (error) console.log(error);
+            res.send({
+                status: "success",
+                rows: results
+            });
         });
-    });
+    })
+        console.log(cloudinaryID);
+    
 
 });
 
@@ -1029,14 +1034,16 @@ app.post('/upload-images', upload.array("files"), (req, res) => {
                 SET profilePic = ?
                 WHERE userID = ?`;
     if (req.files.length > 0) {
-        database.query(sql, [req.files[0].filename, req.session.userid], (error, results) => {
-            if (error) console.log(error);
-
-            res.send({
-                status: "success",
-                rows: results
-            });
-        });
+        cloudinary.uploader.upload(req.files[0].path, function(result) {
+            database.query(sql, [result.url, req.session.userid], (error, results) => {
+                if (error) console.log(error);
+    
+                res.send({
+                    status: "success",
+                    rows: results
+                });
+            }); })
+        
     }
 });
 

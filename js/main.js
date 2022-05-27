@@ -22,7 +22,7 @@ function displayPosts() {
                         newPostTemplate.getElementById("postTitle").innerHTML = `<p onclick = "sendPostId(` +
                             row.postID + `)">` +
                             title + `</p>`;
-                        newPostTemplate.getElementById("posterPic").src = "/img/" + row.profilePic;
+                        newPostTemplate.getElementById("posterPic").src = row.profilePic;
                         parent.appendChild(newPostTemplate);
                     }
                 } else {
@@ -79,7 +79,7 @@ function displayProfilePic() {
                 let data = JSON.parse(this.responseText);
                 if (data.status == "success" && data.rows.length > 0) {
                     let row = data.rows[0];
-                    document.getElementById("myPic").src = "/img/" + row.profilePic;
+                    document.getElementById("myPic").src = row.profilePic;
                 } else {
                     console.log("Error!");
                 }

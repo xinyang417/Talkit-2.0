@@ -63,6 +63,7 @@ document.getElementById("updateSave").addEventListener("click", function (e) {
 
             // 200 means everthing worked
             if (xhr.status === 200) {
+                window.location.reload();
                 window.location.assign("/profile");
             } else {
 
@@ -124,7 +125,7 @@ function displayProfile() {
                     let about = row.about;
                     document.getElementById("displayName").setAttribute("value", name);
                     document.getElementById("about").innerHTML = about;
-                    document.getElementById("profilePic").src = "/img/" + row.profilePic;
+                    document.getElementById("profilePic").src = row.profilePic;
                 } else {
                     console.log("Error!");
                 }

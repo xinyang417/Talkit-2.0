@@ -30,13 +30,13 @@ function sendMyMessage(chatWindowId, fromUser, message) {
         html =`<div class="myBubble">
                     <div class="myMsg">
                         <p class="myText">${message}</p>
-                        <img class="myPic" src="/img/${fromUser.profilePic}" />
+                        <img class="myPic" src="${fromUser.profilePic}" />
                     </div>
                 </div>`;
     } else {
         html = `<div class="userBubble"> 
                     <div class="userMsg">
-                        <img class="userPic" src="/img/${fromUser.profilePic}" />
+                        <img class="userPic" src="${fromUser.profilePic}" />
                         <p class="userText">${message}</p>
                     </div>
                 </div>`;
