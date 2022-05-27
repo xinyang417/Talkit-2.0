@@ -111,7 +111,7 @@ function displayComment() {
                         let offset = tz.getTimezoneOffset() * 60000;
                         tz = new Date(tz.getTime() - offset);
                         let time = tz.toISOString().slice(0, 19).replace('T', ' ');
-                        let profilePic = "/img/" + row.profilePic;
+                        let profilePic = row.profilePic;
                         newCommentTemplate.getElementById("comment").setAttribute("id", row.commentID);
                         newCommentTemplate.getElementById("commenterPic").setAttribute("src", profilePic);
                         newCommentTemplate.getElementById("commenter").innerHTML = displayName;
