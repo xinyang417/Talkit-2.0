@@ -732,13 +732,10 @@ app.post('/post-story', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     let title = req.body.title;
     let story = req.body.story;
-    let date = req.body.date;
     let user = req.session.userid;
-    console.log("date from req.body.date on /post-story: ", req.body.date);
     let tz = new Date();
     let offset = tz.getTimezoneOffset() * 60000;
     let updatedDate = new Date(tz.getTime() - offset).toISOString().slice(0, 19).replace('T', ' ');
-    console.log("updatedDate: ", updatedDate);
     if (title != '' && story != '') {
         database.query('INSERT INTO BBY_01_timeline (userID, title, story, date) values(?, ?, ?, ?)',
             [user, title, story, updatedDate],
