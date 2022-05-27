@@ -59,7 +59,6 @@ function displayPicture() {
                 let data = JSON.parse(this.responseText);
                 if (data.status == "success" && data.rows.length > 0) {
                     let row = data.rows[0];
-                    console.log(row.profilePic);
                     document.getElementById("profilePic").setAttribute("src", row.profilePic);
                 } else if (data.rows.length == 0) {
                     document.getElementById("profilePic").setAttribute("src", "/img/logo-04.png");
