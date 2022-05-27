@@ -1085,66 +1085,109 @@ app.post('/update-profile', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     let newName = req.body.displayName;
     let newAbout = req.body.about;
-    let newEmail = req.body.email;
+    let newEmail = req.body.email.trim();
     let newPassword = req.body.password;
     let newUsername = req.body.username;
+    let change = req.body.change;
     let sql;
-    let message = "Profile updated.";
+    let s = "success";
+    let message = "Profile is not updated.";
+    let checkUsername = false;
+    let checkEmail = false;
 
-    if (newAbout.trim().length >= 1 && newAbout != '') {
-        sql = `UPDATE bby_01_profile
-                SET about = ?
-                WHERE userID = ?`;
-        database.query(sql, [newAbout, req.session.userid],
-            (error, results, fields) => {
-                if (error) console.log(error);
-                message = "About updated."
+    sql = `SELECT * FROM bby_01_user`;
+    database.query(sql, (error,results) => {
+        if (error) throw error;
+        let l = 0;
+
+        for (let i = 0; i < results.length; i++) {
+            if (results[i].email == newEmail && change == "email") {
+                checkEmail = true;
+                break;
+            }
+            if (results[i].username == newUsername && change == "username") {
+                checkUsername = true;
+                break;
+            }
+        }
+        if (checkEmail) {
+            res.send({
+                status: "email existed",
+                msg: `Email '${newEmail}' is already in use.`
             });
-    }
-    if (newName.trim().length >= 1 && newName != '') {
-        sql = `UPDATE bby_01_profile
-                SET displayName = ?
-                WHERE userID = ?`;
-        database.query(sql, [newName, req.session.userid],
-            (error, results, fields) => {
-                if (error) console.log(error);
-                message = "Display name updated."
+            res.end();
+        } else if (checkUsername) {
+            res.send({
+                status: "invalid username",
+                msg: `Username '${newUsername}' is already in use.`
             });
-    }
-    if (newEmail.trim().length >= 1 && newEmail != '') {
-        sql = `UPDATE bby_01_user
-                SET email = ?
-                WHERE ID = ?`;
-        req.session.email = newEmail;
-        database.query(sql, [newEmail, req.session.userid], (error, results, fields) => {
-            if (error) console.log(error);
-            message = "Email updated."
-        });
-    }
-    if (newPassword != '') {
-        sql = `UPDATE bby_01_user
-                SET password = ?
-                WHERE ID = ?`;
-        req.session.password = newPassword;
-        database.query(sql, [newPassword, req.session.userid], (error, results, fields) => {
-            if (error) console.log(error);
-            message = "Password updated."
-        })
-    }
-    if (newUsername.trim().length >= 1 && newUsername != '') {
-        sql = `UPDATE bby_01_user
-                SET username = ?
-                WHERE ID = ?`;
-        req.session.username = newUsername;
-        database.query(sql, [newUsername, req.session.userid], (error, results, fields) => {
-            if(error) console.log(error);
-            message = "Username updated."
-        })
-    }
-    res.send({
-        status: "success",
-        msg: message
-    });
+            res.end();
+        } else {
+            if (newAbout.trim().length >= 1 && newAbout != '') {
+                sql = `UPDATE bby_01_profile
+                        SET about = ?
+                        WHERE userID = ?`;
+                database.query(sql, [newAbout, req.session.userid],
+                    (error, results, fields) => {
+                        if (error) console.log(error);
+                        s = "success";
+                        message = "About updated."
+                    });
+            }
+            if (newName.trim().length >= 1 && newName != '') {
+                sql = `UPDATE bby_01_profile
+                        SET displayName = ?
+                        WHERE userID = ?`;
+                database.query(sql, [newName, req.session.userid],
+                    (error, results, fields) => {
+                        if (error) console.log(error);
+                        s = "success";
+                        message = "Display name updated."
+                    });
+            }
+            if (newEmail.trim().length >= 1 && newEmail != '' && emailVal(newEmail)) {
+                sql = `UPDATE bby_01_user
+                        SET email = ?
+                        WHERE ID = ?`;
+                req.session.email = newEmail;
+                database.query(sql, [newEmail, req.session.userid], (error, results, fields) => {
+                    if (error) console.log(error);
+                    s = "success";
+                    message = "Email updated."
+                });
+            }
+            if (newPassword != '') {
+                sql = `UPDATE bby_01_user
+                        SET password = ?
+                        WHERE ID = ?`;
+                req.session.password = newPassword;
+                database.query(sql, [newPassword, req.session.userid], (error, results, fields) => {
+                    if (error) console.log(error);
+                    s = "success";
+                    message = "Password updated."
+                })
+            }
+            if (newUsername.trim().length >= 1 && newUsername != '') {
+                sql = `UPDATE bby_01_user
+                        SET username = ?
+                        WHERE ID = ?`;
+                req.session.username = newUsername;
+                database.query(sql, [newUsername, req.session.userid], (error, results, fields) => {
+                    if(error) console.log(error);
+                    s = "success";
+                    message = "Username updated."
+                })
+            }
+            if (!emailVal(newEmail)){
+                s = "fail";
+                message = `Please include '@' in the email address '${newEmail}' is missing '@'.` 
+            }
+            res.send({
+                status: s,
+                msg: message
+            });
+        }
+    })
 });
 
 app.get("/logout", (req, res) => {

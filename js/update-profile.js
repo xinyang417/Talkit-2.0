@@ -1,5 +1,10 @@
 "use strict";
 const upLoadForm = document.getElementById("upload-images-form");
+var oUsername;
+var oEmail;
+var oPassword;
+var oDisplayName;
+var oAbout;
 
 function uploadImages(e) {
     e.preventDefault();
@@ -42,29 +47,51 @@ form.addEventListener('submit', function (e) {
 });
 
 
+
 // Update profile when save button is clicked
 document.getElementById("updateSave").addEventListener("click", function (e) {
     e.preventDefault();
+    let change;
     let formData = {
-        email: document.getElementById("email").value,
+        email: document.getElementById("email").value.trim(),
         password: document.getElementById("password").value,
         displayName: document.getElementById("displayName").value,
         about: document.getElementById("about").value,
-        username: document.getElementById("username").value
+        username: document.getElementById("username").value.trim()
     };
     document.getElementById("displayName").value = "";
     document.getElementById("about").value = "";
     document.getElementById("email").value = "";
     document.getElementById("password").value = "";
     document.getElementById("username").value = "";
+    
+    if (oEmail != formData.email) {
+        change = "email";
+    } else if (oUsername != formData.username) {
+        change = "username";
+    }
+
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE) {
 
             // 200 means everthing worked
             if (xhr.status === 200) {
-                window.location.reload();
-                window.location.assign("/profile");
+                let data = JSON.parse(this.responseText);
+                if (data.status == "success") {
+                    window.location.assign("/profile");
+                } else {
+                    document.getElementById("displayName").value = oDisplayName;
+                    document.getElementById("about").value = oAbout;
+                    document.getElementById("email").value = oEmail;
+                    document.getElementById("password").value = oPassword;
+                    document.getElementById("username").value = oUsername;
+                    let error = document.getElementById("errorMsg");
+                    error.innerHTML = data.msg;
+                    error.style.color = "red";
+                    displayProfile();
+                    displayUsername();
+                }
             } else {
 
                 // not a 200, could be anything (404, 500, etc.)
@@ -76,7 +103,7 @@ document.getElementById("updateSave").addEventListener("click", function (e) {
             console.log("ERROR", this.status);
         }
     }
-    let queryString = "displayName=" + formData.displayName + "&about=" + formData.about + "&email=" + formData.email + "&password=" + formData.password + "&username=" + formData.username;
+    let queryString = "displayName=" + formData.displayName + "&about=" + formData.about + "&email=" + formData.email + "&password=" + formData.password + "&username=" + formData.username + "&change=" + change;
     xhr.open("POST", "/update-profile");
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -89,6 +116,8 @@ document.getElementById("updateCancel").addEventListener("click", (e) => {
     window.location.assign("/profile");
 })
 
+
+
 function displayUsername() {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -97,6 +126,9 @@ function displayUsername() {
                 let data = JSON.parse(this.responseText);
                 if (data.status == "success") {
                     let row = data.rows[0];
+                    oUsername = row.username;
+                    oPassword = row.password;
+                    oEmail = row.email;
                     document.getElementById("username").setAttribute("value", row.username);
                 } else {
                     console.log("Error!");
@@ -123,6 +155,8 @@ function displayProfile() {
                     let row = data.rows[0];
                     let name = row.displayName;
                     let about = row.about;
+                    oDisplayName = name;
+                    oAbout = about;
                     document.getElementById("displayName").setAttribute("value", name);
                     document.getElementById("about").innerHTML = about;
                     document.getElementById("profilePic").src = row.profilePic;
