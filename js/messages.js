@@ -73,6 +73,7 @@ socket.on('updateUserList', (userList) => {
 });
 
 socket.on('invite', function(data) {
+    console.log("invite", data);
     document.getElementById("friend-dName").getElementsByTagName("b")[0].innerHTML = `${data.hostName}`;
     document.getElementById("dfriend-dName").getElementsByTagName("b")[0].innerHTML = `${data.hostName}`;
     socket.emit("joinRoom", data)
@@ -109,8 +110,6 @@ socket.on('receive-message', (data) => {
         document.getElementById(tabName).style.display = "block";
         evt.currentTarget.className += " active";
     }
-    // document.getElementById("inbox-tab").setAttribute("onclick", `openTab(event, 'inbox-component)`);
-    // document.getElementById("chat-tab").setAttribute("onclick",`openTab(event, 'chat-component')`);
 
 // Logout Modal Functions
 var modal = document.getElementById('simpleModal');
@@ -131,3 +130,7 @@ window.addEventListener('click', function (e) {
         modal.style.display = 'none';
     }
 });
+
+window.onbeforeunload = function() {
+    socket.emit("disconnect");
+}

@@ -328,6 +328,7 @@ function getSocketByUserId(userId) {
 //socket io function starts
 io.on('connection', function (socket) {
     socket.on('disconnect', () => {
+        console.log("disconnect");
         connectedUsers = connectedUsers.filter(item => item.socketId != socket.id);
         io.emit('updateUserList', connectedUsers);
     });
@@ -347,6 +348,8 @@ io.on('connection', function (socket) {
 
     socket.on('create', (data) => {
         let withSocket = getSocketByUserId(data.withUserId);
+        console.log(data);
+        
         socket.broadcast.to(withSocket.id).emit("invite", data);
         socket.join(data.room);
     });
@@ -356,6 +359,7 @@ io.on('connection', function (socket) {
     });
 
     socket.on('send-message', function (data) {
+        console.log(data);
         socket.to(data.room).emit("receive-message", data)
     });
 });
