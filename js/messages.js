@@ -1,5 +1,4 @@
 "use strict";
-
 let socket = io.connect('/');
 let data = JSON.parse(sessionStorage.getItem("user"));
 var room;
