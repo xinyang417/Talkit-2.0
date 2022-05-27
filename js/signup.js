@@ -62,6 +62,8 @@ ready(function () {
                     document.getElementById("errorMsg").innerHTML = dataParsed.msg;
                 } else if (dataParsed.status == "empty") {
                     document.getElementById("errorMsg").innerHTML = dataParsed.msg;
+                } else if (dataParsed.status == "invalid email") {
+                    document.getElementById("errorMsg").innerHTML = dataParsed.msg;
                 } else {
                     const xhr = new XMLHttpRequest();
                     xhr.onload = function () {

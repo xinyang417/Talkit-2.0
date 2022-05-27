@@ -181,6 +181,11 @@ app.post('/auth', (req, res) => {
     }
 });
 
+const emailVal = (email) => {
+    return String(email).toLowerCase().match( /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+
 app.post('/check-account', (req, res) => {
     let username = req.body.username;
     let email = req.body.email;
@@ -204,7 +209,12 @@ app.post('/check-account', (req, res) => {
                     break;
                 }
             }
-            if (checkEmail) {
+            if (!emailVal(email)) {
+                res.send({
+                    status: "invalid email",
+                    msg: `Please include '@' in the email address.<br/> '${email}' is missing '@'.`
+                })
+            } else if (checkEmail) {
                 res.send({
                     status: "email existed",
                     msg: "Email already in use."

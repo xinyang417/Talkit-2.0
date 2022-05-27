@@ -32,7 +32,8 @@
             <form id='loginForm'>
                 <h3>Join us today.</h3>
                 <input id='username' type='text' required="required" placeholder="Username" maxlength="30">
-                <input id='email' type='email' required="required" placeholder="Email" maxlength="30">
+                <input id='email' type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required="required"
+                    placeholder="Email" maxlength="30" />
                 <p id="psw">
                     <input id='password' type='password' required="required" placeholder="Password" maxlength="20">
                     <i class="bi bi-eye-slash" id="togglePassword"></i>
