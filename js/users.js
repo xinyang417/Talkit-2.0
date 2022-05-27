@@ -227,7 +227,6 @@ document.getElementById("add").addEventListener("click", (e) => {
                     if (this.readyState == XMLHttpRequest.DONE) {
                         // 200 means everthing worked
                         if (xhr.status === 200) {
-                            // window.location.assign("/profile");
                             let data = xhr.responseText;
                             let jsonResponse = JSON.parse(data);
                             document.getElementById("status").innerHTML = jsonResponse["msg"];
