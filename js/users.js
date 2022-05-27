@@ -1,5 +1,10 @@
 "use strict";
 
+const emailVal = (email) => {
+    return String(email).toLowerCase().match( /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+
 function ajaxPOST(url, callback, data) {
     let params = typeof data == 'string' ? data : Object.keys(data).map(
         function (k) {
@@ -153,6 +158,12 @@ function edit(e) {
                 getUsers();
                 return;
             }
+            if(!emailVal(dataToSend.email)) {
+                document.getElementById("status").innerHTML = `Please include '@' in the email address.<br/> '${dataToSend.email}' is missing '@'.`;
+                document.getElementById('status').style.color = "red";
+                getUsers();
+                return;
+            }
             const xhr = new XMLHttpRequest();
             xhr.onload = function () {
                 if (this.readyState == XMLHttpRequest.DONE) {
@@ -205,7 +216,7 @@ document.getElementById("add").addEventListener("click", (e) => {
     ajaxPOST("/check-account", function (data) {
         if (data) {
             let dataParsed = JSON.parse(data);
-            let dataStatus = ["email existed", 'invalid username', 'invalid admin code', 'empty'];
+            let dataStatus = ["email existed", 'invalid username', 'invalid admin code', 'empty', 'invalid email'];
             if (dataStatus.includes(dataParsed.status)) {
                 document.getElementById("status").innerHTML = dataParsed.msg;
                 document.getElementById("status").style.color = "red";
