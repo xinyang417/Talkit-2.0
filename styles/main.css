@@ -174,12 +174,11 @@ body {
     #search-bar {
         width: 100%;
         background-color: #e4e4e4;
-        color: #909090;
         font-family: 'Inter', sans-serif;
         font-size: 16px;
         height: 40px;
         border-radius: 20px;
-        border: none;
+        border: 1.5px solid #e4e4e4;
         padding-left: 20px;
         margin-bottom: 1em;
     }
@@ -375,10 +374,10 @@ body {
 
     .searchBox {
         border: 0;
-        background-color: #e4e4e4;
         flex: 1;
+        background-color: #e4e4e4;
         font-size: 14px;
-        padding-left: 10px;
+        padding-left: 15px;
     }
 
     #dashboard {
@@ -499,7 +498,7 @@ body {
     .post .material-symbols-outlined {
         color: #9595c5;
         float: right;
-        font-weight: bold;
+        font-weight: 600;
         font-size: 20px;
         right: 1em;
     }
@@ -520,7 +519,7 @@ body {
 
     .material-symbols-outlined {
         font-size: 30px;
-        font-weight: bold;
+        font-weight: 600;
     }
 
     #footer {

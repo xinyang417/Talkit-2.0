@@ -15,6 +15,10 @@ button:hover {
 
 @media screen and (min-width: 701px) {
 
+    body {
+        background-color: #9595c51e;
+    }
+
     .container {
         display: grid;
         height: 100vh;
@@ -31,6 +35,7 @@ button:hover {
 
     .box1 p {
         font-size: 20px;
+        letter-spacing: 2px;
     }
 
     img {
@@ -57,7 +62,7 @@ button:hover {
     #loginForm {
         align-items: center;
         width: 80%;
-        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.108), 0 5px 10px 0 rgba(0, 0, 0, 0.076);
+        background-color: white;
         border-radius: 20px;
         padding: 70px 0;
         padding: 2em;
@@ -68,6 +73,7 @@ button:hover {
     #loginForm h3 {
         font-size: 30px;
         text-align: center;
+        font-weight: 600;
     }
 
     #psw {
@@ -77,9 +83,9 @@ button:hover {
 
     form i {
         float: right;
-        right: 10px;
+        right: 20px;
         margin-left: -40px;
-        margin-top: -41px;
+        margin-top: -54px;
         position: relative;
         z-index: 2;
         cursor: pointer;
@@ -89,13 +95,12 @@ button:hover {
     input[type=email],
     input[type=password] {
         width: 100%;
-        height: 40px;
-        margin: 5px 0 12px 0;
+        height: 50px;
+        margin: 5px 0 20px 0;
         display: block;
-        border: none;
-        border-radius: 10px;
-        background: #e4e4e4;
-        padding-left: 10px;
+        border: 1.5px solid #e4e4e4;
+        border-radius: 30px;
+        padding-left: 20px;
         font-size: 16px;
         box-sizing: border-box;
     }
@@ -113,14 +118,15 @@ button:hover {
         background-color: #9595c5;
         border: none;
         color: white;
-        height: 40px;
+        height: 50px;
         width: 100%;
         margin-top: 22px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        border-radius: 10px;
+        border-radius: 30px;
         font-size: 20px;
+        font-weight: 600;
     }
 
     p {
@@ -131,14 +137,23 @@ button:hover {
         font-family: 'Inter', sans-serif;
     }
 
-    p a {
-        color: black;
+    a:-webkit-any-link {
+        color: #9595c5;
+        cursor: pointer;
         text-decoration: none;
-        font-family: 'Inter', sans-serif;
+        font-weight: 600;
     }
 
-    p b {
-        color: #9595c5;
+    a:-webkit-any-link:hover {
+        text-decoration: underline;
+    }
+
+    .copyRight,
+    .copyRight a {
+        color: #909090;
+        letter-spacing: 2px;
+        font-size: 14px;
+        font-weight: normal;
     }
 
     #errorMsg {
@@ -189,7 +204,7 @@ button:hover {
 
     .logo {
         position: sticky;
-        top: 13em;
+        top: 10em;
 
     }
 
@@ -199,8 +214,10 @@ button:hover {
     }
 
     .box2 h3 {
-        font-size: 20px;
+        font-size: 23px;
         text-align: center;
+        font-weight: 500;
+        margin-top: 0;
     }
 
     #loginForm {
@@ -225,9 +242,9 @@ button:hover {
 
     form i {
         float: right;
-        right: 10px;
+        right: 20px;
         margin-left: -40px;
-        margin-top: 15px;
+        margin-top: 17px;
         position: relative;
         z-index: 2;
         cursor: pointer;
@@ -237,14 +254,13 @@ button:hover {
     input[type=email],
     input[type=password] {
         width: 100%;
-        height: 40px;
+        height: 45px;
         margin: 5px 0 12px 0;
         display: inline-block;
-        border: none;
-        border-radius: 10px;
-        background: #e4e4e4;
+        border: 1px solid #909090;
+        border-radius: 30px;
         font-size: 14px;
-        padding-left: 10px;
+        padding-left: 20px;
         box-sizing: border-box;
     }
 
@@ -258,14 +274,15 @@ button:hover {
         border: none;
         color: white;
         padding: 10px 32px;
-        height: 40px;
+        height: 45px;
         width: 100%;
         margin-top: 22px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        border-radius: 10px;
+        border-radius: 30px;
         font-size: 18px;
+        font-weight: 600;
     }
 
     p {
@@ -273,21 +290,20 @@ button:hover {
         margin: 20px;
         font-size: 14px;
         color: black;
-        font-family: 'Inter', sans-serif;
     }
 
-    p b {
+    a:-webkit-any-link {
         color: #9595c5;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 600;
     }
 
-    p a {
-        color: black;
-        text-decoration: none;
-        font-family: 'Inter', sans-serif;
+    .copyRight {
+        display: none;
     }
 
     #errorMsg {
-        font-family: 'Inter', sans-serif;
         font-size: 14px;
         color: red;
     }

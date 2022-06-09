@@ -15,6 +15,10 @@ input[type=submit]:hover {
 
 @media screen and (min-width: 701px) {
 
+    body {
+        background-color: #9595c51e;
+    }
+
     .container {
         display: grid;
         height: 100vh;
@@ -46,6 +50,7 @@ input[type=submit]:hover {
 
     .branding p {
         font-size: 20px;
+        letter-spacing: 2px;
         text-align: center;
         font-family: 'Inter', sans-serif !important;
     }
@@ -59,7 +64,7 @@ input[type=submit]:hover {
     #loginForm {
         align-items: center;
         width: 80%;
-        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.108), 0 5px 10px 0 rgba(0, 0, 0, 0.076);
+        background-color: white;
         border-radius: 20px;
         padding: 70px 0;
         padding: 2em;
@@ -70,6 +75,7 @@ input[type=submit]:hover {
     #loginForm h3 {
         font-size: 30px;
         text-align: center;
+        font-weight: 600;
     }
 
     #psw {
@@ -79,9 +85,9 @@ input[type=submit]:hover {
 
     form i {
         float: right;
-        right: 10px;
+        right: 20px;
         margin-left: -40px;
-        margin-top: -41px;
+        margin-top: -46px;
         position: relative;
         z-index: 2;
         cursor: pointer;
@@ -90,13 +96,13 @@ input[type=submit]:hover {
     input[type=text],
     input[type=password] {
         width: 100%;
-        height: 40px;
-        margin: 5px 0 12px 0;
+        height: 50px;
+        margin: 2em 0 12px 0;
         display: block;
-        border: none;
-        border-radius: 10px;
-        background: #e4e4e4;
-        padding-left: 10px;
+        border: 1.5px solid #e4e4e4;
+        border-radius: 30px;
+        padding-left: 20px;
+        padding-right: 20px;
         font-size: 16px;
         box-sizing: border-box;
     }
@@ -114,15 +120,15 @@ input[type=submit]:hover {
         background-color: #9595c5;
         border: none;
         color: white;
-        height: 40px;
+        height: 50px;
         width: 100%;
         margin-top: 40px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        border-radius: 10px;
+        border-radius: 30px;
         font-size: 20px;
-        font-weight: bold;
+        font-weight: 600;
     }
 
     p {
@@ -133,23 +139,31 @@ input[type=submit]:hover {
         font-family: 'Inter', sans-serif;
     }
 
-    p b,
-    .psw b {
-        color: #9595c5;
-    }
-
-    span.psw {
+    span.psw,
+    .toSignUp {
         float: right;
         font-size: 14px;
-        color: black;
         margin-top: 5px;
-        font-family: 'Inter', sans-serif !important;
     }
 
-    a {
-        color: black;
+    a:-webkit-any-link {
+        color: #9595c5;
+        cursor: pointer;
         text-decoration: none;
-        font-family: 'Inter', sans-serif !important;
+        font-weight: 600;
+    }
+
+    span.psw:hover,
+    #toSignUp:hover {
+        text-decoration: underline;
+    }
+
+    .copyRight,
+    .copyRight a {
+        color: #909090;
+        letter-spacing: 2px;
+        font-size: 14px;
+        font-weight: normal;
     }
 
     #errorMsg {
@@ -201,8 +215,7 @@ input[type=submit]:hover {
 
     .logo {
         position: sticky;
-        top: 13em;
-
+        top: 10em;
     }
 
     .login {
@@ -211,8 +224,10 @@ input[type=submit]:hover {
     }
 
     .login h3 {
-        font-size: 20px;
+        font-size: 23px;
         text-align: center;
+        font-weight: 500;
+        margin-top: 0;
     }
 
     #loginForm {
@@ -232,9 +247,9 @@ input[type=submit]:hover {
 
     form i {
         float: right;
-        right: 10px;
+        right: 20px;
         margin-left: -40px;
-        margin-top: 15px;
+        margin-top: 18px;
         position: relative;
         z-index: 2;
         cursor: pointer;
@@ -243,14 +258,13 @@ input[type=submit]:hover {
     input[type=text],
     input[type=password] {
         width: 100%;
-        height: 40px;
+        height: 45px;
         margin: 5px 0 12px 0;
         display: inline-block;
-        border: none;
-        border-radius: 10px;
-        background: #e4e4e4;
+        border-radius: 30px;
+        border: 1px solid #909090;
         font-size: 14px;
-        padding-left: 10px;
+        padding-left: 20px;
         box-sizing: border-box;
     }
 
@@ -263,16 +277,16 @@ input[type=submit]:hover {
         background-color: #9595c5;
         border: none;
         color: white;
-        height: 40px;
+        height: 45px;
         width: 100%;
         margin-top: 35px;
         margin-bottom: 0;
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        border-radius: 10px;
+        border-radius: 30px;
         font-size: 18px;
-        font-weight: bold;
+        font-weight: 600;
     }
 
     .login p {
@@ -283,23 +297,22 @@ input[type=submit]:hover {
         font-family: 'Inter', sans-serif !important;
     }
 
-    p b,
-    .psw b {
-        color: #9595c5;
-    }
-
-    span.psw {
+    span.psw,
+    .toSignUp {
         float: right;
         font-size: 14px;
-        color: black;
         margin-top: 5px;
-        font-family: 'Inter', sans-serif !important;
     }
 
-    a {
-        color: black;
+    a:-webkit-any-link {
+        color: #9595c5;
+        cursor: pointer;
         text-decoration: none;
-        font-family: 'Inter', sans-serif !important;
+        font-weight: 600;
+    }
+
+    .copyRight {
+        display: none;
     }
 
     #errorMsg {
